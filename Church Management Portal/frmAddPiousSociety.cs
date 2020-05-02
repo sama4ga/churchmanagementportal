@@ -34,12 +34,11 @@ namespace Church_Management_Portal
 
             codename.ToUpper();
 
-            Sql.Execute_Query("INSERT INTO `pious_SOCIETIES`(`name`,`code_name`,`slogan`) VALUES('" + txtSocietyName.Text + "','" + codename + "','" + txtSlogan.Text + "');");
-
+            Sql.Execute_Query("INSERT INTO `pious_societies`(`name`,`code_name`,`slogan`) VALUES('" + txtSocietyName.Text + "','" + codename + "','" + txtSlogan.Text + "');");
+            if (!Sql.result) { return; }
 
             Sql.Execute_CUD("CREATE TABLE IF NOT EXISTS `"+ codename +"`(`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE,`member_id` INT);",
                 "Could not add new Pious Society", "New Pious Society successfully added");
-
             refresh();
         }
 

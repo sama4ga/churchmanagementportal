@@ -54,7 +54,7 @@ namespace Church_Management_Portal
             DataGridViewRow row;
 
             //Variables
-             int intCurrentChar;       //static
+             //int intCurrentChar;       //static
             int intPrintAreaHeight, intPrintAreaWidth, intMarginLeft, intMarginTop;
 
             //Set printing area boundaries and margin coordinates
@@ -80,7 +80,7 @@ namespace Church_Management_Portal
             StringFormat objSF = new StringFormat(StringFormatFlags.LineLimit);
 
             // Figure out how many lines will fit into rectangle
-            int intLinesFilled, intCharsFitted;
+            //int intLinesFilled, intCharsFitted;
             //e.Graphics.MeasureString((dgv, Font, new SizeF(intPrintAreaWidth, intPrintAreaHeight), objSF, intCharsFitted, intLinesFilled);
 
             // print the title of the document

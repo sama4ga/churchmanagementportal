@@ -13,12 +13,12 @@ namespace Church_Management_Portal
     class SQLConfig
     {
 
-        private MySqlConnection con = new MySqlConnection("server=localhost;user id=root;password=maurice5782;port=3308;database=churchms");
+        private MySqlConnection con = new MySqlConnection("server="+ Properties.Settings.Default.server + ";user id="+ Properties.Settings.Default.user + ";password="+Properties.Settings.Default.password+";port="+ Properties.Settings.Default.port + ";database=churchms");
         private MySqlCommand cmd;
         private MySqlDataAdapter da;
         private DataTable dt;
         public DataSet ds;
-        int result;
+        public bool result;
         usableFunction funct = new usableFunction(); 
 
         public void Execute_CUD(string sql, string msg_false, string msg_true)
@@ -29,8 +29,9 @@ namespace Church_Management_Portal
                 cmd = new MySqlCommand();
                 cmd.Connection = con;
                 cmd.CommandText = sql;
-                result = cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
 
+                result = true;
                 //if(result > 0)
                 //{
                     MessageBox.Show(msg_true);
@@ -43,7 +44,8 @@ namespace Church_Management_Portal
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("An error occured while executing query\n" + ex.Message);
+                result = false;
             }
             finally
             {
@@ -51,6 +53,80 @@ namespace Church_Management_Portal
             }
         }
 
+        /// <summary>
+        /// Used to insert data and return insert id
+        /// </summary>
+        /// <param name="query">Query string</param>
+        /// <param name="ParamValues">A list containing values for parameters used in the query</param>
+        /// <returns>true if query is successful and false if otherwise</returns>
+        public bool InsertQuery(string query, List<object>[] ParamValues, out long insertId)
+        {
+            try
+            {
+                con.Open();
+                cmd = new MySqlCommand(query, con);
+                cmd.Prepare();
+
+                //if (cmd.IsPrepared) {
+                cmd.Parameters.Clear();
+                
+                cmd.Parameters.AddRange(ParamValues);
+
+                cmd.ExecuteNonQuery();
+                insertId = cmd.LastInsertedId;
+                return true;
+
+            }
+            catch (MySqlException e)
+            {
+                MessageBox.Show("An error occurred while inserting the record: " + e.Message);
+                insertId = 0;
+                return false;
+            }
+            finally
+            {
+                cmd.Dispose();
+                con.Close();
+            }
+
+        }
+
+
+        /// <summary>
+        /// Used to updata data
+        /// </summary>
+        /// <param name="query">Query string</param>
+        /// <param name="ParamValues">A list containing values for parameters used in the query</param>
+        /// <returns>true if query is successful and false if otherwise</returns>
+        public bool UpdateQuery(string query, List<object>[] ParamValues)
+        {
+            try
+            {
+                con.Open();
+                cmd = new MySqlCommand(query, con);
+                cmd.Prepare();
+
+                //if (cmd.IsPrepared) {
+                cmd.Parameters.Clear();
+
+                cmd.Parameters.AddRange(ParamValues);
+
+                cmd.ExecuteNonQuery();
+                return true;
+
+            }
+            catch (MySqlException e)
+            {
+                MessageBox.Show("An error occurred while inserting the record: " + e.Message);
+                return false;
+            }
+            finally
+            {
+                cmd.Dispose();
+                con.Close();
+            }
+
+        }
 
         public void Execute_Query(string sql)
         {
@@ -60,12 +136,14 @@ namespace Church_Management_Portal
                 cmd = new MySqlCommand();
                 cmd.Connection = con;
                 cmd.CommandText = sql;
-                result = cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
                  
+                result = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("An error occured while executing query\n" + ex.Message);
+                result = false;
             }
             finally
             {
@@ -97,12 +175,15 @@ namespace Church_Management_Portal
                
                 funct.ResponsiveDtg(dtg);
                 dtg.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dtg.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;               
+                dtg.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+
+                result = true;
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("An error occured while executing query\n" + ex.Message);
+                result = false;
             }
             finally
             {
@@ -134,11 +215,12 @@ namespace Church_Management_Portal
                 listBox.DisplayMember = dt.Columns[1].ColumnName;
                 listBox.ValueMember = dt.Columns[0].ColumnName;
 
-
+                result = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("An error occured while executing query\n" + ex.Message);
+                result = false;
             }
             finally
             {
@@ -172,11 +254,12 @@ namespace Church_Management_Portal
                 cbo.DisplayMember = dt.Columns[1].ColumnName;
                 cbo.DataSource = dt;
 
-
+                result = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("An error occured while executing query\n" + ex.Message);
+                result = false;
             }
             finally
             {
@@ -185,45 +268,7 @@ namespace Church_Management_Portal
             }
 
         }
-
-
-        public void combo(string sql, ComboBox cbo,string name="")
-        {
-            try
-            {
-                if (con.State != ConnectionState.Open)
-                {
-                    con.Open();
-                }
-
-                cmd = new MySqlCommand(sql,con);
-                da = new MySqlDataAdapter(cmd);
-                dt = new DataTable(name);
-                ds = new DataSet();
-
-                da.Fill(dt);
-                ds.Tables.Add(dt);
-
-                cbo.Items.Clear();
-                cbo.Text = "Select";
-                foreach(DataRow r in dt.Rows)
-                {
-                    cbo.Items.Add(r.Field<string>(0));
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                con.Close();
-                da.Dispose();
-            }
-
-        }
+        
         
         public int maxrow(string sql,string name="")
         {
@@ -259,7 +304,8 @@ namespace Church_Management_Portal
                 //                                            "MYSQL_SETUP.exe"+
                 //                                            " datadir=\C:\\Program")
                 //}
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("An error occured while executing query\n" + ex.Message);
+                result = false;
             }
             finally
             {
@@ -276,13 +322,15 @@ namespace Church_Management_Portal
             {
                 con.Open();
                 cmd = new MySqlCommand(sql,con);
-                result = cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
 
                 insert_id = cmd.LastInsertedId;
+                result = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("An error occured while executing query\n" + ex.Message);
+                result = false;
             }
             finally
             {
@@ -292,114 +340,7 @@ namespace Church_Management_Portal
         }
 
         
-        public void autocomplete(string sql,TextBox txt)
-        {
-            try
-            {
-                con.Open();
-                cmd = new MySqlCommand();
-                da = new MySqlDataAdapter();
-                dt = new DataTable();
-
-
-                cmd.Connection = con;
-                cmd.CommandText = sql;
-                da.SelectCommand = cmd;
-                da.Fill(dt);
-
-                txt.AutoCompleteCustomSource.Clear();
-                txt.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                txt.AutoCompleteSource = AutoCompleteSource.CustomSource;
-
-                foreach (DataRow r in dt.Rows)
-                {
-                    txt.AutoCompleteCustomSource.Add(r.Field<string>(0));
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                con.Close();
-                da.Dispose();
-            }
-        }
-
-        public void autonumber(string AUTOKEY, TextBox txt)
-        {
-            try
-            {
-
-                if (con.State != ConnectionState.Open)
-                {
-                    con.Open(); 
-                }
-                cmd = new MySqlCommand();
-                da = new MySqlDataAdapter();
-                dt = new DataTable();
-
-
-                cmd.Connection = con;
-                cmd.CommandText = "SELECT concat(`STRT`, `END`) FROM `tblautonumber` WHERE `DESCRIPTION`='" + AUTOKEY + "'";
-                da.SelectCommand = cmd;
-                da.Fill(dt);
-
-                txt.Text = DateTime.Now.ToString("yyyy") + dt.Rows[0].Field<string>(0);
-            
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                con.Close();
-                da.Dispose();
-            }
-        }
-
-        public void trans_autonumber(string AUTOKEY, Label txt)
-        {
-            try
-            {
-
-                if (con.State != ConnectionState.Open)
-                {
-                    con.Open();
-                }
-                cmd = new MySqlCommand();
-                da = new MySqlDataAdapter();
-                dt = new DataTable();
-
-
-                cmd.Connection = con;
-                cmd.CommandText = "SELECT concat(`STRT`, `END`) FROM `tblautonumber` WHERE `DESCRIPTION`='" + AUTOKEY + "'";
-                da.SelectCommand = cmd;
-                da.Fill(dt);
-
-                txt.Text = DateTime.Now.ToString("yyyy") + dt.Rows[0].Field<string>(0);
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                con.Close();
-                da.Dispose();
-            }
-        }
-        public void update_Autonumber(string id)
-        { 
-            Execute_Query("UPDATE `tblautonumber` SET `END`=`END`+`INCREMENT` WHERE `DESCRIPTION`='" + id + "'");
-        }
+        
 
       
     }

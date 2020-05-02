@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Church_Management_Portal
 {
@@ -15,29 +16,42 @@ namespace Church_Management_Portal
         usableFunction UF = new usableFunction();
         SQLConfig Sql = new SQLConfig();
         TimeSpan timeLogin = new TimeSpan();
-        int user_id = 0;
+        public int user_id = 0;
         int maxrow = 0;
         public  string user_status;
 
-        public Form1(int user_id)
+        public Form1()
         {
             InitializeComponent();
-            this.user_id = user_id;
         }
-                
+
+        //public Form1(int user_id)
+        //{
+        //    InitializeComponent();
+        //    this.user_id = user_id;
+        //}
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
             lblChurchName.Text = Properties.Settings.Default.church_name.ToUpper();
-            lblAddress.Text = Properties.Settings.Default.church_name;
-            //this.BackgroundImage = Properties.Resources.background_image;        
+            lblAddress.Text = Properties.Settings.Default.church_address;
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.background_image) & File.Exists(Properties.Settings.Default.background_image))
+            {
+                this.BackgroundImage = Image.FromFile(Properties.Settings.Default.background_image);
+            }
+            else
+            {
+                this.BackgroundImage = Properties.Resources.background_image;
+            }
+                   
             
             // get user details
             if (user_id != 0) {
                 maxrow = Sql.maxrow("SELECT * FROM `parishioners` where `parishioner_id`='"+ user_id +"';","parishioners");
                 if (maxrow == 1)
                 {
-                    if (System.IO.File.Exists(Sql.ds.Tables["parishioners"].Rows[0].Field<string>("passport")))
+                    if (File.Exists(Sql.ds.Tables["parishioners"].Rows[0].Field<string>("passport")))
                     {
                         picPassport.Image = Image.FromFile(Sql.ds.Tables["parishioners"].Rows[0].Field<string>("passport"));
                     }
@@ -63,6 +77,18 @@ namespace Church_Management_Portal
             timer1.Start();
             timer1.Enabled = true;
 
+            if (user_status.Equals("secretary", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnAddUser.Visible = false;
+            }
+            else if (user_status.Equals("user", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnAddUser.Visible = false;
+                btnAddParishioner.Enabled = false;
+                btnOpenNewRecord.Enabled = false;
+                btnViewSacramentRecord.Enabled = false;
+            }
+
         }
 
         private void button4_MouseHover(object sender, EventArgs e)
@@ -85,7 +111,9 @@ namespace Church_Management_Portal
 
         private void btnViewList_Click(object sender, EventArgs e)
         {
-            UF.showFrmD( new frmViewListBy());
+            frmViewListBy frm = new frmViewListBy();
+            frm.user_status = this.user_status;
+            frm.ShowDialog();
             
         }
         #endregion
@@ -166,12 +194,12 @@ namespace Church_Management_Portal
         private void btnViewRecords_MouseHover(object sender, EventArgs e)
         {
             lblLabel.Text = "View Register of Sacraments";
-            btnViewRecords.BackColor = Color.Lime;
+            btnViewSacramentRecord.BackColor = Color.Lime;
         }
 
         private void btnViewRecords_MouseLeave(object sender, EventArgs e)
         {
-            btnViewRecords.BackColor = Color.Green;
+            btnViewSacramentRecord.BackColor = Color.Green;
             lblLabel.Text = "";
         }
 
@@ -181,19 +209,29 @@ namespace Church_Management_Portal
             switch (cmbViewRecordBy.SelectedItem.ToString())
             {
                 case "Baptism":
-                    UF.showFrmD(new frmBaptismRecord());
+                    frmBaptismRecord frmB = new frmBaptismRecord();
+                    frmB.user_status = this.user_status;
+                    frmB.ShowDialog();
                     break;
                 case "Confirmation":
-                    UF.showFrmD(new frmConfirmationRecord());
+                    frmConfirmationRecord frmC = new frmConfirmationRecord();
+                    frmC.user_status = this.user_status;
+                    frmC.ShowDialog();
                     break;
                 case "Communion":
-                    UF.showFrmD(new frmCommunionRecord());
+                    frmCommunionRecord frmCo = new frmCommunionRecord();
+                    frmCo.user_status = this.user_status;
+                    frmCo.ShowDialog();
                     break;
                 case "Marriage":
-                    UF.showFrmD(new frmMarriageRecord());
+                    frmMarriageRecord frmM = new frmMarriageRecord();
+                    frmM.user_status = this.user_status;
+                    frmM.ShowDialog();
                     break;
                 case "Death":
-                    UF.showFrmD(new frmDeath());
+                    frmDeath frmD = new frmDeath();
+                    frmD.user_status = this.user_status;
+                    frmD.ShowDialog();
                     break;
 
                 default:
@@ -213,7 +251,9 @@ namespace Church_Management_Portal
 
         private void btnViewRecord_Click(object sender, EventArgs e)
         {
-            UF.showFrmD(new frmViewRecords());
+            frmViewRecords frm = new frmViewRecords();
+            frm.user_status = user_status;
+            frm.ShowDialog();
         }
 
         private void btnViewRecord_MouseLeave(object sender, EventArgs e)
@@ -229,7 +269,9 @@ namespace Church_Management_Portal
 
         private void btnPriests_Click(object sender, EventArgs e)
         {
-            UF.showFrmD(new frmViewPriests());
+            frmViewPriests frm = new frmViewPriests();
+            frm.user_status = this.user_status;
+            frm.ShowDialog();
         }
 
         private void btnPriests_MouseHover(object sender, EventArgs e)
@@ -246,16 +288,16 @@ namespace Church_Management_Portal
  #endregion
 
 
- #region Add User
+ #region Manage Users
         private void btnAddUser_MouseHover(object sender, EventArgs e)
         {
-            lblLabel.Text = "Add New User";
+            lblLabel.Text = "Manage Users";
             btnAddUser.BackColor = Color.Lime;
         }
 
         private void btnAddUser_Click(object sender, EventArgs e)
         {
-            UF.showFrmD(new frmAddNewUser());
+            UF.showFrmD(new frmManageUsers());
         }
 
         private void btnAddUser_MouseLeave(object sender, EventArgs e)
@@ -282,8 +324,32 @@ namespace Church_Management_Portal
             };
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                this.BackgroundImage = Image.FromFile(ofd.FileName);
+                string fileType = ofd.SafeFileName.Split('.').Last();
+                string newFileName = Directory.GetCurrentDirectory() + "/background_image." + fileType;
+                File.Copy(ofd.FileName, newFileName,true);
+                Properties.Settings.Default.background_image = newFileName;
+                Properties.Settings.Default.Save();
+
+                this.BackgroundImage = Image.FromFile(newFileName);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frmChangePassword frm = new frmChangePassword();
+            frm.user_id = this.user_id;
+            frm.ShowDialog();
+        }
+
+        private void lblChurchName_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            frmSettings frm = new frmSettings();
+            frm.Show();
         }
     }
 }

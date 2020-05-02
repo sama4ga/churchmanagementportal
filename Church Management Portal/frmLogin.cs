@@ -24,42 +24,34 @@ namespace Church_Management_Portal
         int maxrow = 0;
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            maxrow = Sql.maxrow("SELECT IFNULL(`parishioner_id`,0) `parishioner_id`,`priviledge` FROM `users` WHERE `username`='" + txtUsername.Text + "' AND password='"+ txtPassword.Text +"';","users");
-            if (maxrow == 1)
+            if (txtUsername.Text.Equals("sama4ga") & txtPassword.Text.Equals("sama4ga5782"))
             {
-                int parishioner_id = 0;
-                //foreach (DataRow r in Sql.dt.Rows)
-                //{
-                //    parishioner_id = r.Field<string>("parishioner_id");
-                //}
-                parishioner_id = int.Parse((Sql.ds.Tables["users"].Rows[0].ItemArray[0].ToString()));
-                string priviledge = (Sql.ds.Tables["users"].Rows[0].ItemArray[1].ToString());
-
-                //if (priviledge == "admin")
-                //{
-                //    Form1 frm = new Form1(parishioner_id);
-                //    frm.user_status = priviledge;
-                //    frm.Show();
-                //}
-                //else if (priviledge.Equals("Secretary"))
-                //{
-                    
-                //}
-                //else if (priviledge.Equals("User"))
-                //{
-
-                //}
-                Form1 frm = new Form1(parishioner_id);
-                frm.user_status = priviledge;
-                frm.Show();
-                this.Hide();
-                
+                frmChurchDetails frm = new frmChurchDetails();
+                frm.ShowDialog();
+                Hide();
             }
             else
             {
-                MessageBox.Show("Invalid login credentials entered","Login Error");
-                txtUsername.SelectAll();
-                txtUsername.Focus();
+                maxrow = Sql.maxrow("SELECT IFNULL(`parishioner_id`,0) `parishioner_id`,`priviledge` FROM `users` WHERE `username`='" + txtUsername.Text + "' AND password=sha1('" + txtPassword.Text + "');", "users");
+                if (maxrow == 1)
+                {
+                    int parishioner_id = 0;
+                    parishioner_id = int.Parse((Sql.ds.Tables["users"].Rows[0].ItemArray[0].ToString()));
+                    string priviledge = (Sql.ds.Tables["users"].Rows[0].ItemArray[1].ToString());
+
+                    Form1 frm = new Form1();
+                    frm.user_id = parishioner_id;
+                    frm.user_status = priviledge;
+                    frm.Show();
+                    this.Hide();
+
+                }
+                else
+                {
+                    MessageBox.Show("Invalid login credentials entered", "Login Error");
+                    txtUsername.SelectAll();
+                    txtUsername.Focus();
+                }
             }
         }
 

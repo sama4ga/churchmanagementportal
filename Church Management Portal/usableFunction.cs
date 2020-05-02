@@ -128,6 +128,15 @@ namespace Church_Management_Portal
             dtg.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
         }
 
+        /// <summary>
+        /// Used to encrypt a password
+        /// </summary>
+        /// <param name="password">password to be encrypted</param>
+        /// <returns></returns>
+        public string EncryptPassword(string password)
+        {
+            return password;
+        }
 
         public void SaveRecord(DataGridView dgv)
         {
@@ -140,12 +149,7 @@ namespace Church_Management_Portal
             sfd.RestoreDirectory = true;
             sfd.Title = "Choose filename for the record";
             sfd.Filter = "ALL FIles|*.*|CSV|*.csv";
-            sfd.FilterIndex = 2;
-
-            if (sfd.ShowDialog() == DialogResult.OK) {
-                //Save(sfd.FileName)
-                timetableFilename = sfd.FileName.Split('/').Last();
-            }
+            sfd.FilterIndex = 2;           
         
 
             //timetableFilename = "timetable" & DateTime.Now.ToString("yyyyMMddHHmmss") & ".csv"
@@ -157,9 +161,9 @@ namespace Church_Management_Portal
                 if (dgv.Columns[index].Visible)
                 {
                     if (index == dgv.ColumnCount - 1){
-                        str += dgv.Columns[index].Name; 
+                        str += '"' + dgv.Columns[index].Name + '"'; 
                     } else{
-                            str += dgv.Columns[index].Name + ","; 
+                            str += '"' + dgv.Columns[index].Name + '"' + ","; 
                     }
                 }
                 
@@ -180,12 +184,12 @@ namespace Church_Management_Portal
                             if (dgv.Rows[row].Cells[col].Value == null){
                                 dgv.Rows[row].Cells[col].Value = "";
                             }
-                            str += dgv.Rows[row].Cells[col].Value.ToString();
+                            str += '"' + dgv.Rows[row].Cells[col].Value.ToString() + '"';
                         }else{
                             if (dgv.Rows[row].Cells[col].Value == null){
                                 dgv.Rows[row].Cells[col].Value = "";
                             }
-                            str += dgv.Rows[row].Cells[col].Value.ToString() + ",";
+                            str += '"' + dgv.Rows[row].Cells[col].Value.ToString() + '"' + ",";
                         }
                     }
                 }
@@ -194,9 +198,14 @@ namespace Church_Management_Portal
                 str = String.Empty;
             }
 
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                //Save(sfd.FileName)
+                timetableFilename = sfd.FileName.Split('/').Last();
 
                 File.WriteAllText(sfd.FileName, Data.ToString(), Encoding.UTF8);
                 MessageBox.Show("Record successfully exported","Export Record");
+            }
        }
        
     }

@@ -16,6 +16,7 @@ namespace Church_Management_Portal
 
         SQLConfig Sql = new SQLConfig();
         string parishioner_id = "";
+        public string user_status = "";
 
 
         public frmConfirmationRecord()
@@ -25,6 +26,14 @@ namespace Church_Management_Portal
 
         private void frmConfirmationRecord_Load(object sender, EventArgs e)
         {
+            if (user_status.Equals("secretary", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnDelete.Visible = false; btnEditRecord.Visible = false;
+            }
+            else if (user_status.Equals("user", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnDelete.Visible = false; btnEditRecord.Visible = false; btnAddNewRecord.Visible = false;
+            }
             refresh();
             cmbSearchBy.SelectedIndex = 0;
         }
@@ -34,14 +43,21 @@ namespace Church_Management_Portal
                     "/* p.`gender` as 'Gender',p.`dob` as 'Date of Birth', */" +
                     "b.`date_received` AS 'Date',b.`minister` AS 'Minister',b.`venue` AS 'Venue',b.`sponsor` AS 'Sponsor'" +
                     "from `parishioners` p JOIN `confirmation` b on p.`parishioner_id`=b.`parishioner_id`;", dgvConfirmationRegister);
-
+            if (!Sql.result) { return; }
             dgvConfirmationRegister.Columns[0].Visible = false;
+
+            current_row_no = 0;
+            txtRowNo.Text = current_row_no.ToString();
+            if (dgvConfirmationRegister.RowCount > 0)
+            {
+                txtRowCount.Text = (dgvConfirmationRegister.RowCount).ToString();
+            }
         }
 
 
         private void btnAddNewRecord_Click(object sender, EventArgs e)
         {
-            panelAddNewParishioner.Show();
+            gbAddNewRecord.Show();
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -51,17 +67,28 @@ namespace Church_Management_Portal
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string sponsor = txtSponsor.Text;
-            string venue = txtVenue.Text;
-            string minister = txtMinister.Text;
-            string dateReceived = dtpDate.Value.ToString("yyyy-MM-dd");
+            if (rdExistingParishioner.Checked == false & rdNewParishioner.Checked == false)
+            {
+                MessageBox.Show("Choose one method to identify the parishioner (either as existing or new)", "Add New Parishioner");
+            }
+            else if (int.Parse(parishioner_id) <= 0)
+            {
+                MessageBox.Show("You must choose a parishioner to proceed", "Add New Parishioner");
+            }
+            else
+            {
+                string sponsor = txtSponsor.Text;
+                string venue = txtVenue.Text;
+                string minister = txtMinister.Text;
+                string dateReceived = dtpDate.Value.ToString("yyyy-MM-dd");
 
-            Sql.Execute_Insert("INSERT INTO `confirmation`(" +
-                "`parishioner_id`,`date_received`,`minister`,`venue`,`sponsor`) VALUES(" +
-                "'" + parishioner_id + "','" + dateReceived + "','" + minister + "','" + venue + "','" + sponsor + "');");
-
-            MessageBox.Show("Name successfully entered into the confirmation register", "Add New Confirmation Record");
-            refresh();
+                Sql.Execute_Insert("INSERT INTO `confirmation`(" +
+                    "`parishioner_id`,`date_received`,`minister`,`venue`,`sponsor`) VALUES(" +
+                    "'" + parishioner_id + "','" + dateReceived + "','" + minister + "','" + venue + "','" + sponsor + "');");
+                if (!Sql.result) { return; }
+                MessageBox.Show("Name successfully entered into the confirmation register", "Add New Confirmation Record");
+                refresh();
+            }
         }
 
         private void dgvListOfParishioners_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -117,7 +144,7 @@ namespace Church_Management_Portal
                     "left join `stations` st on p.`station`=st.`station_id`" +
                     "left join `societies` so on so.`society_id`=p.`society`" +
                     "left join `organisation` o on o.`organisation_id`=p.`organisation`;", dgvListOfParishioners);
-
+                if (!Sql.result) { return; }
                 dgvListOfParishioners.Columns[0].Visible = false;
 
             }
@@ -125,12 +152,13 @@ namespace Church_Management_Portal
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            if (dgvListOfParishioners.DataSource != null)
-            {
-                //Sql.ds.Tables[0].Select("Name LIKE '%" + txtName.Text + "%'");
-                (dgvListOfParishioners.DataSource as DataTable).DefaultView.RowFilter = "Name LIKE '%" + txtName.Text + "%'";
-                dgvListOfParishioners.Refresh();
-            }
+            
+            //if (dgvListOfParishioners.DataSource != null)
+            //{
+            //    //Sql.ds.Tables[0].Select("Name LIKE '%" + txtName.Text + "%'");
+            //    (dgvListOfParishioners.DataSource as DataTable).DefaultView.RowFilter = "Name LIKE '%" + txtName.Text + "%'";
+            //    dgvListOfParishioners.Refresh();
+            //}
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
@@ -145,10 +173,17 @@ namespace Church_Management_Portal
                 string searchBy = cmbSearchBy.SelectedItem.ToString();
                 (dgvConfirmationRegister.DataSource as DataTable).DefaultView.RowFilter = "`" + searchBy + "`" + " LIKE '%" + txtSearch.Text + "%'";
                 dgvConfirmationRegister.Refresh();
+
+                current_row_no = 0;
+                txtRowNo.Text = current_row_no.ToString();
+                if (dgvConfirmationRegister.RowCount > 0)
+                {
+                    txtRowCount.Text = (dgvConfirmationRegister.RowCount).ToString();
+                }
             }
             else
             {
-                MessageBox.Show("Choose a field to use in searching to proceed");
+                MessageBox.Show("Choose a field to use in searching to proceed", "Confirmation Register");
                 cmbSearchBy.Focus();
             }
         }
@@ -314,9 +349,155 @@ namespace Church_Management_Portal
         }
 
         usableFunction usf = new usableFunction();
+        private int current_row_no;
+
         private void btnExport_Click(object sender, EventArgs e)
         {
             usf.SaveRecord(dgvConfirmationRegister);
+        }
+
+        private void dgvListOfParishioners_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                parishioner_id = dgvListOfParishioners.Rows[e.RowIndex].Cells[0].Value.ToString();
+                txtName.Text = dgvListOfParishioners.Rows[e.RowIndex].Cells[1].Value.ToString();
+
+            }
+        }
+        
+        private void txtName_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (dgvListOfParishioners.DataSource != null)
+            {
+                //Sql.ds.Tables[0].Select("Name LIKE '%" + txtName.Text + "%'");
+                (dgvListOfParishioners.DataSource as DataTable).DefaultView.RowFilter = "Name LIKE '%" + txtName.Text + "%'";
+                dgvListOfParishioners.Refresh();
+            }
+        }
+
+        private void btnEditRecord_Click(object sender, EventArgs e)
+        {
+            gbEditRecord.Visible = true;
+        }
+
+        private void dgvConfirmationRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            parishioner_id = dgvConfirmationRegister.CurrentRow.Cells[0].Value.ToString();
+            if (dgvConfirmationRegister.RowCount > 0)
+            {
+                current_row_no = e.RowIndex;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+
+            if (gbEditRecord.Visible)
+            {
+                txtNameUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Name"].Value.ToString();
+                txtVenueUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Venue"].Value.ToString();
+                txtSponsorUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Sponsor"].Value.ToString();
+                txtMinisterUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Minister"].Value.ToString();
+                dtpDateUpdate.Value = (DateTime)dgvConfirmationRegister.CurrentRow.Cells["Date"].Value;
+            }
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            string sponsor = txtSponsorUpdate.Text;
+            string venue = txtVenueUpdate.Text;
+            string minister = txtMinisterUpdate.Text;
+            string dateReceived = dtpDateUpdate.Value.ToString("yyyy-MM-dd");
+
+            Sql.Execute_Query("UPDATE `confirmation` SET `date_received`='" + dateReceived + "'," +
+                "`minister`='" + minister + "',`venue`='" + venue + "',`sponsor`='" + sponsor + "'" +
+                "WHERE `parishioner_id`='" + parishioner_id + "';");
+            if (!Sql.result) { return; }
+            MessageBox.Show("Record successfully updated in the confirmation register", "Update confirmation Record");
+
+            refresh();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dgvConfirmationRegister.CurrentRow != null)
+            {
+                string name = dgvConfirmationRegister.CurrentRow.Cells[1].Value.ToString();
+                if (MessageBox.Show("Are you sure you want to delete record of " + name + " from the confirmation register", "Delete confirmation Record", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    Sql.Execute_Query("DELETE FROM `confirmation` WHERE `parishioner_id`='" + parishioner_id + "';");
+                    if (!Sql.result) { return; }
+                    MessageBox.Show("Record of " + name + " successfully deleted.");
+                }
+            }
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            if (dgvConfirmationRegister.RowCount > 0)
+            {
+                current_row_no = dgvConfirmationRegister.RowCount - 1;
+                dgvConfirmationRegister.ClearSelection();
+                dgvConfirmationRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (dgvConfirmationRegister.RowCount > 0 && current_row_no < dgvConfirmationRegister.RowCount - 1)
+            {
+                current_row_no += 1;
+                dgvConfirmationRegister.ClearSelection();
+                dgvConfirmationRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (dgvConfirmationRegister.RowCount > 0 && current_row_no > 0)
+            {
+                current_row_no -= 1;
+                dgvConfirmationRegister.ClearSelection();
+                dgvConfirmationRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            if (dgvConfirmationRegister.RowCount > 0)
+            {
+                current_row_no = 0;
+                dgvConfirmationRegister.ClearSelection();
+                dgvConfirmationRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void txtRowNo_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtRowNo.Text.Trim()))
+            {
+                if (int.Parse(txtRowNo.Text.Trim()) > 0 && int.Parse(txtRowNo.Text.Trim()) <= dgvConfirmationRegister.RowCount)
+                {
+                    current_row_no = int.Parse(txtRowNo.Text.Trim()) - 1;
+
+                    dgvConfirmationRegister.ClearSelection();
+                    dgvConfirmationRegister.Rows[current_row_no].Selected = true;
+                }
+
+            }
+        }
+
+        private void txtRowNo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (dgvConfirmationRegister.RowCount > 0)
+            {
+                if ((new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Contains(e.KeyChar) == false)
+                {
+                    e.Handled = true;
+                }
+            }
         }
     }
 }

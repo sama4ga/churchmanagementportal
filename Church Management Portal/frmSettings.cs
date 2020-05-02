@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,8 +29,13 @@ namespace Church_Management_Portal
             };
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                Form1 frm = new Form1(1);
-                frm.BackgroundImage = Image.FromFile(ofd.FileName);
+                string fileType = ofd.SafeFileName.Split('.').Last();
+                string newFileName = Directory.GetCurrentDirectory() + "/background_image." + fileType;
+                File.Copy(ofd.FileName, newFileName, true);
+                Properties.Settings.Default.background_image = newFileName;
+                Properties.Settings.Default.Save();
+
+                this.BackgroundImage = Image.FromFile(newFileName);
             }
         }
     }

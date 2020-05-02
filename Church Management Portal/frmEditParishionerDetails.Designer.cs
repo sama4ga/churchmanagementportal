@@ -42,6 +42,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnLoadPassport = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtPhoneNo = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtAddress = new System.Windows.Forms.TextBox();
@@ -56,8 +58,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dtpDOB = new System.Windows.Forms.DateTimePicker();
-            this.txtPhoneNo = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPassport)).BeginInit();
@@ -65,11 +65,12 @@
             // 
             // cmbOrganisation
             // 
+            this.cmbOrganisation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbOrganisation.FormattingEnabled = true;
             this.cmbOrganisation.Location = new System.Drawing.Point(183, 84);
             this.cmbOrganisation.Name = "cmbOrganisation";
             this.cmbOrganisation.Size = new System.Drawing.Size(201, 24);
-            this.cmbOrganisation.TabIndex = 20;
+            this.cmbOrganisation.TabIndex = 10;
             this.cmbOrganisation.SelectedIndexChanged += new System.EventHandler(this.cmbOrganisation_SelectedIndexChanged_1);
             // 
             // groupBox2
@@ -104,16 +105,17 @@
             this.listSacrament.Location = new System.Drawing.Point(185, 167);
             this.listSacrament.Name = "listSacrament";
             this.listSacrament.Size = new System.Drawing.Size(200, 72);
-            this.listSacrament.TabIndex = 9;
+            this.listSacrament.TabIndex = 12;
             this.listSacrament.ThreeDCheckBoxes = true;
             // 
             // cmbStation
             // 
+            this.cmbStation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStation.FormattingEnabled = true;
             this.cmbStation.Location = new System.Drawing.Point(183, 42);
             this.cmbStation.Name = "cmbStation";
             this.cmbStation.Size = new System.Drawing.Size(201, 24);
-            this.cmbStation.TabIndex = 6;
+            this.cmbStation.TabIndex = 9;
             this.cmbStation.SelectedIndexChanged += new System.EventHandler(this.cmbStation_SelectedIndexChanged);
             // 
             // label8
@@ -127,12 +129,12 @@
             // 
             // cmbSociety
             // 
-            this.cmbSociety.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cmbSociety.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSociety.FormattingEnabled = true;
             this.cmbSociety.Location = new System.Drawing.Point(183, 122);
             this.cmbSociety.Name = "cmbSociety";
             this.cmbSociety.Size = new System.Drawing.Size(201, 24);
-            this.cmbSociety.TabIndex = 8;
+            this.cmbSociety.TabIndex = 11;
             // 
             // label7
             // 
@@ -171,7 +173,7 @@
             this.btnBack.Location = new System.Drawing.Point(281, 600);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(168, 52);
-            this.btnBack.TabIndex = 28;
+            this.btnBack.TabIndex = 14;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = false;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
@@ -185,7 +187,7 @@
             this.btnSave.Location = new System.Drawing.Point(89, 600);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(168, 52);
-            this.btnSave.TabIndex = 27;
+            this.btnSave.TabIndex = 13;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click_1);
@@ -199,7 +201,7 @@
             this.btnLoadPassport.Location = new System.Drawing.Point(410, 111);
             this.btnLoadPassport.Name = "btnLoadPassport";
             this.btnLoadPassport.Size = new System.Drawing.Size(125, 33);
-            this.btnLoadPassport.TabIndex = 12;
+            this.btnLoadPassport.TabIndex = 8;
             this.btnLoadPassport.Tag = "";
             this.btnLoadPassport.Text = "Passport...";
             this.btnLoadPassport.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -235,8 +237,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Parishioner Details";
             // 
+            // txtPhoneNo
+            // 
+            this.txtPhoneNo.Location = new System.Drawing.Point(148, 136);
+            this.txtPhoneNo.Name = "txtPhoneNo";
+            this.txtPhoneNo.Size = new System.Drawing.Size(197, 22);
+            this.txtPhoneNo.TabIndex = 3;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(18, 136);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(110, 16);
+            this.label11.TabIndex = 25;
+            this.label11.Text = "Phone Number";
+            // 
             // cmbStatus
             // 
+            this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStatus.FormattingEnabled = true;
             this.cmbStatus.Items.AddRange(new object[] {
             "active",
@@ -244,7 +263,8 @@
             this.cmbStatus.Location = new System.Drawing.Point(148, 260);
             this.cmbStatus.Name = "cmbStatus";
             this.cmbStatus.Size = new System.Drawing.Size(201, 24);
-            this.cmbStatus.TabIndex = 22;
+            this.cmbStatus.TabIndex = 7;
+            this.cmbStatus.SelectedIndexChanged += new System.EventHandler(this.cmbStatus_SelectedIndexChanged);
             // 
             // label10
             // 
@@ -320,7 +340,7 @@
             this.rdMale.Location = new System.Drawing.Point(148, 174);
             this.rdMale.Name = "rdMale";
             this.rdMale.Size = new System.Drawing.Size(60, 20);
-            this.rdMale.TabIndex = 3;
+            this.rdMale.TabIndex = 4;
             this.rdMale.TabStop = true;
             this.rdMale.Text = "Male";
             this.rdMale.UseVisualStyleBackColor = true;
@@ -331,7 +351,7 @@
             this.rdFemale.Location = new System.Drawing.Point(236, 173);
             this.rdFemale.Name = "rdFemale";
             this.rdFemale.Size = new System.Drawing.Size(78, 20);
-            this.rdFemale.TabIndex = 4;
+            this.rdFemale.TabIndex = 5;
             this.rdFemale.TabStop = true;
             this.rdFemale.Text = "Female";
             this.rdFemale.UseVisualStyleBackColor = true;
@@ -361,23 +381,7 @@
             this.dtpDOB.Location = new System.Drawing.Point(148, 206);
             this.dtpDOB.Name = "dtpDOB";
             this.dtpDOB.Size = new System.Drawing.Size(200, 22);
-            this.dtpDOB.TabIndex = 5;
-            // 
-            // txtPhoneNo
-            // 
-            this.txtPhoneNo.Location = new System.Drawing.Point(148, 136);
-            this.txtPhoneNo.Name = "txtPhoneNo";
-            this.txtPhoneNo.Size = new System.Drawing.Size(197, 22);
-            this.txtPhoneNo.TabIndex = 24;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(18, 136);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(110, 16);
-            this.label11.TabIndex = 25;
-            this.label11.Text = "Phone Number";
+            this.dtpDOB.TabIndex = 6;
             // 
             // frmEditParishionerDetails
             // 

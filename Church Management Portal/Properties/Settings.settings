@@ -2,23 +2,26 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Church_Management_Portal.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="server" Type="System.String" Scope="Application">
+    <Setting Name="server" Type="System.String" Scope="User">
       <Value Profile="(Default)">localhost</Value>
     </Setting>
-    <Setting Name="user" Type="System.String" Scope="Application">
+    <Setting Name="user" Type="System.String" Scope="User">
       <Value Profile="(Default)">root</Value>
     </Setting>
-    <Setting Name="password" Type="System.String" Scope="Application">
+    <Setting Name="password" Type="System.String" Scope="User">
       <Value Profile="(Default)">maurice5782</Value>
     </Setting>
-    <Setting Name="port" Type="System.String" Scope="Application">
+    <Setting Name="port" Type="System.String" Scope="User">
       <Value Profile="(Default)">3308</Value>
     </Setting>
-    <Setting Name="church_name" Type="System.String" Scope="Application">
+    <Setting Name="church_name" Type="System.String" Scope="User">
       <Value Profile="(Default)">ST. PETER CATHOLIC CHURCH</Value>
     </Setting>
-    <Setting Name="church_address" Type="System.String" Scope="Application">
+    <Setting Name="church_address" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mbiabong Anyanya Etoi, Uyo</Value>
+    </Setting>
+    <Setting Name="background_image" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

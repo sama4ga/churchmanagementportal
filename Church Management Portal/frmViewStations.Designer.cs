@@ -37,20 +37,20 @@
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dtpDateEstablished = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dtpDateEstablished = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnDelete
             // 
-            this.btnDelete.BackColor = System.Drawing.Color.Yellow;
+            this.btnDelete.BackColor = System.Drawing.Color.DarkGreen;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnDelete.ForeColor = System.Drawing.Color.DarkGreen;
+            this.btnDelete.ForeColor = System.Drawing.Color.White;
             this.btnDelete.Location = new System.Drawing.Point(221, 367);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(241, 67);
@@ -75,9 +75,9 @@
             // 
             // listStations
             // 
-            this.listStations.BackColor = System.Drawing.Color.ForestGreen;
+            this.listStations.BackColor = System.Drawing.Color.White;
             this.listStations.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.listStations.ForeColor = System.Drawing.Color.White;
+            this.listStations.ForeColor = System.Drawing.SystemColors.ControlText;
             this.listStations.ItemHeight = 20;
             this.listStations.Location = new System.Drawing.Point(19, 48);
             this.listStations.Name = "listStations";
@@ -97,9 +97,9 @@
             // 
             // btnBack
             // 
-            this.btnBack.BackColor = System.Drawing.Color.Yellow;
+            this.btnBack.BackColor = System.Drawing.Color.DarkGreen;
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnBack.ForeColor = System.Drawing.Color.DarkGreen;
+            this.btnBack.ForeColor = System.Drawing.Color.White;
             this.btnBack.Location = new System.Drawing.Point(837, 479);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(146, 67);
@@ -110,8 +110,8 @@
             // 
             // txtAddress
             // 
-            this.txtAddress.BackColor = System.Drawing.Color.ForestGreen;
-            this.txtAddress.ForeColor = System.Drawing.Color.White;
+            this.txtAddress.BackColor = System.Drawing.Color.White;
+            this.txtAddress.ForeColor = System.Drawing.SystemColors.ControlText;
             this.txtAddress.Location = new System.Drawing.Point(105, 172);
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
@@ -146,11 +146,27 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Station\'s Details";
             // 
+            // dtpDateEstablished
+            // 
+            this.dtpDateEstablished.Location = new System.Drawing.Point(105, 313);
+            this.dtpDateEstablished.Name = "dtpDateEstablished";
+            this.dtpDateEstablished.Size = new System.Drawing.Size(336, 26);
+            this.dtpDateEstablished.TabIndex = 17;
+            // 
+            // label4
+            // 
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(6, 302);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(102, 50);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Date Established";
+            // 
             // btnUpdate
             // 
-            this.btnUpdate.BackColor = System.Drawing.Color.Yellow;
+            this.btnUpdate.BackColor = System.Drawing.Color.DarkGreen;
             this.btnUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnUpdate.ForeColor = System.Drawing.Color.DarkGreen;
+            this.btnUpdate.ForeColor = System.Drawing.Color.White;
             this.btnUpdate.Location = new System.Drawing.Point(223, 367);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(218, 67);
@@ -161,8 +177,8 @@
             // 
             // txtName
             // 
-            this.txtName.BackColor = System.Drawing.Color.ForestGreen;
-            this.txtName.ForeColor = System.Drawing.Color.White;
+            this.txtName.BackColor = System.Drawing.Color.White;
+            this.txtName.ForeColor = System.Drawing.SystemColors.ControlText;
             this.txtName.Location = new System.Drawing.Point(105, 48);
             this.txtName.Multiline = true;
             this.txtName.Name = "txtName";
@@ -178,22 +194,6 @@
             this.label3.Size = new System.Drawing.Size(51, 20);
             this.label3.TabIndex = 4;
             this.label3.Text = "Name";
-            // 
-            // label4
-            // 
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(6, 302);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(102, 50);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "Date Established";
-            // 
-            // dtpDateEstablished
-            // 
-            this.dtpDateEstablished.Location = new System.Drawing.Point(105, 313);
-            this.dtpDateEstablished.Name = "dtpDateEstablished";
-            this.dtpDateEstablished.Size = new System.Drawing.Size(336, 26);
-            this.dtpDateEstablished.TabIndex = 17;
             // 
             // frmViewStations
             // 

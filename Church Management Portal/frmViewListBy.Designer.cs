@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.flpOtherGroups = new System.Windows.Forms.FlowLayoutPanel();
@@ -48,6 +49,7 @@
             this.btnCommunicants = new System.Windows.Forms.Button();
             this.btnConfirmed = new System.Windows.Forms.Button();
             this.btnMarried = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -63,13 +65,13 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 7;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.20068F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.54082F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.62585F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.11565F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.37075F));
             this.tableLayoutPanel1.Controls.Add(this.groupBox7, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.groupBox6, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.groupBox5, 4, 0);
@@ -78,12 +80,13 @@
             this.tableLayoutPanel1.Controls.Add(this.groupBox2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableLayoutPanel1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1054, 662);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1176, 662);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // groupBox7
@@ -91,31 +94,33 @@
             this.groupBox7.Controls.Add(this.flpOtherGroups);
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox7.ForeColor = System.Drawing.Color.White;
-            this.groupBox7.Location = new System.Drawing.Point(303, 3);
+            this.groupBox7.Location = new System.Drawing.Point(339, 3);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(144, 656);
+            this.groupBox7.Size = new System.Drawing.Size(165, 656);
             this.groupBox7.TabIndex = 6;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Other Groups";
             // 
             // flpOtherGroups
             // 
+            this.flpOtherGroups.AutoScroll = true;
             this.flpOtherGroups.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpOtherGroups.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpOtherGroups.Location = new System.Drawing.Point(3, 16);
+            this.flpOtherGroups.Location = new System.Drawing.Point(3, 20);
             this.flpOtherGroups.Name = "flpOtherGroups";
-            this.flpOtherGroups.Size = new System.Drawing.Size(138, 637);
+            this.flpOtherGroups.Size = new System.Drawing.Size(159, 633);
             this.flpOtherGroups.TabIndex = 0;
             this.flpOtherGroups.WrapContents = false;
+            this.flpOtherGroups.Paint += new System.Windows.Forms.PaintEventHandler(this.flpOtherGroups_Paint);
             // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.flpPiousSoc);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox6.ForeColor = System.Drawing.Color.White;
-            this.groupBox6.Location = new System.Drawing.Point(153, 3);
+            this.groupBox6.Location = new System.Drawing.Point(169, 3);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(144, 656);
+            this.groupBox6.Size = new System.Drawing.Size(164, 656);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Pious Societies";
@@ -125,20 +130,21 @@
             this.flpPiousSoc.AutoScroll = true;
             this.flpPiousSoc.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpPiousSoc.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpPiousSoc.Location = new System.Drawing.Point(3, 16);
+            this.flpPiousSoc.Location = new System.Drawing.Point(3, 20);
             this.flpPiousSoc.Name = "flpPiousSoc";
-            this.flpPiousSoc.Size = new System.Drawing.Size(138, 637);
+            this.flpPiousSoc.Size = new System.Drawing.Size(158, 633);
             this.flpPiousSoc.TabIndex = 0;
             this.flpPiousSoc.WrapContents = false;
+            this.flpPiousSoc.Paint += new System.Windows.Forms.PaintEventHandler(this.flpPiousSoc_Paint);
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.flpAll);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.ForeColor = System.Drawing.Color.White;
-            this.groupBox5.Location = new System.Drawing.Point(903, 3);
+            this.groupBox5.Location = new System.Drawing.Point(1009, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(148, 656);
+            this.groupBox5.Size = new System.Drawing.Size(164, 656);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "All";
@@ -148,9 +154,9 @@
             this.flpAll.Controls.Add(this.btnAll);
             this.flpAll.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpAll.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpAll.Location = new System.Drawing.Point(3, 16);
+            this.flpAll.Location = new System.Drawing.Point(3, 20);
             this.flpAll.Name = "flpAll";
-            this.flpAll.Size = new System.Drawing.Size(142, 637);
+            this.flpAll.Size = new System.Drawing.Size(158, 633);
             this.flpAll.TabIndex = 0;
             this.flpAll.WrapContents = false;
             // 
@@ -170,9 +176,9 @@
             this.groupBox4.Controls.Add(this.flpSocieities);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.ForeColor = System.Drawing.Color.White;
-            this.groupBox4.Location = new System.Drawing.Point(753, 3);
+            this.groupBox4.Location = new System.Drawing.Point(842, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(144, 656);
+            this.groupBox4.Size = new System.Drawing.Size(161, 656);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Societies";
@@ -182,20 +188,21 @@
             this.flpSocieities.AutoScroll = true;
             this.flpSocieities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpSocieities.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpSocieities.Location = new System.Drawing.Point(3, 16);
+            this.flpSocieities.Location = new System.Drawing.Point(3, 20);
             this.flpSocieities.Name = "flpSocieities";
-            this.flpSocieities.Size = new System.Drawing.Size(138, 637);
+            this.flpSocieities.Size = new System.Drawing.Size(155, 633);
             this.flpSocieities.TabIndex = 0;
             this.flpSocieities.WrapContents = false;
+            this.flpSocieities.Paint += new System.Windows.Forms.PaintEventHandler(this.flpSocieities_Paint);
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.flpStations);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(603, 3);
+            this.groupBox3.Location = new System.Drawing.Point(675, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(144, 656);
+            this.groupBox3.Size = new System.Drawing.Size(161, 656);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Stations";
@@ -205,20 +212,21 @@
             this.flpStations.AutoScroll = true;
             this.flpStations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpStations.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpStations.Location = new System.Drawing.Point(3, 16);
+            this.flpStations.Location = new System.Drawing.Point(3, 20);
             this.flpStations.Name = "flpStations";
-            this.flpStations.Size = new System.Drawing.Size(138, 637);
+            this.flpStations.Size = new System.Drawing.Size(155, 633);
             this.flpStations.TabIndex = 0;
             this.flpStations.WrapContents = false;
+            this.flpStations.Paint += new System.Windows.Forms.PaintEventHandler(this.flpStations_Paint);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.flpOrganisation);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(453, 3);
+            this.groupBox2.Location = new System.Drawing.Point(510, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(144, 656);
+            this.groupBox2.Size = new System.Drawing.Size(159, 656);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Organisation";
@@ -228,11 +236,12 @@
             this.flpOrganisation.AutoScroll = true;
             this.flpOrganisation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpOrganisation.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpOrganisation.Location = new System.Drawing.Point(3, 16);
+            this.flpOrganisation.Location = new System.Drawing.Point(3, 20);
             this.flpOrganisation.Name = "flpOrganisation";
-            this.flpOrganisation.Size = new System.Drawing.Size(138, 637);
+            this.flpOrganisation.Size = new System.Drawing.Size(153, 633);
             this.flpOrganisation.TabIndex = 0;
             this.flpOrganisation.WrapContents = false;
+            this.flpOrganisation.Paint += new System.Windows.Forms.PaintEventHandler(this.flpOrganisation_Paint);
             // 
             // groupBox1
             // 
@@ -241,7 +250,7 @@
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(144, 656);
+            this.groupBox1.Size = new System.Drawing.Size(160, 656);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Sacrament Recieved";
@@ -249,24 +258,25 @@
             // flpSacraments
             // 
             this.flpSacraments.AutoScroll = true;
+            this.flpSacraments.Controls.Add(this.btnMarried);
             this.flpSacraments.Controls.Add(this.btnBaptised);
             this.flpSacraments.Controls.Add(this.btnCommunicants);
             this.flpSacraments.Controls.Add(this.btnConfirmed);
-            this.flpSacraments.Controls.Add(this.btnMarried);
             this.flpSacraments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpSacraments.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpSacraments.Location = new System.Drawing.Point(3, 16);
+            this.flpSacraments.Location = new System.Drawing.Point(3, 20);
             this.flpSacraments.Name = "flpSacraments";
-            this.flpSacraments.Size = new System.Drawing.Size(138, 637);
+            this.flpSacraments.Size = new System.Drawing.Size(154, 633);
             this.flpSacraments.TabIndex = 0;
             this.flpSacraments.WrapContents = false;
+            this.flpSacraments.Paint += new System.Windows.Forms.PaintEventHandler(this.flpSacraments_Paint);
             // 
             // btnBaptised
             // 
             this.btnBaptised.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnBaptised.Location = new System.Drawing.Point(3, 3);
+            this.btnBaptised.Location = new System.Drawing.Point(3, 106);
             this.btnBaptised.Name = "btnBaptised";
-            this.btnBaptised.Size = new System.Drawing.Size(112, 74);
+            this.btnBaptised.Size = new System.Drawing.Size(130, 97);
             this.btnBaptised.TabIndex = 0;
             this.btnBaptised.Text = "Baptised";
             this.btnBaptised.UseVisualStyleBackColor = false;
@@ -275,9 +285,9 @@
             // btnCommunicants
             // 
             this.btnCommunicants.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnCommunicants.Location = new System.Drawing.Point(3, 83);
+            this.btnCommunicants.Location = new System.Drawing.Point(3, 209);
             this.btnCommunicants.Name = "btnCommunicants";
-            this.btnCommunicants.Size = new System.Drawing.Size(112, 74);
+            this.btnCommunicants.Size = new System.Drawing.Size(130, 97);
             this.btnCommunicants.TabIndex = 1;
             this.btnCommunicants.Text = "Communicants";
             this.btnCommunicants.UseVisualStyleBackColor = false;
@@ -286,9 +296,9 @@
             // btnConfirmed
             // 
             this.btnConfirmed.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnConfirmed.Location = new System.Drawing.Point(3, 163);
+            this.btnConfirmed.Location = new System.Drawing.Point(3, 312);
             this.btnConfirmed.Name = "btnConfirmed";
-            this.btnConfirmed.Size = new System.Drawing.Size(112, 74);
+            this.btnConfirmed.Size = new System.Drawing.Size(130, 97);
             this.btnConfirmed.TabIndex = 2;
             this.btnConfirmed.Text = "Confirmed";
             this.btnConfirmed.UseVisualStyleBackColor = false;
@@ -297,9 +307,9 @@
             // btnMarried
             // 
             this.btnMarried.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnMarried.Location = new System.Drawing.Point(3, 243);
+            this.btnMarried.Location = new System.Drawing.Point(3, 3);
             this.btnMarried.Name = "btnMarried";
-            this.btnMarried.Size = new System.Drawing.Size(112, 74);
+            this.btnMarried.Size = new System.Drawing.Size(130, 97);
             this.btnMarried.TabIndex = 3;
             this.btnMarried.Text = "Married";
             this.btnMarried.UseVisualStyleBackColor = false;
@@ -310,7 +320,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGreen;
-            this.ClientSize = new System.Drawing.Size(1054, 662);
+            this.ClientSize = new System.Drawing.Size(1176, 662);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmViewListBy";
@@ -353,5 +363,6 @@
         private System.Windows.Forms.Button btnAll;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.FlowLayoutPanel flpOtherGroups;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

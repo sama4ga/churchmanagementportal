@@ -15,6 +15,7 @@ namespace Church_Management_Portal
 
         SQLConfig Sql = new SQLConfig();
         usableFunction UF = new usableFunction();
+        public string user_status = "";
         //int maxrow = 0;
 
         public frmAddOrganisation()
@@ -30,8 +31,14 @@ namespace Church_Management_Portal
             //    listOrganisations.DataSource = Sql.dt;
             //    maxrow = 0;
             //}
+            if (user_status.Equals("user", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnAdd.Hide();
+            }
+
             listOrganisations.DataSource = null;
             Sql.fiil_listBox("SELECT * FROM `organisation`;", listOrganisations);
+
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

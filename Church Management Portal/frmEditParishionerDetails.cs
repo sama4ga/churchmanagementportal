@@ -26,8 +26,9 @@ namespace Church_Management_Portal
         private void frmEditParishionerDetails_Load(object sender, EventArgs e)
         {
             Sql.fiil_CBO("SELECT * FROM `stations`;", cmbStation, "station");
+            if (!Sql.result) { return; }
             Sql.fiil_CBO("SELECT `organisation_id`,`short_name` FROM `organisation`;", cmbOrganisation, "organisation");
-
+            if (!Sql.result) { return; }
             int num_rows = Sql.maxrow("SELECT * FROM `parishioners` WHERE `parishioner_id`='" + parishioner_id + "';","parishioners");
             if (num_rows == 1)
             {
@@ -46,7 +47,7 @@ namespace Church_Management_Portal
                 txtAddress.Text = Sql.ds.Tables["parishioners"].Rows[0].Field<string>("address");
                 txtPhoneNo.Text = Sql.ds.Tables["parishioners"].Rows[0].Field<string>("phoneNo");
                 string gender = Sql.ds.Tables["parishioners"].Rows[0].Field<string>("gender");
-                if (gender == "Male")
+                if (gender.Equals("Male"))
                 {
                     rdMale.Checked = true;
                 }
@@ -83,6 +84,7 @@ namespace Church_Management_Portal
 
 
                 Sql.fiil_CBO("SELECT * FROM `societies` WHERE `organisation_id`='" + organisation + "' AND `station_id`='" + station + "';", cmbSociety,"society");
+                if (!Sql.result) { return; }
                 cmbStation.SelectedValue = station;
                 cmbOrganisation.SelectedValue = organisation;
                 cmbSociety.SelectedValue = society;
@@ -123,22 +125,21 @@ namespace Church_Management_Portal
             string confirmation = "false";
             string communion = "false";
             string married = "false";
-            foreach (string selected in listSacrament.CheckedItems)
+            foreach (string sacrament in listSacrament.CheckedItems)
             {
-                // MessageBox.Show(selected);
-                if (selected == "Baptised")
+                if (sacrament == "Baptised")
                 {
                     baptism = "true";
                 }
-                else if (selected == "Confirmed")
+                else if (sacrament == "Confirmed")
                 {
                     confirmation = "true";
                 }
-                else if (selected == "Communicant")
+                else if (sacrament == "Communicant")
                 {
                     communion = "true";
                 }
-                else if (selected == "Married")
+                else if (sacrament == "Married")
                 {
                     married = "true";
                 }
@@ -149,8 +150,13 @@ namespace Church_Management_Portal
             System.IO.Directory.CreateDirectory(passpor_location);
             if (!string.IsNullOrWhiteSpace(passport))
             {
-                passpor_location = (passpor_location + "/parishioner_" + parishioner_id + ".jpg").Replace("\\", "/");
-                System.IO.File.Copy(passport, passpor_location, true);
+                if (!System.IO.File.Exists(passport))
+                {
+                    passpor_location = (passpor_location + "/parishioner_" + parishioner_id + ".jpg").Replace("\\", "/");
+                    System.IO.File.Copy(passport, passpor_location, true);
+                    Sql.Execute_Insert("UPDATE `parishioners` SET `passport`= '" + passpor_location + "' WHERE `parishioner_id`='" + parishioner_id + "';");
+                    if (!Sql.result){return;}
+                }
             }
 
 
@@ -158,12 +164,15 @@ namespace Church_Management_Portal
             Sql.Execute_Insert("UPDATE `parishioners` SET `name`='" + name + "',`station`='" + station_id + "',`organisation`='" + organisation_id + "'," +
                                 "`society`= '" + society_id + "',`address`= '" + address + "',`status`= '" + status + "',`gender`= '" + gender + "'," +
                                 "`dob`= '" + dob + "',`baptised`= '" + baptism + "',`communicant`= '" + communion + "',`confirmed`= '" + confirmation + "'," +
-                                "`wedded`= '" + married + "',`passport`= '" + passpor_location + "',`phoneNo`= '" + phone_no + "' WHERE `parishioner_id`='"+ parishioner_id +"';");
+                                "`wedded`= '" + married + "',`phoneNo`= '" + phone_no + "' WHERE `parishioner_id`='"+ parishioner_id +"';");
+
+            if (Sql.result)
+            {
+                MessageBox.Show("Edit successful", "Update Status");
+            }
 
 
-
-
-            MessageBox.Show("Edit successful", "Update Status");
+           
         }
 
         private void cmbOrganisation_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -199,6 +208,11 @@ namespace Church_Management_Portal
                 passport = ofd.FileName;
                 picPassport.Image = Image.FromFile(passport);
             }
+        }
+
+        private void cmbStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

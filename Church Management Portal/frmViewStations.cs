@@ -14,6 +14,7 @@ namespace Church_Management_Portal
     {
 
         SQLConfig Sql = new SQLConfig();
+        public string user_status = "";
         string station_id = "";
 
         public frmViewStations()
@@ -28,6 +29,10 @@ namespace Church_Management_Portal
 
         private void frmViewStations_Load(object sender, EventArgs e)
         {
+            if (user_status.Equals("user", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnDelete.Hide(); groupBox2.Hide();
+            }
             refresh();
         }
 

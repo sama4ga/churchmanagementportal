@@ -14,6 +14,7 @@ namespace Church_Management_Portal
     {
 
         usableFunction UF = new usableFunction();
+        public string user_status = "";
         SQLConfig Sql = new SQLConfig();
 
 
@@ -51,7 +52,7 @@ namespace Church_Management_Portal
 
 
             Sql.Execute_Query("INSERT INTO `other_groups`(`name`,`code_name`,`slogan`) VALUES('" + txtGroupName.Text + "','" + codename + "','" + txtSlogan.Text + "');");
-
+            if (!Sql.result) { return; }
 
             Sql.Execute_CUD("CREATE TABLE IF NOT EXISTS `" + codename + "`(`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE,`member_id` INT);",
                 "Could not add new group", "New Group successfully added");
@@ -61,6 +62,10 @@ namespace Church_Management_Portal
 
         private void frmAddOtherGroups_Load(object sender, EventArgs e)
         {
+            if (user_status.Equals("user", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnAdd.Hide();
+            }
             refresh();
         }
 

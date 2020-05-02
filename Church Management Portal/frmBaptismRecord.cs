@@ -16,6 +16,7 @@ namespace Church_Management_Portal
 
         SQLConfig Sql = new SQLConfig();
         string parishioner_id = "";
+        public string user_status = "";
 
         private int mRow = 0;
         private Boolean newpage = true;
@@ -34,7 +35,7 @@ namespace Church_Management_Portal
 
         private void btnAddNewRecord_Click(object sender, EventArgs e)
         {
-            panelAddNewParishioner.Show();
+            gbAddNewRecord.Show();
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -65,16 +66,6 @@ namespace Church_Management_Portal
             }
         }
 
-        private void txtName_TextChanged(object sender, EventArgs e)
-        {
-            //if (dgvListOfParishioners.DataSource != null)
-            //{
-            //    //Sql.dt.Select("SELECT * WHERE `Name` LIKE '%" + txtName.Text + "%'");
-            //    (dgvListOfParishioners.DataSource as DataTable).DefaultView.RowFilter = "Name LIKE '%" + txtName.Text + "%'";
-            //    dgvListOfParishioners.Refresh();
-            //}
-        }
-
         private void gbListOfParishioners_VisibleChanged(object sender, EventArgs e)
         {
             if (gbListOfParishioners.Visible == true)
@@ -86,7 +77,7 @@ namespace Church_Management_Portal
                     "left join `stations` st on p.`station`=st.`station_id`" +
                     "left join `societies` so on so.`society_id`=p.`society`" +
                     "left join `organisation` o on o.`organisation_id`=p.`organisation`;", dgvListOfParishioners);
-
+                if (!Sql.result) { return; }
                 dgvListOfParishioners.Columns[0].Visible = false;
 
             }
@@ -94,11 +85,21 @@ namespace Church_Management_Portal
 
         private void frmBaptismRecord_Load(object sender, EventArgs e)
         {
-            dgvBaptismRegister.DefaultCellStyle.BackColor = Color.White;
-            dgvBaptismRegister.DefaultCellStyle.ForeColor = Color.Black;
+
+            if (user_status.Equals("secretary",StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnDelete.Visible = false; btnEdit.Visible = false;
+            }
+            else if (user_status.Equals("user", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnDelete.Visible = false; btnEdit.Visible = false; btnAddNewRecord.Visible = false;
+            }
 
             refresh();
             cmbSearchBy.SelectedIndex = 0;
+
+            dgvBaptismRegister.DefaultCellStyle.BackColor = Color.White;
+            dgvBaptismRegister.DefaultCellStyle.ForeColor = Color.Black;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -114,28 +115,42 @@ namespace Church_Management_Portal
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string sponsor = txtSponsor.Text;
-            string venue = txtVenue.Text;
-            string minister = txtMinister.Text;
-            string dateReceived = dtpDate.Value.ToString("yyyy-MM-dd");
+            if (rdExistingParishioner.Checked == false & rdNewParishioner.Checked == false)
+            {
+                MessageBox.Show("Choose one method to identify the parishioner (either as existing or new)","Add New Parishioner");
+            }
+            else if (int.Parse(parishioner_id) <= 0)
+            {
+                MessageBox.Show("You must choose a parishioner to proceed", "Add New Parishioner");
+            }
+            else
+            {
+                string sponsor = txtSponsor.Text;
+                string venue = txtVenue.Text;
+                string minister = txtMinister.Text;
+                string dateReceived = dtpDate.Value.ToString("yyyy-MM-dd");
 
-            Sql.Execute_Insert("INSERT INTO `baptism`("+
-                "`parishioner_id`,`date_received`,`minister`,`venue`,`sponsor`) VALUES(" +
-                "'"+ parishioner_id +"','" + dateReceived +"','" + minister +"','" + venue +"','" + sponsor +"');");
+                // perform background check to see if name already exists
 
-            MessageBox.Show("Name successfully entered into the baptism register","Add New Baptism Record");
 
-            refresh();
+                Sql.Execute_Insert("INSERT INTO `baptism`("+
+                    "`parishioner_id`,`date_received`,`minister`,`venue`,`sponsor`) VALUES(" +
+                    "'"+ parishioner_id +"','" + dateReceived +"','" + minister +"','" + venue +"','" + sponsor +"');");
+                if (!Sql.result) { return; }
+                MessageBox.Show("Name successfully entered into the baptism register","Add New Baptism Record");
+
+                refresh();
+            }
         }
 
         private void dgvListOfParishioners_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > -1)
-            {
-                parishioner_id = dgvListOfParishioners.Rows[e.RowIndex].Cells[0].Value.ToString();
-                txtName.Text = dgvListOfParishioners.Rows[e.RowIndex].Cells[1].Value.ToString();
+            //if (e.RowIndex > -1)
+            //{
+            //    parishioner_id = dgvListOfParishioners.Rows[e.RowIndex].Cells[0].Value.ToString();
+            //    txtName.Text = dgvListOfParishioners.Rows[e.RowIndex].Cells[1].Value.ToString();
                 
-            }
+            //}
         }
 
 
@@ -145,27 +160,24 @@ namespace Church_Management_Portal
                    "/* p.`gender` as 'Gender',p.`dob` as 'Date of Birth', */" +
                    "b.`date_received` AS 'Date',b.`minister` AS 'Minister',b.`venue` AS 'Venue',b.`sponsor` AS 'Sponsor'" +
                    "from `parishioners` p JOIN `baptism` b on p.`parishioner_id`=b.`parishioner_id`;", dgvBaptismRegister);
-
+            if (!Sql.result) { return; }
             dgvBaptismRegister.Columns[0].Visible = false;
+
+            current_row_no = 0;
+            txtRowNo.Text = current_row_no.ToString();
+            if (dgvBaptismRegister.RowCount > 0)
+            {
+                txtRowCount.Text = (dgvBaptismRegister.RowCount).ToString();
+            }
         }
 
         private void dgvListOfParishioners_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //if (e.RowIndex > -1)
-            //{
-            //    parishioner_id = dgvListOfParishioners.Rows[e.RowIndex].Cells[0].Value.ToString();
-            //    txtName.Text = dgvListOfParishioners.Rows[e.RowIndex].Cells[1].Value.ToString();
-
-            //}
-        }
-
-        private void txtName_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (dgvListOfParishioners.DataSource != null)
+            if (e.RowIndex > -1)
             {
-                //Sql.dt.Select("SELECT * WHERE `Name` LIKE '%" + txtName.Text + "%'");
-                (dgvListOfParishioners.DataSource as DataTable).DefaultView.RowFilter = "Name LIKE '%" + txtName.Text + "%'";
-                dgvListOfParishioners.Refresh();
+                parishioner_id = dgvListOfParishioners.Rows[e.RowIndex].Cells[0].Value.ToString();
+                txtName.Text = dgvListOfParishioners.Rows[e.RowIndex].Cells[1].Value.ToString();
+
             }
         }
 
@@ -176,10 +188,17 @@ namespace Church_Management_Portal
                 string searchBy = cmbSearchBy.SelectedItem.ToString();
                 (dgvBaptismRegister.DataSource as DataTable).DefaultView.RowFilter = "`" + searchBy + "`" + " LIKE '%" + txtSearch.Text + "%'";
                 dgvBaptismRegister.Refresh();
+
+                current_row_no = 0;
+                txtRowNo.Text = current_row_no.ToString();
+                if (dgvBaptismRegister.RowCount > 0)
+                {
+                    txtRowCount.Text = (dgvBaptismRegister.RowCount).ToString();
+                }
             }
             else
             {
-                MessageBox.Show("Choose a field to use in searching to proceed");
+                MessageBox.Show("Choose a field to use in searching to proceed", "Baptism Register");
                 cmbSearchBy.Focus();
             }
         }
@@ -342,9 +361,146 @@ namespace Church_Management_Portal
         }
 
         usableFunction usf = new usableFunction();
+        private int current_row_no;
+
         private void btnExport_Click(object sender, EventArgs e)
         {
             usf.SaveRecord(dgvBaptismRegister);
+        }
+
+        private void txtName_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (dgvListOfParishioners.DataSource != null)
+            {
+                //Sql.dt.Select("SELECT * WHERE `Name` LIKE '%" + txtName.Text + "%'");
+                (dgvListOfParishioners.DataSource as DataTable).DefaultView.RowFilter = "Name LIKE '%" + txtName.Text + "%'";
+                dgvListOfParishioners.Refresh();
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dgvBaptismRegister.CurrentRow != null)
+            {
+                string name = dgvBaptismRegister.CurrentRow.Cells[1].Value.ToString();
+                if (MessageBox.Show("Are you sure you want to delete record of " + name + " from the baptism register","Delete Baptism Record",MessageBoxButtons.YesNo,MessageBoxIcon.Question)== DialogResult.Yes)
+                {
+                    Sql.Execute_Query("DELETE FROM `baptism` WHERE `parishioner_id`='" + parishioner_id + "';");
+                    if (!Sql.result) { return; }
+                    MessageBox.Show("Record of " + name + " successfully deleted.");
+                    refresh();         
+                }
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+           gbEditRecord.Visible = true;
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            string sponsor = txtSponsorUpdate.Text;
+            string venue = txtVenueUpdate.Text;
+            string minister = txtMinisterUpdate.Text;
+            string dateReceived = dtpDateUpdate.Value.ToString("yyyy-MM-dd");
+
+            Sql.Execute_Query("UPDATE `baptism` SET `date_received`='" + dateReceived + "'," +
+                "`minister`='" + minister + "',`venue`='" + venue + "',`sponsor`='" + sponsor + "'" +
+                "WHERE `parishioner_id`='" + parishioner_id + "';");
+            if (!Sql.result) { return; }
+            MessageBox.Show("Record successfully updated in the baptism register", "Update Baptism Record");
+
+            refresh();
+        }
+
+        private void dgvBaptismRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            parishioner_id = dgvBaptismRegister.CurrentRow.Cells[0].Value.ToString();
+            if (dgvBaptismRegister.RowCount > 0)
+            {
+                current_row_no = e.RowIndex;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+
+            if (gbEditRecord.Visible)
+            {
+                txtNameUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Name"].Value.ToString();
+                txtVenueUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Venue"].Value.ToString();
+                txtSponsorUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Sponsor"].Value.ToString();
+                txtMinisterUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Minister"].Value.ToString();
+                dtpDateUpdate.Value = (DateTime)dgvBaptismRegister.CurrentRow.Cells["Date"].Value;
+            }
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            if (dgvBaptismRegister.RowCount > 0)
+            {
+                current_row_no = dgvBaptismRegister.RowCount - 1;
+                dgvBaptismRegister.ClearSelection();
+                dgvBaptismRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (dgvBaptismRegister.RowCount > 0 && current_row_no < dgvBaptismRegister.RowCount - 1)
+            {
+                current_row_no += 1;
+                dgvBaptismRegister.ClearSelection();
+                dgvBaptismRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (dgvBaptismRegister.RowCount > 0 && current_row_no > 0)
+            {
+                current_row_no -= 1;
+                dgvBaptismRegister.ClearSelection();
+                dgvBaptismRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            if (dgvBaptismRegister.RowCount > 0)
+            {
+                current_row_no = 0;
+                dgvBaptismRegister.ClearSelection();
+                dgvBaptismRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void txtRowNo_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtRowNo.Text.Trim()))
+            {
+                if (int.Parse(txtRowNo.Text.Trim()) > 0 && int.Parse(txtRowNo.Text.Trim()) <= dgvBaptismRegister.RowCount)
+                {
+                    current_row_no = int.Parse(txtRowNo.Text.Trim()) - 1;
+
+                    dgvBaptismRegister.ClearSelection();
+                    dgvBaptismRegister.Rows[current_row_no].Selected = true;
+                }
+
+            }
+        }
+
+        private void txtRowNo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (dgvBaptismRegister.RowCount > 0)
+            {
+                if ((new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Contains(e.KeyChar) == false)
+                {
+                    e.Handled = true;
+                }
+            }
         }
     }
 }

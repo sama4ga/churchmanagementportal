@@ -117,6 +117,7 @@
             this.Name = "frmViewRecords";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "View Records";
+            this.Load += new System.EventHandler(this.frmViewRecords_Load);
             this.ResumeLayout(false);
 
         }

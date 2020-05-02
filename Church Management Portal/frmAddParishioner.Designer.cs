@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddParishioner));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtPhoneNo = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -59,8 +61,6 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.listPiousSocieties = new System.Windows.Forms.CheckedListBox();
             this.btnClear = new System.Windows.Forms.Button();
-            this.txtPhoneNo = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPassport)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -94,6 +94,27 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Parishioner Details";
+            // 
+            // txtPhoneNo
+            // 
+            this.txtPhoneNo.Location = new System.Drawing.Point(185, 161);
+            this.txtPhoneNo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPhoneNo.Name = "txtPhoneNo";
+            this.txtPhoneNo.Size = new System.Drawing.Size(261, 23);
+            this.txtPhoneNo.TabIndex = 3;
+            this.txtPhoneNo.TextChanged += new System.EventHandler(this.txtPhoneNo_TextChanged);
+            this.txtPhoneNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPhoneNo_KeyDown);
+            this.txtPhoneNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhoneNo_KeyPress);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(45, 161);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(103, 17);
+            this.label10.TabIndex = 23;
+            this.label10.Text = "Phone Number";
             // 
             // txtAddress
             // 
@@ -168,7 +189,7 @@
             this.rdMale.Margin = new System.Windows.Forms.Padding(4);
             this.rdMale.Name = "rdMale";
             this.rdMale.Size = new System.Drawing.Size(56, 21);
-            this.rdMale.TabIndex = 3;
+            this.rdMale.TabIndex = 4;
             this.rdMale.TabStop = true;
             this.rdMale.Text = "Male";
             this.rdMale.UseVisualStyleBackColor = true;
@@ -180,7 +201,7 @@
             this.rdFemale.Margin = new System.Windows.Forms.Padding(4);
             this.rdFemale.Name = "rdFemale";
             this.rdFemale.Size = new System.Drawing.Size(72, 21);
-            this.rdFemale.TabIndex = 4;
+            this.rdFemale.TabIndex = 5;
             this.rdFemale.TabStop = true;
             this.rdFemale.Text = "Female";
             this.rdFemale.UseVisualStyleBackColor = true;
@@ -214,7 +235,7 @@
             this.dtpDOB.Margin = new System.Windows.Forms.Padding(4);
             this.dtpDOB.Name = "dtpDOB";
             this.dtpDOB.Size = new System.Drawing.Size(265, 23);
-            this.dtpDOB.TabIndex = 5;
+            this.dtpDOB.TabIndex = 6;
             // 
             // btnLoadPassport
             // 
@@ -223,7 +244,7 @@
             this.btnLoadPassport.Margin = new System.Windows.Forms.Padding(4);
             this.btnLoadPassport.Name = "btnLoadPassport";
             this.btnLoadPassport.Size = new System.Drawing.Size(127, 30);
-            this.btnLoadPassport.TabIndex = 12;
+            this.btnLoadPassport.TabIndex = 13;
             this.btnLoadPassport.Tag = "";
             this.btnLoadPassport.Text = "Passport...";
             this.btnLoadPassport.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -283,28 +304,29 @@
             this.listSacrament.Margin = new System.Windows.Forms.Padding(4);
             this.listSacrament.Name = "listSacrament";
             this.listSacrament.Size = new System.Drawing.Size(265, 76);
-            this.listSacrament.TabIndex = 9;
+            this.listSacrament.TabIndex = 10;
             this.listSacrament.ThreeDCheckBoxes = true;
             // 
             // cmbSociety
             // 
-            this.cmbSociety.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cmbSociety.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSociety.FormattingEnabled = true;
             this.cmbSociety.Location = new System.Drawing.Point(185, 131);
             this.cmbSociety.Margin = new System.Windows.Forms.Padding(4);
             this.cmbSociety.Name = "cmbSociety";
             this.cmbSociety.Size = new System.Drawing.Size(267, 25);
-            this.cmbSociety.TabIndex = 8;
+            this.cmbSociety.TabIndex = 9;
             this.cmbSociety.SelectedIndexChanged += new System.EventHandler(this.cmdSociety_SelectedIndexChanged);
             // 
             // cmbStation
             // 
+            this.cmbStation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStation.FormattingEnabled = true;
             this.cmbStation.Location = new System.Drawing.Point(183, 29);
             this.cmbStation.Margin = new System.Windows.Forms.Padding(4);
             this.cmbStation.Name = "cmbStation";
             this.cmbStation.Size = new System.Drawing.Size(267, 25);
-            this.cmbStation.TabIndex = 6;
+            this.cmbStation.TabIndex = 7;
             this.cmbStation.SelectedIndexChanged += new System.EventHandler(this.cmbStation_SelectedIndexChanged);
             // 
             // btnSave
@@ -313,11 +335,11 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(450, 624);
+            this.btnSave.Location = new System.Drawing.Point(491, 624);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(143, 50);
-            this.btnSave.TabIndex = 13;
+            this.btnSave.TabIndex = 14;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -329,11 +351,11 @@
             this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBack.ForeColor = System.Drawing.Color.White;
-            this.btnBack.Location = new System.Drawing.Point(634, 624);
+            this.btnBack.Location = new System.Drawing.Point(675, 624);
             this.btnBack.Margin = new System.Windows.Forms.Padding(4);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(143, 50);
-            this.btnBack.TabIndex = 14;
+            this.btnBack.TabIndex = 15;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = false;
             // 
@@ -359,12 +381,13 @@
             // 
             // cmbOrganisation
             // 
+            this.cmbOrganisation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbOrganisation.FormattingEnabled = true;
             this.cmbOrganisation.Location = new System.Drawing.Point(185, 81);
             this.cmbOrganisation.Margin = new System.Windows.Forms.Padding(4);
             this.cmbOrganisation.Name = "cmbOrganisation";
             this.cmbOrganisation.Size = new System.Drawing.Size(267, 25);
-            this.cmbOrganisation.TabIndex = 20;
+            this.cmbOrganisation.TabIndex = 8;
             this.cmbOrganisation.SelectedIndexChanged += new System.EventHandler(this.cmbOrganisation_SelectedIndexChanged);
             // 
             // groupBox3
@@ -389,7 +412,7 @@
             this.listOtherGroups.Margin = new System.Windows.Forms.Padding(4);
             this.listOtherGroups.Name = "listOtherGroups";
             this.listOtherGroups.Size = new System.Drawing.Size(511, 220);
-            this.listOtherGroups.TabIndex = 10;
+            this.listOtherGroups.TabIndex = 11;
             // 
             // groupBox4
             // 
@@ -412,7 +435,7 @@
             this.listPiousSocieties.Margin = new System.Windows.Forms.Padding(4);
             this.listPiousSocieties.Name = "listPiousSocieties";
             this.listPiousSocieties.Size = new System.Drawing.Size(511, 256);
-            this.listPiousSocieties.TabIndex = 11;
+            this.listPiousSocieties.TabIndex = 12;
             // 
             // btnClear
             // 
@@ -421,32 +444,15 @@
             this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClear.ForeColor = System.Drawing.Color.White;
-            this.btnClear.Location = new System.Drawing.Point(818, 624);
+            this.btnClear.Location = new System.Drawing.Point(881, 624);
             this.btnClear.Margin = new System.Windows.Forms.Padding(4);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(143, 50);
-            this.btnClear.TabIndex = 24;
+            this.btnClear.TabIndex = 16;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Visible = false;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
-            // txtPhoneNo
-            // 
-            this.txtPhoneNo.Location = new System.Drawing.Point(185, 161);
-            this.txtPhoneNo.Margin = new System.Windows.Forms.Padding(4);
-            this.txtPhoneNo.Name = "txtPhoneNo";
-            this.txtPhoneNo.Size = new System.Drawing.Size(261, 23);
-            this.txtPhoneNo.TabIndex = 22;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(45, 161);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(103, 17);
-            this.label10.TabIndex = 23;
-            this.label10.Text = "Phone Number";
             // 
             // frmAddParishioner
             // 

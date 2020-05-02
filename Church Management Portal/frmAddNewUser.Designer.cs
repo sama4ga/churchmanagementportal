@@ -73,10 +73,11 @@
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // cmbPriviledge
             // 
-            this.cmbPriviledge.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbPriviledge.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPriviledge.FormattingEnabled = true;
             this.cmbPriviledge.ImeMode = System.Windows.Forms.ImeMode.On;
             this.cmbPriviledge.Items.AddRange(new object[] {
@@ -215,6 +216,7 @@
             this.dgvParishionerList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvParishionerList.Size = new System.Drawing.Size(381, 366);
             this.dgvParishionerList.TabIndex = 12;
+            this.dgvParishionerList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvParishionerList_CellContentClick);
             // 
             // frmAddNewUser
             // 

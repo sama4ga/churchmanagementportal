@@ -26,10 +26,13 @@
     <ProductName>Church Management Portal</ProductName>
     <PublisherName>Samaservices</PublisherName>
     <SuiteName>churchms</SuiteName>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <AutorunEnabled>true</AutorunEnabled>
+    <DisallowUrlActivation>true</DisallowUrlActivation>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -74,6 +77,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Church Management Portal_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data, Version=8.0.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
@@ -159,6 +165,18 @@
     <Compile Include="frmBaptismRecord.Designer.cs">
       <DependentUpon>frmBaptismRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChangePassword.Designer.cs">
+      <DependentUpon>frmChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmChurchDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChurchDetails.Designer.cs">
+      <DependentUpon>frmChurchDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCommunionRecord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,11 +231,11 @@
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmMainSecretary.cs">
+    <Compile Include="frmManageUsers.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMainSecretary.Designer.cs">
-      <DependentUpon>frmMainSecretary.cs</DependentUpon>
+    <Compile Include="frmManageUsers.Designer.cs">
+      <DependentUpon>frmManageUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMarriageRecord.cs">
       <SubType>Form</SubType>
@@ -301,6 +319,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SQL.cs" />
     <Compile Include="SQLConfig.cs" />
     <Compile Include="usableFunction.cs" />
     <EmbeddedResource Include="frmAboutBox.resx">
@@ -333,6 +352,12 @@
     <EmbeddedResource Include="frmBaptismRecord.resx">
       <DependentUpon>frmBaptismRecord.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmChangePassword.resx">
+      <DependentUpon>frmChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmChurchDetails.resx">
+      <DependentUpon>frmChurchDetails.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCommunionRecord.resx">
       <DependentUpon>frmCommunionRecord.cs</DependentUpon>
     </EmbeddedResource>
@@ -360,8 +385,8 @@
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMainSecretary.resx">
-      <DependentUpon>frmMainSecretary.cs</DependentUpon>
+    <EmbeddedResource Include="frmManageUsers.resx">
+      <DependentUpon>frmManageUsers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMarriageRecord.resx">
       <DependentUpon>frmMarriageRecord.cs</DependentUpon>

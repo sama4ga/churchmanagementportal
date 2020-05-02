@@ -35,7 +35,7 @@ namespace Church_Management_Portal
                    "left join `organisation` o on o.`organisation_id`=p.`organisation`" +
                    "LEFT JOIN `" + group_codename + "` b ON b.`member_id`=p.`parishioner_id`"+
                    "WHERE p.`status`<>'dead';", dataGridView1);
-
+            if (!Sql.result) { return; }
             dataGridView1.Columns[0].Visible = false;
         }
 
@@ -62,7 +62,9 @@ namespace Church_Management_Portal
                     else
                     {
                         Sql.Execute_Insert("INSERT INTO `" + group_codename + "`(`member_id`) VALUES('" + parishionerId + "');");
+                        if (!Sql.result) { return; }
                         Sql.Execute_Insert("INSERT INTO `parishioner_groups`(`parishioner_id`,`group_code_name`,`group_name`,`group_type`) VALUES('" + parishionerId + "','" + group_codename + "','" + group_longname + "','" + group_type + "');");
+                        if (!Sql.result) { return; }
                         MessageBox.Show("Parishioner successfully added to " + group_longname);
                     }
 
@@ -86,6 +88,11 @@ namespace Church_Management_Portal
         {
             (dataGridView1.DataSource as DataTable).DefaultView.RowFilter = "Name LIKE LIKE '%" + txtSearch.Text + "%'";  // Sql.ds.Tables[0]
             dataGridView1.Refresh();
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

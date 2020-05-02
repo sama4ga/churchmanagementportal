@@ -43,11 +43,14 @@ namespace Church_Management_Portal
         private void frmAddParishioner_Load(object sender, EventArgs e)
         {
             Sql.fiil_CBO("SELECT * FROM `stations`;",cmbStation,"station");
+            if (!Sql.result) { return; }
             Sql.fiil_CBO("SELECT `organisation_id`,`short_name` FROM `organisation`;", cmbOrganisation,"organisation");
             //Sql.fiil_listBox("SELECT `organisation_id`,`short_name` FROM `organisation`;", listOrganisation, "organisation");
+            if (!Sql.result) { return; }
             Sql.fiil_listBox("SELECT `code_name`,`name` FROM `pious_societies`;", listPiousSocieties,"pious");
+            if (!Sql.result) { return; }
             Sql.fiil_listBox("SELECT `code_name`,`name` FROM `other_groups`;", listOtherGroups,"groups");
-
+            if (!Sql.result) { return; }
         }
 
 
@@ -60,6 +63,7 @@ namespace Church_Management_Portal
                 string station_id = cmbStation.SelectedValue.ToString();
                 //MessageBox.Show("org id:" + organisation_id + ", station id:" + station_id);
                 Sql.fiil_CBO("SELECT * FROM `societies` WHERE `organisation_id`='" + organisation_id + "' AND `station_id`='" + station_id + "';", cmbSociety);
+                if (!Sql.result) { return; }
             }
         }
 
@@ -87,11 +91,42 @@ namespace Church_Management_Portal
         private void btnSave_Click(object sender, EventArgs e)
         {
             string name = txtSurname.Text.Trim() + ", " + txtOthernames.Text.Trim();
+            if (string.IsNullOrEmpty(txtSurname.Text.Trim()))
+            {
+                MessageBox.Show("Surname is a required field", "Add Parishioner");
+                txtSurname.Focus(); return;                
+            }
+
+            if (string.IsNullOrEmpty(txtOthernames.Text.Trim()))
+            {
+                MessageBox.Show("Othernames is a required field", "Add Parishioner");
+                txtOthernames.Focus(); return;                
+            }
             string address = txtAddress.Text.Trim();
+            if (string.IsNullOrEmpty(address))
+            {
+                MessageBox.Show("Address is a required field", "Add Parishioner");
+                txtAddress.Focus(); return;
+            }
             string dob = dtpDOB.Value.ToString("yyyy-MM-dd");
             string station_id = cmbStation.SelectedValue.ToString();
+            if (string.IsNullOrEmpty(station_id))
+            {
+                MessageBox.Show("Choose a station to proceed", "Add Parishioner");
+                cmbStation.Focus(); return;
+            }
             string organisation_id = cmbOrganisation.SelectedValue.ToString();
+            if (string.IsNullOrEmpty(organisation_id))
+            {
+                MessageBox.Show("Choose an organisation to proceed", "Add Parishioner");
+                cmbOrganisation.Focus(); return;
+            }
             string phone_no = txtPhoneNo.Text.Trim();
+            if (string.IsNullOrEmpty(phone_no))
+            {
+                MessageBox.Show("Phone number is a required field", "Add Parishioner");
+                txtPhoneNo.Focus(); return;
+            }
             string society_id = cmbSociety.SelectedIndex >= 0 ? cmbSociety.SelectedValue.ToString() : "";
             string gender = "";
             if (rdFemale.Checked)
@@ -102,7 +137,11 @@ namespace Church_Management_Portal
             {
                 gender = "Male";
             }
-            
+            if (string.IsNullOrEmpty(gender))
+            {
+                MessageBox.Show("Choose a gender to proceed", "Add Parishioner");
+                rdMale.Focus(); return;
+            }
 
             Dictionary<string,string> pious_societies = new Dictionary<string, string>();
             foreach (DataRowView selected in listPiousSocieties.CheckedItems)
@@ -114,22 +153,22 @@ namespace Church_Management_Portal
             string confirmation = "false";
             string communion = "false";
             string married = "false";
-            foreach (string selected in listSacrament.CheckedItems)
+            foreach (string sacrament in listSacrament.CheckedItems)
             {
                // MessageBox.Show(selected);
-                if (selected == "Baptised")
+                if (sacrament == "Baptised")
                 {
                     baptism = "true";
                 }
-                else if (selected == "Confirmed")
+                else if (sacrament == "Confirmed")
                 {
                     confirmation = "true";
                 }
-                else if (selected == "Communicant")
+                else if (sacrament == "Communicant")
                 {
                     communion = "true";
                 }
-                else if (selected == "Married")
+                else if (sacrament == "Married")
                 {
                     married = "true";
                 }
@@ -143,11 +182,11 @@ namespace Church_Management_Portal
 
             string status = "active";
 
-
+            
             // send the data to the database
             long parishoner_id = Sql.Execute_Insert("INSERT INTO `parishioners`(`name`,`station`,`organisation`,`society`,`address`,`status`,`gender`,`dob`,`baptised`,`communicant`,`confirmed`,`wedded`,`passport`,`phoneNo`) " +
                                  "VALUES('" + name + "','" + station_id + "','" + organisation_id + "','" + society_id + "','" + address + "','" + status + "','" + gender + "','" + dob + "','" + baptism + "','" + communion + "','" + confirmation + "','" + married + "','','"+ phone_no +"');");
-
+            if (!Sql.result) { return; }
 
             //upload the passport
             string passpor_location = System.IO.Directory.GetCurrentDirectory() + "/passport";
@@ -157,6 +196,7 @@ namespace Church_Management_Portal
                 passpor_location = ( passpor_location + "/parishioner_" + parishoner_id + ".jpg").Replace("\\","/");
                 System.IO.File.Copy(passport, passpor_location, false);
                 Sql.Execute_Query("UPDATE `parishioners` SET `passport`='"+ passpor_location +"' WHERE `parishioner_id`='"+ parishoner_id +"';");
+                if (!Sql.result) { return; }
             }
 
             // add pious societies
@@ -165,7 +205,9 @@ namespace Church_Management_Portal
                 foreach (KeyValuePair<string,string> og in other_groups)
                 {
                     Sql.Execute_Query("INSERT INTO `" + og.Key + "`(`member_id`) VALUES('" + parishoner_id + "');");
+                    if (!Sql.result) { return; }
                     Sql.Execute_Insert("INSERT INTO `parishioner_groups`(`parishioner_id`,`group_code_name`,`group_name`,`group_type`) VALUES('" + parishoner_id + "','" + og.Key + "','" + og.Value + "','other_groups');");
+                    if (!Sql.result) { return; }
                 }
             }
 
@@ -175,12 +217,15 @@ namespace Church_Management_Portal
                 foreach (KeyValuePair<string,string> ps in pious_societies)
                 {
                     Sql.Execute_Query("INSERT INTO `" + ps.Key + "`(`member_id`) VALUES('" + parishoner_id + "');");
+                    if (!Sql.result) { return; }
                     Sql.Execute_Insert("INSERT INTO `parishioner_groups`(`parishioner_id`,`group_code_name`,`group_name`,`group_type`) VALUES('" + parishoner_id + "','" + ps.Key + "','" + ps.Value + "','pious_societies');");
+                    if (!Sql.result) { return; }
                 }
             }
 
 
             MessageBox.Show("Parishioner Registration successfully completed","Registration Status");
+            Clear();
         }
 
         private void rdFemale_CheckedChanged(object sender, EventArgs e)
@@ -196,11 +241,16 @@ namespace Church_Management_Portal
                 string station_id = cmbStation.SelectedValue.ToString();
                 //MessageBox.Show("org id:"+organisation_id +", station id:"+station_id);
                 Sql.fiil_CBO("SELECT * FROM `societies` WHERE `organisation_id`='" + organisation_id + "' AND `station_id`='" + station_id + "';", cmbSociety);
-
+                if (!Sql.result) { return; }
             }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+
+        private void Clear()
         {
             txtAddress.Clear();
             txtOthernames.Clear();
@@ -218,9 +268,33 @@ namespace Church_Management_Portal
             txtPhoneNo.Clear();
         }
 
+
         private void groupBox3_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtPhoneNo_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void txtPhoneNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            //List<int> num = new List<int>();
+            //num.AddRange(new int[] { 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105 });
+            //if (num.Contains(e.KeyValue)) {
+            //    e.Handled = false;
+            //}
+        }
+
+        private void txtPhoneNo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+           
+           //if ((new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Contains(e.KeyChar) == false)
+           // {
+           //     e.Handled = true;
+           // }
         }
     }
 }

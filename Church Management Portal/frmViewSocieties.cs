@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Church_Management_Portal
@@ -14,6 +7,7 @@ namespace Church_Management_Portal
     {
 
         SQLConfig Sql = new SQLConfig();
+        public string user_status = "";
         string society_id = "";
 
 
@@ -28,6 +22,7 @@ namespace Church_Management_Portal
             {
                 
                 Sql.Execute_Query("SELECT * FROM `societies` WHERE `society_id`='"+ society_id +"';");
+                if (!Sql.result) { return; }
                 MessageBox.Show("Record successfully deleted","View Society Records");
                 refresh();
 
@@ -36,6 +31,10 @@ namespace Church_Management_Portal
 
         private void frmViewSocieties_Load(object sender, EventArgs e)
         {
+            if (user_status.Equals("user", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnDelete.Hide(); groupBox2.Hide();
+            }
             refresh();
         }
 
@@ -52,6 +51,7 @@ namespace Church_Management_Portal
                               "      `organisation` o ON so.`organisation_id` = o.`organisation_id` "+
                               "          JOIN                                                       "+
                               "      `stations` st ON so.`station_id` = st.`station_id`; ",listSocieties,"society");
+            if (!Sql.result) { return; }
         }
 
         private void listSocieties_SelectedIndexChanged(object sender, EventArgs e)
@@ -70,6 +70,7 @@ namespace Church_Management_Portal
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             Sql.Execute_Query("UPDATE `societies` SET `name`='"+ txtName.Text +"' WHERE `society_id`='" + society_id + "';");
+            if (!Sql.result) { return; }
             MessageBox.Show("Record successfully update", "View Society Records");
             refresh();
         }

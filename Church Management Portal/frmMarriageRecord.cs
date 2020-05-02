@@ -15,6 +15,7 @@ namespace Church_Management_Portal
     {
 
         SQLConfig Sql = new SQLConfig();
+        public string user_status = "";
 
 
         public frmMarriageRecord()
@@ -24,15 +25,32 @@ namespace Church_Management_Portal
 
         private void frmMarriageRecord_Load(object sender, EventArgs e)
         {
+            if (user_status.Equals("secretary", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnDeleteRecord.Visible = false; btnEditRecord.Visible = false; btnUpdate.Visible = false;
+            }
+            else if (user_status.Equals("user", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnDeleteRecord.Visible = false; btnEditRecord.Visible = false; btnUpdate.Visible = false; btnAddNewRecord.Visible = false;
+            }
             refresh();
         }
 
 
         private void refresh()
         {
-            Sql.Load_DTG("SELECT `groom_name` AS 'Groom\\'s Name',`groom_parent` AS 'Groom\\'s Parent',`groom_village` AS 'Groom\\'s Village',"+
+            Sql.Load_DTG("SELECT `marriage_id`,`groom_name` AS 'Groom\\'s Name',`groom_parent` AS 'Groom\\'s Parent',`groom_village` AS 'Groom\\'s Village',"+
                "`bride_name` AS 'Bride\\'s Name',`bride_parent` AS 'Bride\\'s Parent',`bride_village` AS 'Bride\\'s Village'," +
                "`sponsor` AS 'Sponsor',`minister` AS 'Witness',`venue` AS 'Venue',`date_received` AS 'Date Received' FROM `matrimony`; ", dgvMarriageRegister);
+            if (!Sql.result) { return; }
+            dgvMarriageRegister.Columns[0].Visible = false;
+
+            current_row_no = 0;
+            txtRowNo.Text = current_row_no.ToString();
+            if (dgvMarriageRegister.RowCount > 0)
+            {
+                txtRowCount.Text = (dgvMarriageRegister.RowCount).ToString();
+            }
         }
 
         private void btnAddNewRecord_Click(object sender, EventArgs e)
@@ -68,8 +86,10 @@ namespace Church_Management_Portal
                "'"+ txtGroomName.Text + "','" + txtGroomParent.Text + "','" + txtGroomVillage.Text + "',    "+
                "'" + txtBrideName.Text + "','" + txtBrideParent.Text + "','" + txtBrideVillage.Text + "',   "+
                "'" + txtSponsor.Text + "','" + txtWitness.Text + "','" + txtVenue.Text + "','"+ dtpDate.Value.ToString("yyyy-MM-dd") +"' );");
+            if (!Sql.result) { return; }
             MessageBox.Show("Record successfully added","View Marriage Record");
             refresh();
+            btnClear.PerformClick();
         }
 
 
@@ -235,6 +255,161 @@ namespace Church_Management_Portal
         private void btnExport_Click(object sender, EventArgs e)
         {
             usf.SaveRecord(dgvMarriageRegister);
+        }
+
+        private void btnEditRecord_Click(object sender, EventArgs e)
+        {
+            dgvMarriageRegister.ReadOnly = false;
+        }
+
+        private void btnDeleteRecord_Click(object sender, EventArgs e)
+        {
+            if (dgvMarriageRegister.CurrentRow != null)
+            {
+                string name = dgvMarriageRegister.CurrentRow.Cells[1].Value.ToString();
+                if (MessageBox.Show("Are you sure you want to delete record of " + name + " from the marriage register", "Delete Marriage Record", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    Sql.Execute_Query("DELETE FROM `matrimony` WHERE `marriage_id`='" + marriage_id + "';");
+                    if (!Sql.result) { return; }
+                    MessageBox.Show("Record of " + name + " successfully deleted.");
+                    refresh();
+                }
+            }
+        }
+
+        string marriage_id;
+        private void dgvMarriageRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            marriage_id = dgvMarriageRegister.CurrentRow.Cells[0].Value.ToString();
+            if (dgvMarriageRegister.RowCount > 0)
+            {
+                current_row_no = e.RowIndex;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        List<string> query = new List<string>();
+        private void dgvMarriageRegister_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            string column = dgvMarriageRegister.Columns[e.ColumnIndex].Name.Replace("'s", "").Replace(" ","_").ToLower();
+            string marriage_id = dgvMarriageRegister.Rows[e.RowIndex].Cells[0].Value.ToString();
+            string new_value = dgvMarriageRegister.CurrentCell.Value.ToString();
+            //MessageBox.Show(column + " - " + old_value);
+            query.Add("UPDATE `matrimony` SET `"+ column +"`='"+ new_value +"' WHERE `marriage_id`='"+ marriage_id +"';");
+            if (!Sql.result) { return; }
+        }
+
+        string old_value = string.Empty;
+        private int current_row_no;
+
+        private void dgvMarriageRegister_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            old_value = dgvMarriageRegister.CurrentCell.Value.ToString();
+            dgvMarriageRegister.CurrentCell.Style.ForeColor = Color.Green;
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            foreach (string item in query)
+            {
+                Sql.Execute_Query(item);
+                if (!Sql.result) { return; }
+            }
+            MessageBox.Show("Update successful","Update Record");
+            query.Clear();
+            refresh();
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            if (dgvMarriageRegister.RowCount > 0)
+            {
+                current_row_no = dgvMarriageRegister.RowCount - 1;
+                dgvMarriageRegister.ClearSelection();
+                dgvMarriageRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (dgvMarriageRegister.RowCount > 0 && current_row_no < dgvMarriageRegister.RowCount - 1)
+            {
+                current_row_no += 1;
+                dgvMarriageRegister.ClearSelection();
+                dgvMarriageRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (dgvMarriageRegister.RowCount > 0 && current_row_no > 0)
+            {
+                current_row_no -= 1;
+                dgvMarriageRegister.ClearSelection();
+                dgvMarriageRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            if (dgvMarriageRegister.RowCount > 0)
+            {
+                current_row_no = 0;
+                dgvMarriageRegister.ClearSelection();
+                dgvMarriageRegister.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void txtRowNo_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtRowNo.Text.Trim()))
+            {
+                if (int.Parse(txtRowNo.Text.Trim()) > 0 && int.Parse(txtRowNo.Text.Trim()) <= dgvMarriageRegister.RowCount)
+                {
+                    current_row_no = int.Parse(txtRowNo.Text.Trim()) - 1;
+
+                    dgvMarriageRegister.ClearSelection();
+                    dgvMarriageRegister.Rows[current_row_no].Selected = true;
+                }
+
+            }
+        }
+
+        private void txtRowNo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (dgvMarriageRegister.RowCount > 0)
+            {
+                if ((new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Contains(e.KeyChar) == false)
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (cmbSearchBy.SelectedIndex != -1)
+            {
+                string searchBy = cmbSearchBy.SelectedItem.ToString();
+                (dgvMarriageRegister.DataSource as DataTable).DefaultView.RowFilter = "`" + searchBy + "`" + " LIKE '%" + txtSearch.Text + "%'";
+                dgvMarriageRegister.Refresh();
+
+                current_row_no = 0;
+                txtRowNo.Text = current_row_no.ToString();
+                if (dgvMarriageRegister.RowCount > 0)
+                {
+                    txtRowCount.Text = (dgvMarriageRegister.RowCount).ToString();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Choose a field to use in searching to proceed", "Marriage Register");
+                cmbSearchBy.Focus();
+            }
         }
     }
 }

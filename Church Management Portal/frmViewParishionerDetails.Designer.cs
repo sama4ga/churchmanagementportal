@@ -192,6 +192,7 @@
             // listSacrament
             // 
             this.listSacrament.CheckOnClick = true;
+            this.listSacrament.Enabled = false;
             this.listSacrament.FormattingEnabled = true;
             this.listSacrament.Items.AddRange(new object[] {
             "Baptised",
@@ -417,7 +418,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "frmViewParishionerDetails";
-            this.Text = "frmViewParishionerDetails";
+            this.Text = "View Parishioner Details";
             this.Load += new System.EventHandler(this.frmViewParishionerDetails_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picPassport)).EndInit();
             this.groupBox2.ResumeLayout(false);

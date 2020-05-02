@@ -13,16 +13,18 @@ namespace Church_Management_Portal
 {
     public partial class frmViewListOfParishioners : Form
     {
+        public string user_status="";
         public string by;
         public string filter;
         public string text;        
         public string id = "";
         int parishioner_id = 0;
+        int current_row_no = 0;
         SQLConfig Sql = new SQLConfig();
         usableFunction usf = new usableFunction();
 
         private int mRow = 0;
-        private Boolean newpage = true;
+        private bool newpage = true;
         private int no_of_pages = 0;
         string title = "";
 
@@ -42,8 +44,23 @@ namespace Church_Management_Portal
             {
                 groupBox3.Hide();
             }
+
+            if (user_status.Equals("user", StringComparison.CurrentCultureIgnoreCase))
+            {
+                groupBox3.Hide(); btnEditMemberDetails.Hide(); btnMarkActive.Hide(); btnMarkDead.Hide(); btnMarkInactive.Hide();
+            }
+
             refresh();
             cmbSearchBy.SelectedIndex = 0;
+
+            txtRowNo.Text = current_row_no.ToString();
+            txtRowCount.Text = current_row_no.ToString();
+            if (dataGridView1.RowCount > 0)
+            {
+                txtRowCount.Text = (dataGridView1.RowCount).ToString();
+            }
+
+
         }
 
         private void cmbFilter_SelectedIndexChanged(object sender, EventArgs e)
@@ -67,11 +84,20 @@ namespace Church_Management_Portal
                     if (filter == "pious_society" | filter == "other_groups")
                     {
                         Sql.Execute_Query("DELETE FROM `"+ by +"` WHERE `member_id`='"+ parishioner_id +"';");
+                        if (!Sql.result) { return; }
                         Sql.Execute_Query("DELETE FROM `parishioner_groups` WHERE `parishioner_id`='" + parishioner_id + "' AND `group_code_name`='"+ by +"';");
+                        if (!Sql.result) { return; }
                     }
 
                     MessageBox.Show(dataGridView1.CurrentRow.Cells[1].Value.ToString() + " successfully deleted", "Delete Member");
                     refresh();
+
+                    current_row_no = 0;
+                    txtRowNo.Text = current_row_no.ToString();
+                    if (dataGridView1.RowCount > 0)
+                    {
+                        txtRowCount.Text = (dataGridView1.RowCount).ToString();
+                    }
 
                 }
             }
@@ -136,7 +162,7 @@ namespace Church_Management_Portal
             //{
             //    Sql.Load_DTG("SELECT * FROM `parishioners` where `" + by + "`='true';", dataGridView1);
             //}
-
+            if (!Sql.result) { return; }
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Width = 150;
             dataGridView1.Columns[2].Width = 150;
@@ -157,6 +183,11 @@ namespace Church_Management_Portal
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             parishioner_id = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
+            if (dataGridView1.RowCount > 0)
+            {
+                current_row_no = e.RowIndex;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
         }
 
         private void btnAddNewMember_Click(object sender, EventArgs e)
@@ -181,7 +212,9 @@ namespace Church_Management_Portal
                     if (frm.ShowDialog() == DialogResult.OK)
                     {
                         Sql.Execute_Insert("INSERT INTO `death`(`parishioner_id`,`death_date`,`burial_date`) VALUES('" + parishioner_id + "','" + frm.burialDate + "','" + frm.deathDate + "');");
+                        if (!Sql.result) { return; }
                         Sql.Execute_Query("UPDATE `parishioners` SET `status`='dead' WHERE `parishioner_id`='" + parishioner_id + "';");
+                        if (!Sql.result) { return; }
                         MessageBox.Show(dataGridView1.CurrentRow.Cells[1].Value.ToString() + " successfully marked as dead", "Mark Member as Dead");
                         refresh();
                     }
@@ -208,6 +241,7 @@ namespace Church_Management_Portal
                 if (MessageBox.Show("Are you sure you want to mark " + dataGridView1.CurrentRow.Cells[1].Value.ToString() + " as inactive", "Mark Member as Inactive", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Sql.Execute_Query("UPDATE `parishioners` SET `status`='inactive' WHERE `parishioner_id`='" + parishioner_id + "';");
+                    if (!Sql.result) { return; }
                     MessageBox.Show(dataGridView1.CurrentRow.Cells[1].Value.ToString() + " successfully marked as inactive", "Mark Member as Inactive");
                     refresh();
                 }
@@ -217,6 +251,13 @@ namespace Church_Management_Portal
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             refresh();
+
+            current_row_no = 0;
+            txtRowNo.Text = current_row_no.ToString();
+            if (dataGridView1.RowCount > 0)
+            {
+                txtRowCount.Text = (dataGridView1.RowCount).ToString();
+            }
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -226,6 +267,13 @@ namespace Church_Management_Portal
                 string searchBy = cmbSearchBy.SelectedItem.ToString();
                 (dataGridView1.DataSource as DataTable).DefaultView.RowFilter = "`" + searchBy + "`" + " LIKE '%" + txtSearch.Text + "%'";
                 dataGridView1.Refresh();
+
+                current_row_no = 0;
+                txtRowNo.Text = current_row_no.ToString();
+                if (dataGridView1.RowCount > 0)
+                {
+                    txtRowCount.Text = (dataGridView1.RowCount).ToString();
+                }
             }
             else
             {
@@ -430,6 +478,7 @@ namespace Church_Management_Portal
                 if (MessageBox.Show("Are you sure you want to mark " + dataGridView1.CurrentRow.Cells[1].Value.ToString() + " as active", "Mark Member as Active", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Sql.Execute_Query("UPDATE `parishioners` SET `status`='active' WHERE `parishioner_id`='" + parishioner_id + "';");
+                    if (!Sql.result) { return; }
                     MessageBox.Show(dataGridView1.CurrentRow.Cells[1].Value.ToString() + " successfully marked as active", "Mark Member as Active");
                     refresh();
                 }
@@ -451,5 +500,85 @@ namespace Church_Management_Portal
         {
             usf.SaveRecord(dataGridView1);
         }
+
+        private void txtRowNo_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtRowNo.Text.Trim()))
+            {
+                if (int.Parse(txtRowNo.Text.Trim()) > 0 && int.Parse(txtRowNo.Text.Trim()) <= dataGridView1.RowCount)
+                {
+                    current_row_no = int.Parse(txtRowNo.Text.Trim()) - 1;
+
+                    dataGridView1.ClearSelection();
+                    dataGridView1.Rows[current_row_no].Selected = true;
+                }
+
+            }
+        }
+
+        private void txtRowNo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (dataGridView1.RowCount > 0)
+            {
+                if ((new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Contains(e.KeyChar) == false)
+                {
+                    e.Handled = true; 
+                }
+            }
+        }
+
+        private void txtRowNo_KeyUp(object sender, KeyEventArgs e)
+        {
+        //    if ((new int[] { 8, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105 }).Contains(e.KeyValue)) {
+        //        e.Handled = true;
+        //    }
+        }
+
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.RowCount > 0)
+            {
+                current_row_no = dataGridView1.RowCount - 1;
+                dataGridView1.ClearSelection();
+                dataGridView1.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.RowCount > 0 && current_row_no < dataGridView1.RowCount - 1)
+            {
+                current_row_no += 1;
+                dataGridView1.ClearSelection();
+                dataGridView1.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.RowCount  > 0 && current_row_no > 0)
+            {
+                current_row_no -= 1;
+                dataGridView1.ClearSelection();
+                dataGridView1.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.RowCount > 0)
+            {
+                current_row_no = 0;
+                dataGridView1.ClearSelection();
+                dataGridView1.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+       
     }
 }

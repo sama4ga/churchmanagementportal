@@ -46,9 +46,9 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.BackColor = System.Drawing.Color.Yellow;
+            this.btnDelete.BackColor = System.Drawing.Color.Green;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnDelete.ForeColor = System.Drawing.Color.DarkGreen;
+            this.btnDelete.ForeColor = System.Drawing.Color.White;
             this.btnDelete.Location = new System.Drawing.Point(221, 367);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(241, 67);
@@ -73,9 +73,9 @@
             // 
             // listPiousSocieties
             // 
-            this.listPiousSocieties.BackColor = System.Drawing.Color.ForestGreen;
+            this.listPiousSocieties.BackColor = System.Drawing.Color.White;
             this.listPiousSocieties.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.listPiousSocieties.ForeColor = System.Drawing.Color.White;
+            this.listPiousSocieties.ForeColor = System.Drawing.SystemColors.ControlText;
             this.listPiousSocieties.ItemHeight = 20;
             this.listPiousSocieties.Location = new System.Drawing.Point(19, 48);
             this.listPiousSocieties.Name = "listPiousSocieties";
@@ -95,9 +95,9 @@
             // 
             // btnBack
             // 
-            this.btnBack.BackColor = System.Drawing.Color.Yellow;
+            this.btnBack.BackColor = System.Drawing.Color.Green;
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnBack.ForeColor = System.Drawing.Color.DarkGreen;
+            this.btnBack.ForeColor = System.Drawing.Color.White;
             this.btnBack.Location = new System.Drawing.Point(847, 488);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(146, 67);
@@ -108,8 +108,8 @@
             // 
             // txtSlogan
             // 
-            this.txtSlogan.BackColor = System.Drawing.Color.ForestGreen;
-            this.txtSlogan.ForeColor = System.Drawing.Color.White;
+            this.txtSlogan.BackColor = System.Drawing.Color.White;
+            this.txtSlogan.ForeColor = System.Drawing.SystemColors.ControlText;
             this.txtSlogan.Location = new System.Drawing.Point(105, 172);
             this.txtSlogan.Multiline = true;
             this.txtSlogan.Name = "txtSlogan";
@@ -144,9 +144,9 @@
             // 
             // btnUpdate
             // 
-            this.btnUpdate.BackColor = System.Drawing.Color.Yellow;
+            this.btnUpdate.BackColor = System.Drawing.Color.Green;
             this.btnUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnUpdate.ForeColor = System.Drawing.Color.DarkGreen;
+            this.btnUpdate.ForeColor = System.Drawing.Color.White;
             this.btnUpdate.Location = new System.Drawing.Point(223, 367);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(218, 67);
@@ -157,8 +157,8 @@
             // 
             // txtName
             // 
-            this.txtName.BackColor = System.Drawing.Color.ForestGreen;
-            this.txtName.ForeColor = System.Drawing.Color.White;
+            this.txtName.BackColor = System.Drawing.Color.White;
+            this.txtName.ForeColor = System.Drawing.SystemColors.ControlText;
             this.txtName.Location = new System.Drawing.Point(105, 48);
             this.txtName.Multiline = true;
             this.txtName.Name = "txtName";

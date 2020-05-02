@@ -12,7 +12,8 @@ namespace Church_Management_Portal
 {
     public partial class frmViewListBy : Form
     {
-        Size csize = new Size(116, 74);
+        public string user_status = "";
+        Size csize = new Size(130, 97);
         int maxrows = 0;
         frmViewListOfParishioners frm;
         SQLConfig Sql = new SQLConfig();
@@ -29,6 +30,7 @@ namespace Church_Management_Portal
             frm = new frmViewListOfParishioners();
             frm.by = "all";
             frm.text = "All";
+            frm.user_status = user_status;
             frm.Show();
         }
 
@@ -38,6 +40,7 @@ namespace Church_Management_Portal
             frm.by = "baptised";
             frm.filter = "sacrament";
             frm.text = "Baptised";
+            frm.user_status = user_status;
             frm.Show();
         }
 
@@ -47,6 +50,7 @@ namespace Church_Management_Portal
             frm.by = "communicant";
             frm.filter = "sacrament";
             frm.text = "Communicant";
+            frm.user_status = user_status;
             frm.Show();
         }
 
@@ -56,6 +60,7 @@ namespace Church_Management_Portal
             frm.by = "confirmed";
             frm.filter = "sacrament";
             frm.text = "Confirmed";
+            frm.user_status = user_status;
             frm.Show();
         }
 
@@ -65,13 +70,12 @@ namespace Church_Management_Portal
             frm.by = "wedded";
             frm.filter = "sacrament";
             frm.text = "Wedded";
+            frm.user_status = user_status;
             frm.Show();
         }
 
         private void frmViewListBy_Load(object sender, EventArgs e)
-        {               
-
-
+        {
             // get record for organisations
             maxrows = Sql.maxrow("SELECT * FROM `organisation`","organisation");
             if (maxrows > 0)
@@ -159,7 +163,7 @@ namespace Church_Management_Portal
 
         private void btn_click(object sender, EventArgs e)
         {
-            frm = new frmViewListOfParishioners();
+            frmViewListOfParishioners frm = new frmViewListOfParishioners();
             Button btn =((Button)sender);
                         
             string filter = btn.Tag.ToString();
@@ -170,7 +174,8 @@ namespace Church_Management_Portal
                 frm.by = split[1];
                 frm.text = split[2];
             //}
-                        
+            
+            frm.user_status = user_status;    
             frm.Show();
         }
 
@@ -201,11 +206,42 @@ namespace Church_Management_Portal
                     btn.Text = btnName;
                     btn.Size = csize;
                     btn.BackColor = Color.ForestGreen;
+                    toolTip1.SetToolTip(btn, btn.Text);
                     ctl.Controls.Add(btn);
 
                     btn.Click += new System.EventHandler(this.btn_click);
                 }
             }
+        }
+
+        private void flpSacraments_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flpPiousSoc_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flpStations_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flpSocieities_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flpOrganisation_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flpOtherGroups_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

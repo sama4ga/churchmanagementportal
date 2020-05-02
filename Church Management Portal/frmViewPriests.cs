@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Church_Management_Portal
@@ -16,10 +11,12 @@ namespace Church_Management_Portal
 
         SQLConfig sql = new SQLConfig();
         int priest_id = 0;
+        public string user_status = "";
 
         private int mRow = 0;
         private Boolean newpage = true;
         private int no_of_pages = 0;
+        int current_row_no = 0;
 
 
         public frmViewPriests()
@@ -29,6 +26,14 @@ namespace Church_Management_Portal
 
         private void frmViewPriests_Load(object sender, EventArgs e)
         {
+            if (user_status.Equals("secretary", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnDelete.Visible = false; btnUpdateSelected.Visible = false;
+            }
+            else if (user_status.Equals("user", StringComparison.CurrentCultureIgnoreCase))
+            {
+                btnDelete.Visible = false; btnUpdateSelected.Visible = false; btnAddShow.Visible = false;
+            }
             refresh();
         }
 
@@ -36,7 +41,15 @@ namespace Church_Management_Portal
         private void refresh()
         {
             sql.Load_DTG("SELECT `priest_id`,`priest_name` AS 'Name',`type` AS 'Type',`date_resumed` AS 'Date Resumed',`date_left` AS 'Date Left' FROM `priests`;", dgvListOfPriests);
+            if (!sql.result) { return; }
             dgvListOfPriests.Columns[0].Visible = false;
+
+            current_row_no = 0;
+            txtRowNo.Text = current_row_no.ToString();
+            if (dgvListOfPriests.RowCount > 0)
+            {
+                txtRowCount.Text = (dgvListOfPriests.RowCount).ToString();
+            }
         }
 
         private void btnAddShow_Click(object sender, EventArgs e)
@@ -52,6 +65,7 @@ namespace Church_Management_Portal
         private void btnAdd_Click(object sender, EventArgs e)
         {
             sql.Execute_Insert("INSERT INTO `priests` (`priest_name`,`type`,`date_resumed`) VALUES('"+ txtName.Text + "','" + cmbType.SelectedItem.ToString() + "','" + dtpDateResumed.Value.ToString("yyyy-MM-dd") + "');");
+            if (!sql.result) { return; }
             MessageBox.Show("Record successfully added","View Priests");
             refresh();
         }
@@ -65,11 +79,17 @@ namespace Church_Management_Portal
         private void dgvListOfPriests_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             priest_id = int.Parse(dgvListOfPriests.CurrentRow.Cells[0].Value.ToString());
+            if (dgvListOfPriests.RowCount > 0)
+            {
+                current_row_no = e.RowIndex;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+
 
             if (groupBox1.Visible == true)
             {
-                txtNameUpdate.Text = dgvListOfPriests.CurrentRow.Cells[1].Value.ToString();
-                cmbTypeUpdate.SelectedItem = dgvListOfPriests.CurrentRow.Cells[2].Value.ToString();
+                txtNameUpdate.Text = dgvListOfPriests.Rows[e.RowIndex].Cells[1].Value.ToString();
+                cmbTypeUpdate.SelectedItem = dgvListOfPriests.Rows[e.RowIndex].Cells[2].Value.ToString();
                 dtpDateResumedUpdate.Value = (DateTime)dgvListOfPriests.CurrentRow.Cells[3].Value;
             }
         }
@@ -89,6 +109,7 @@ namespace Church_Management_Portal
             if (dgvListOfPriests.SelectedCells.Count > 0)
             { 
                 sql.Execute_Insert("UPDATE `priests` SET `priest_name`='" + txtNameUpdate.Text + "',`type`='" + cmbTypeUpdate.SelectedItem.ToString() + "',`date_resumed`='" + dtpDateResumedUpdate.Value.ToString("yyyy-MM-dd") + "' WHERE `priest_id`='" + priest_id + "';");
+                if (!sql.result) { return; }
                 MessageBox.Show("Record successfully updated", "View Priests");
                 refresh();
             }
@@ -100,6 +121,7 @@ namespace Church_Management_Portal
             if (dgvListOfPriests.SelectedCells.Count > 0)
             {
                 sql.Execute_Insert("UPDATE `priests` SET `date_left`='" + dtpTransferDate.Value.ToString("yyyy-MM-dd") + "' WHERE `priest_id`='"+ priest_id +"';");
+                if (!sql.result) { return; }
                 MessageBox.Show("Record successfully updated", "View Priests");
                 refresh();
             }
@@ -268,6 +290,87 @@ namespace Church_Management_Portal
         {
             usf.SaveRecord(dgvListOfPriests);
         }
-        
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            priest_id = int.Parse(dgvListOfPriests.CurrentRow.Cells[0].Value.ToString());
+            string name = dgvListOfPriests.CurrentRow.Cells[1].Value.ToString();
+
+            if (MessageBox.Show("Are you sure you want to delete record of "+ name,"Delete Priest Record", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes) {
+                sql.Execute_Query("DELETE FROM `priests` WHERE `priest_id`='" + priest_id + "';");
+                if (!sql.result) { return; }
+                MessageBox.Show("Record of " + name + " successfully deleted");
+            }
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            if (dgvListOfPriests.RowCount > 0)
+            {
+                current_row_no = dgvListOfPriests.RowCount - 1;
+                dgvListOfPriests.ClearSelection();
+                dgvListOfPriests.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (dgvListOfPriests.RowCount > 0 && current_row_no < dgvListOfPriests.RowCount - 1)
+            {
+                current_row_no += 1;
+                dgvListOfPriests.ClearSelection();
+                dgvListOfPriests.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (dgvListOfPriests.RowCount > 0 && current_row_no > 0)
+            {
+                current_row_no -= 1;
+                dgvListOfPriests.ClearSelection();
+                dgvListOfPriests.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            if (dgvListOfPriests.RowCount > 0)
+            {
+                current_row_no = 0;
+                dgvListOfPriests.ClearSelection();
+                dgvListOfPriests.Rows[current_row_no].Selected = true;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
+
+        private void txtRowNo_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtRowNo.Text.Trim()))
+            {
+                if (int.Parse(txtRowNo.Text.Trim()) > 0 && int.Parse(txtRowNo.Text.Trim()) <= dgvListOfPriests.RowCount)
+                {
+                    current_row_no = int.Parse(txtRowNo.Text.Trim()) - 1;
+
+                    dgvListOfPriests.ClearSelection();
+                    dgvListOfPriests.Rows[current_row_no].Selected = true;
+                }
+
+            }
+        }
+
+        private void txtRowNo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (dgvListOfPriests.RowCount > 0)
+            {
+                if ((new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Contains(e.KeyChar) == false)
+                {
+                    e.Handled = true;
+                }
+            }
+        }
     }
 }

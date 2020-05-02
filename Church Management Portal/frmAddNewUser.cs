@@ -26,6 +26,7 @@ namespace Church_Management_Portal
             {
                 this.Width = 800;
                 Sql.Load_DTG("select p.`parishioner_id`,p.`name` as 'Name',st.`name` as 'Station' from `parishioners` p left join `stations` st on p.`station`=st.`station_id` WHERE p.`status`<>'dead';", dgvParishionerList);
+                if (!Sql.result) { return; }
                 dgvParishionerList.Columns[0].Visible = false;
             }
             else
@@ -61,7 +62,8 @@ namespace Church_Management_Portal
             }
             else
             {
-                Sql.Execute_Insert("INSERT INTO `users`(`username`,`password`,`parishioner_id`,`priviledge`) VALUES('"+ txtUsername.Text + "','" + txtPassword.Text + "','" + parishioner_id + "','" + cmbPriviledge.SelectedItem.ToString() + "');");
+                Sql.Execute_Insert("INSERT INTO `users`(`username`,`password`,`parishioner_id`,`priviledge`) VALUES('"+ txtUsername.Text + "',sha1('" + txtPassword.Text + "'),'" + parishioner_id + "','" + cmbPriviledge.SelectedItem.ToString() + "');");
+                if (!Sql.result) { return; }
                 MessageBox.Show("Success", "Add New User");
             }
         }
@@ -69,6 +71,11 @@ namespace Church_Management_Portal
         private void dgvParishionerList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             parishioner_id = int.Parse(dgvParishionerList.CurrentRow.Cells[0].Value.ToString());
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

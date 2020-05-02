@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnChangePassword = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblUserStatus = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -45,7 +47,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblDescription = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnBackgroundPic = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnSettings = new System.Windows.Forms.ToolStripButton();
             this.btnSearch = new System.Windows.Forms.ToolStripButton();
@@ -56,7 +57,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.panelViewRecordBy = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnViewRecords = new System.Windows.Forms.Button();
+            this.btnViewSacramentRecord = new System.Windows.Forms.Button();
             this.btnAddUser = new System.Windows.Forms.Button();
             this.btnPriests = new System.Windows.Forms.Button();
             this.btnViewRecord = new System.Windows.Forms.Button();
@@ -64,6 +65,7 @@
             this.btnOpenNewRecord = new System.Windows.Forms.Button();
             this.btnViewList = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPassport)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -77,6 +79,8 @@
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.BackColor = System.Drawing.Color.ForestGreen;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnChangePassword);
+            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.lblUserName);
             this.panel1.Controls.Add(this.lblUserStatus);
             this.panel1.Controls.Add(this.label5);
@@ -95,24 +99,51 @@
             this.panel1.Size = new System.Drawing.Size(1370, 84);
             this.panel1.TabIndex = 0;
             // 
+            // btnChangePassword
+            // 
+            this.btnChangePassword.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnChangePassword.BackColor = System.Drawing.Color.Green;
+            this.btnChangePassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnChangePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnChangePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnChangePassword.ForeColor = System.Drawing.Color.White;
+            this.btnChangePassword.Location = new System.Drawing.Point(1247, 56);
+            this.btnChangePassword.Name = "btnChangePassword";
+            this.btnChangePassword.Size = new System.Drawing.Size(121, 25);
+            this.btnChangePassword.TabIndex = 19;
+            this.btnChangePassword.Text = "Change Password";
+            this.btnChangePassword.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnChangePassword.UseVisualStyleBackColor = false;
+            this.btnChangePassword.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(0, -1);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 83);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 20;
+            this.pictureBox1.TabStop = false;
+            // 
             // lblUserName
             // 
             this.lblUserName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUserName.AutoSize = true;
-            this.lblUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserName.Location = new System.Drawing.Point(1050, 12);
+            this.lblUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserName.Location = new System.Drawing.Point(1009, 12);
             this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(0, 13);
+            this.lblUserName.Size = new System.Drawing.Size(0, 16);
             this.lblUserName.TabIndex = 17;
             // 
             // lblUserStatus
             // 
             this.lblUserStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUserStatus.AutoSize = true;
-            this.lblUserStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserStatus.Location = new System.Drawing.Point(1033, 40);
+            this.lblUserStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserStatus.Location = new System.Drawing.Point(1009, 40);
             this.lblUserStatus.Name = "lblUserStatus";
-            this.lblUserStatus.Size = new System.Drawing.Size(0, 13);
+            this.lblUserStatus.Size = new System.Drawing.Size(0, 16);
             this.lblUserStatus.TabIndex = 16;
             // 
             // label5
@@ -120,7 +151,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(956, 63);
+            this.label5.Location = new System.Drawing.Point(915, 63);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(83, 16);
             this.label5.TabIndex = 15;
@@ -129,16 +160,16 @@
             // lblDate
             // 
             this.lblDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDate.Font = new System.Drawing.Font("LCD", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(1063, 62);
+            this.lblDate.Font = new System.Drawing.Font("LCD", 10F, System.Drawing.FontStyle.Bold);
+            this.lblDate.Location = new System.Drawing.Point(1009, 62);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(276, 20);
+            this.lblDate.Size = new System.Drawing.Size(235, 20);
             this.lblDate.TabIndex = 14;
             // 
             // pictureBox2
             // 
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.Location = new System.Drawing.Point(1113, 32);
+            this.pictureBox2.Location = new System.Drawing.Point(1072, 32);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(35, 22);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -155,7 +186,7 @@
             this.btnLogout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLogout.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.btnLogout.LinkColor = System.Drawing.Color.Black;
-            this.btnLogout.Location = new System.Drawing.Point(1156, 31);
+            this.btnLogout.Location = new System.Drawing.Point(1115, 31);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(71, 28);
             this.btnLogout.TabIndex = 12;
@@ -170,7 +201,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(956, 10);
+            this.label1.Location = new System.Drawing.Point(915, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 16);
             this.label1.TabIndex = 9;
@@ -181,7 +212,7 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(956, 38);
+            this.label2.Location = new System.Drawing.Point(915, 38);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(55, 16);
             this.label2.TabIndex = 10;
@@ -190,7 +221,7 @@
             // picPassport
             // 
             this.picPassport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picPassport.Location = new System.Drawing.Point(1256, 8);
+            this.picPassport.Location = new System.Drawing.Point(1269, 1);
             this.picPassport.Name = "picPassport";
             this.picPassport.Size = new System.Drawing.Size(83, 51);
             this.picPassport.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -201,7 +232,7 @@
             // 
             this.lblAddress.AutoSize = true;
             this.lblAddress.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAddress.Location = new System.Drawing.Point(38, 49);
+            this.lblAddress.Location = new System.Drawing.Point(117, 49);
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.Size = new System.Drawing.Size(250, 23);
             this.lblAddress.TabIndex = 5;
@@ -211,11 +242,12 @@
             // 
             this.lblChurchName.AutoSize = true;
             this.lblChurchName.Font = new System.Drawing.Font("Garamond", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblChurchName.Location = new System.Drawing.Point(31, 1);
+            this.lblChurchName.Location = new System.Drawing.Point(112, 1);
             this.lblChurchName.Name = "lblChurchName";
             this.lblChurchName.Size = new System.Drawing.Size(771, 54);
             this.lblChurchName.TabIndex = 4;
             this.lblChurchName.Text = "ST. PETER CATHOLIC CHURCH";
+            this.lblChurchName.Click += new System.EventHandler(this.lblChurchName_Click);
             // 
             // statusStrip1
             // 
@@ -245,23 +277,6 @@
             this.lblLabel.Name = "lblLabel";
             this.lblLabel.Size = new System.Drawing.Size(0, 17);
             // 
-            // btnBackgroundPic
-            // 
-            this.btnBackgroundPic.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnBackgroundPic.BackColor = System.Drawing.Color.Green;
-            this.btnBackgroundPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnBackgroundPic.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnBackgroundPic.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBackgroundPic.ForeColor = System.Drawing.Color.White;
-            this.btnBackgroundPic.Location = new System.Drawing.Point(1025, 536);
-            this.btnBackgroundPic.Name = "btnBackgroundPic";
-            this.btnBackgroundPic.Size = new System.Drawing.Size(150, 101);
-            this.btnBackgroundPic.TabIndex = 2;
-            this.btnBackgroundPic.Text = "Change Background Picture";
-            this.btnBackgroundPic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnBackgroundPic.UseVisualStyleBackColor = false;
-            this.btnBackgroundPic.Click += new System.EventHandler(this.btnBackgroundPic_Click);
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Right;
@@ -269,12 +284,11 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnSettings,
             this.btnSearch});
-            this.toolStrip1.Location = new System.Drawing.Point(1338, 84);
+            this.toolStrip1.Location = new System.Drawing.Point(1346, 84);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(32, 597);
+            this.toolStrip1.Size = new System.Drawing.Size(24, 597);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
-            this.toolStrip1.Visible = false;
             // 
             // btnSettings
             // 
@@ -284,6 +298,7 @@
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(21, 20);
             this.btnSettings.Text = "Setting";
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // btnSearch
             // 
@@ -323,6 +338,7 @@
             // 
             // cmbViewRecordBy
             // 
+            this.cmbViewRecordBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbViewRecordBy.Font = new System.Drawing.Font("Dutch801 XBd BT", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbViewRecordBy.FormattingEnabled = true;
             this.cmbViewRecordBy.Items.AddRange(new object[] {
@@ -362,7 +378,7 @@
             // 
             this.panel2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.Controls.Add(this.btnViewRecords);
+            this.panel2.Controls.Add(this.btnViewSacramentRecord);
             this.panel2.Controls.Add(this.panelViewRecordBy);
             this.panel2.ForeColor = System.Drawing.Color.White;
             this.panel2.Location = new System.Drawing.Point(715, 100);
@@ -371,27 +387,27 @@
             this.panel2.TabIndex = 18;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
-            // btnViewRecords
+            // btnViewSacramentRecord
             // 
-            this.btnViewRecords.AutoEllipsis = true;
-            this.btnViewRecords.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnViewRecords.BackColor = System.Drawing.Color.Green;
-            this.btnViewRecords.FlatAppearance.BorderColor = System.Drawing.Color.Green;
-            this.btnViewRecords.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnViewRecords.Font = new System.Drawing.Font("Swis721 Blk BT", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnViewRecords.Image = ((System.Drawing.Image)(resources.GetObject("btnViewRecords.Image")));
-            this.btnViewRecords.Location = new System.Drawing.Point(9, 4);
-            this.btnViewRecords.Name = "btnViewRecords";
-            this.btnViewRecords.Size = new System.Drawing.Size(212, 236);
-            this.btnViewRecords.TabIndex = 12;
-            this.btnViewRecords.Text = "View Sacrament Register";
-            this.btnViewRecords.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnViewRecords.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnViewRecords.UseCompatibleTextRendering = true;
-            this.btnViewRecords.UseVisualStyleBackColor = false;
-            this.btnViewRecords.Click += new System.EventHandler(this.btnViewRecords_Click);
-            this.btnViewRecords.MouseLeave += new System.EventHandler(this.btnViewRecords_MouseLeave);
-            this.btnViewRecords.MouseHover += new System.EventHandler(this.btnViewRecords_MouseHover);
+            this.btnViewSacramentRecord.AutoEllipsis = true;
+            this.btnViewSacramentRecord.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnViewSacramentRecord.BackColor = System.Drawing.Color.Green;
+            this.btnViewSacramentRecord.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            this.btnViewSacramentRecord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnViewSacramentRecord.Font = new System.Drawing.Font("Swis721 Blk BT", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnViewSacramentRecord.Image = ((System.Drawing.Image)(resources.GetObject("btnViewSacramentRecord.Image")));
+            this.btnViewSacramentRecord.Location = new System.Drawing.Point(9, 4);
+            this.btnViewSacramentRecord.Name = "btnViewSacramentRecord";
+            this.btnViewSacramentRecord.Size = new System.Drawing.Size(212, 236);
+            this.btnViewSacramentRecord.TabIndex = 12;
+            this.btnViewSacramentRecord.Text = "View Sacrament Register";
+            this.btnViewSacramentRecord.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnViewSacramentRecord.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnViewSacramentRecord.UseCompatibleTextRendering = true;
+            this.btnViewSacramentRecord.UseVisualStyleBackColor = false;
+            this.btnViewSacramentRecord.Click += new System.EventHandler(this.btnViewRecords_Click);
+            this.btnViewSacramentRecord.MouseLeave += new System.EventHandler(this.btnViewRecords_MouseLeave);
+            this.btnViewSacramentRecord.MouseHover += new System.EventHandler(this.btnViewRecords_MouseHover);
             // 
             // btnAddUser
             // 
@@ -409,7 +425,7 @@
             this.btnAddUser.Name = "btnAddUser";
             this.btnAddUser.Size = new System.Drawing.Size(176, 192);
             this.btnAddUser.TabIndex = 17;
-            this.btnAddUser.Text = "Add New User";
+            this.btnAddUser.Text = "Manage Users";
             this.btnAddUser.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnAddUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnAddUser.UseVisualStyleBackColor = true;
@@ -545,7 +561,6 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnOpenNewRecord);
-            this.Controls.Add(this.btnBackgroundPic);
             this.Controls.Add(this.btnViewList);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -556,6 +571,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPassport)).EndInit();
             this.statusStrip1.ResumeLayout(false);
@@ -578,7 +594,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel lblDescription;
         private System.Windows.Forms.Button btnOpenNewRecord;
-        private System.Windows.Forms.Button btnBackgroundPic;
         private System.Windows.Forms.Button btnViewList;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnSettings;
@@ -598,13 +613,15 @@
         private System.Windows.Forms.Label lblUserStatus;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblDate;
-        private System.Windows.Forms.Button btnViewRecords;
+        private System.Windows.Forms.Button btnViewSacramentRecord;
         private System.Windows.Forms.Panel panelViewRecordBy;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cmbViewRecordBy;
         private System.Windows.Forms.Button btnPriests;
         private System.Windows.Forms.Button btnAddUser;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnChangePassword;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
