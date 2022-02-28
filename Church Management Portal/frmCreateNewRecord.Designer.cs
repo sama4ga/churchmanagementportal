@@ -96,7 +96,7 @@
             this.btnOtherGroups.Name = "btnOtherGroups";
             this.btnOtherGroups.Size = new System.Drawing.Size(174, 100);
             this.btnOtherGroups.TabIndex = 4;
-            this.btnOtherGroups.Text = "Other Groups";
+            this.btnOtherGroups.Text = "Lay Apostolates";
             this.btnOtherGroups.UseVisualStyleBackColor = false;
             this.btnOtherGroups.Click += new System.EventHandler(this.btnOtherGroups_Click);
             // 

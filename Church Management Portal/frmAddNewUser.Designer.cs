@@ -216,6 +216,7 @@
             this.dgvParishionerList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvParishionerList.Size = new System.Drawing.Size(381, 366);
             this.dgvParishionerList.TabIndex = 12;
+            this.dgvParishionerList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvParishionerList_CellClick);
             this.dgvParishionerList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvParishionerList_CellContentClick);
             // 
             // frmAddNewUser

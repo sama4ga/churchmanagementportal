@@ -126,7 +126,7 @@
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkGreen;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
@@ -139,7 +139,7 @@
             this.dgvBaptismRegister.ShowEditingIcon = false;
             this.dgvBaptismRegister.Size = new System.Drawing.Size(564, 563);
             this.dgvBaptismRegister.TabIndex = 0;
-            this.dgvBaptismRegister.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBaptismRegister_CellContentClick);
+            this.dgvBaptismRegister.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBaptismRegister_CellClick);
             // 
             // panelAddNewParishioner
             // 
@@ -183,7 +183,7 @@
             this.txtMinisterUpdate.Location = new System.Drawing.Point(87, 193);
             this.txtMinisterUpdate.Name = "txtMinisterUpdate";
             this.txtMinisterUpdate.Size = new System.Drawing.Size(224, 23);
-            this.txtMinisterUpdate.TabIndex = 13;
+            this.txtMinisterUpdate.TabIndex = 19;
             // 
             // btnUpdate
             // 
@@ -195,7 +195,7 @@
             this.btnUpdate.Location = new System.Drawing.Point(182, 230);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(129, 35);
-            this.btnUpdate.TabIndex = 2;
+            this.btnUpdate.TabIndex = 20;
             this.btnUpdate.Text = "&Update Record";
             this.btnUpdate.UseVisualStyleBackColor = false;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
@@ -232,28 +232,28 @@
             this.dtpDateUpdate.Location = new System.Drawing.Point(87, 153);
             this.dtpDateUpdate.Name = "dtpDateUpdate";
             this.dtpDateUpdate.Size = new System.Drawing.Size(224, 23);
-            this.dtpDateUpdate.TabIndex = 9;
+            this.dtpDateUpdate.TabIndex = 18;
             // 
             // txtVenueUpdate
             // 
             this.txtVenueUpdate.Location = new System.Drawing.Point(87, 73);
             this.txtVenueUpdate.Name = "txtVenueUpdate";
             this.txtVenueUpdate.Size = new System.Drawing.Size(224, 23);
-            this.txtVenueUpdate.TabIndex = 5;
+            this.txtVenueUpdate.TabIndex = 16;
             // 
             // txtSponsorUpdate
             // 
             this.txtSponsorUpdate.Location = new System.Drawing.Point(87, 113);
             this.txtSponsorUpdate.Name = "txtSponsorUpdate";
             this.txtSponsorUpdate.Size = new System.Drawing.Size(224, 23);
-            this.txtSponsorUpdate.TabIndex = 4;
+            this.txtSponsorUpdate.TabIndex = 17;
             // 
             // txtNameUpdate
             // 
             this.txtNameUpdate.Location = new System.Drawing.Point(87, 33);
             this.txtNameUpdate.Name = "txtNameUpdate";
             this.txtNameUpdate.Size = new System.Drawing.Size(224, 23);
-            this.txtNameUpdate.TabIndex = 3;
+            this.txtNameUpdate.TabIndex = 15;
             // 
             // label10
             // 
@@ -332,7 +332,6 @@
             this.dgvListOfParishioners.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvListOfParishioners.Size = new System.Drawing.Size(429, 596);
             this.dgvListOfParishioners.TabIndex = 0;
-            this.dgvListOfParishioners.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListOfParishioners_CellContentClick);
             this.dgvListOfParishioners.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListOfParishioners_CellContentDoubleClick);
             // 
             // gbAddNewRecord
@@ -367,7 +366,7 @@
             this.txtMinister.Location = new System.Drawing.Point(87, 227);
             this.txtMinister.Name = "txtMinister";
             this.txtMinister.Size = new System.Drawing.Size(224, 23);
-            this.txtMinister.TabIndex = 13;
+            this.txtMinister.TabIndex = 12;
             // 
             // btnClear
             // 
@@ -379,7 +378,7 @@
             this.btnClear.Location = new System.Drawing.Point(207, 269);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(104, 35);
-            this.btnClear.TabIndex = 3;
+            this.btnClear.TabIndex = 14;
             this.btnClear.Text = "&Clear";
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -394,7 +393,7 @@
             this.btnSave.Location = new System.Drawing.Point(30, 269);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(129, 35);
-            this.btnSave.TabIndex = 2;
+            this.btnSave.TabIndex = 13;
             this.btnSave.Text = "&Save Record";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -431,7 +430,7 @@
             this.dtpDate.Location = new System.Drawing.Point(87, 187);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(224, 23);
-            this.dtpDate.TabIndex = 9;
+            this.dtpDate.TabIndex = 11;
             // 
             // rdNewParishioner
             // 
@@ -462,21 +461,21 @@
             this.txtVenue.Location = new System.Drawing.Point(87, 107);
             this.txtVenue.Name = "txtVenue";
             this.txtVenue.Size = new System.Drawing.Size(224, 23);
-            this.txtVenue.TabIndex = 5;
+            this.txtVenue.TabIndex = 9;
             // 
             // txtSponsor
             // 
             this.txtSponsor.Location = new System.Drawing.Point(87, 147);
             this.txtSponsor.Name = "txtSponsor";
             this.txtSponsor.Size = new System.Drawing.Size(224, 23);
-            this.txtSponsor.TabIndex = 4;
+            this.txtSponsor.TabIndex = 10;
             // 
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(87, 67);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(224, 23);
-            this.txtName.TabIndex = 3;
+            this.txtName.TabIndex = 8;
             this.txtName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtName_KeyUp);
             // 
             // label3
@@ -507,7 +506,7 @@
             this.btnAddNewRecord.Location = new System.Drawing.Point(586, 639);
             this.btnAddNewRecord.Name = "btnAddNewRecord";
             this.btnAddNewRecord.Size = new System.Drawing.Size(179, 30);
-            this.btnAddNewRecord.TabIndex = 0;
+            this.btnAddNewRecord.TabIndex = 1;
             this.btnAddNewRecord.Text = "&Add New Record";
             this.btnAddNewRecord.UseVisualStyleBackColor = false;
             this.btnAddNewRecord.Click += new System.EventHandler(this.btnAddNewRecord_Click);
@@ -522,7 +521,7 @@
             this.btnBack.Location = new System.Drawing.Point(1188, 639);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(146, 30);
-            this.btnBack.TabIndex = 1;
+            this.btnBack.TabIndex = 4;
             this.btnBack.Text = "&Back";
             this.btnBack.UseVisualStyleBackColor = false;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
@@ -566,7 +565,7 @@
             this.txtRowNo.Location = new System.Drawing.Point(93, 9);
             this.txtRowNo.Name = "txtRowNo";
             this.txtRowNo.Size = new System.Drawing.Size(35, 26);
-            this.txtRowNo.TabIndex = 6;
+            this.txtRowNo.TabIndex = 25;
             this.txtRowNo.TextChanged += new System.EventHandler(this.txtRowNo_TextChanged);
             this.txtRowNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRowNo_KeyPress);
             // 
@@ -577,7 +576,7 @@
             this.txtRowCount.Location = new System.Drawing.Point(149, 8);
             this.txtRowCount.Name = "txtRowCount";
             this.txtRowCount.Size = new System.Drawing.Size(35, 26);
-            this.txtRowCount.TabIndex = 5;
+            this.txtRowCount.TabIndex = 26;
             // 
             // label12
             // 
@@ -596,7 +595,7 @@
             this.btnLast.Location = new System.Drawing.Point(233, 5);
             this.btnLast.Name = "btnLast";
             this.btnLast.Size = new System.Drawing.Size(35, 30);
-            this.btnLast.TabIndex = 3;
+            this.btnLast.TabIndex = 30;
             this.btnLast.Text = ">>";
             this.btnLast.UseVisualStyleBackColor = true;
             this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
@@ -608,7 +607,7 @@
             this.btnNext.Location = new System.Drawing.Point(195, 5);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(35, 30);
-            this.btnNext.TabIndex = 2;
+            this.btnNext.TabIndex = 28;
             this.btnNext.Text = ">";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
@@ -620,7 +619,7 @@
             this.btnPrevious.Location = new System.Drawing.Point(49, 6);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(35, 30);
-            this.btnPrevious.TabIndex = 1;
+            this.btnPrevious.TabIndex = 27;
             this.btnPrevious.Text = "<";
             this.btnPrevious.UseVisualStyleBackColor = true;
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
@@ -632,7 +631,7 @@
             this.btnFirst.Location = new System.Drawing.Point(10, 6);
             this.btnFirst.Name = "btnFirst";
             this.btnFirst.Size = new System.Drawing.Size(35, 30);
-            this.btnFirst.TabIndex = 0;
+            this.btnFirst.TabIndex = 29;
             this.btnFirst.Text = "<<";
             this.btnFirst.UseVisualStyleBackColor = true;
             this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
@@ -645,8 +644,8 @@
             this.btnExport.Margin = new System.Windows.Forms.Padding(4);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(69, 39);
-            this.btnExport.TabIndex = 9;
-            this.btnExport.Text = "Export";
+            this.btnExport.TabIndex = 24;
+            this.btnExport.Text = "E&xport";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
@@ -658,8 +657,8 @@
             this.btnPrint.Margin = new System.Windows.Forms.Padding(4);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(64, 39);
-            this.btnPrint.TabIndex = 8;
-            this.btnPrint.Text = "Print";
+            this.btnPrint.TabIndex = 23;
+            this.btnPrint.Text = "&Print";
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
@@ -697,14 +696,14 @@
             this.cmbSearchBy.Location = new System.Drawing.Point(109, 15);
             this.cmbSearchBy.Name = "cmbSearchBy";
             this.cmbSearchBy.Size = new System.Drawing.Size(83, 26);
-            this.cmbSearchBy.TabIndex = 9;
+            this.cmbSearchBy.TabIndex = 21;
             // 
             // txtSearch
             // 
             this.txtSearch.Location = new System.Drawing.Point(192, 16);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(219, 24);
-            this.txtSearch.TabIndex = 2;
+            this.txtSearch.TabIndex = 22;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // printDocument1
@@ -736,7 +735,7 @@
             this.btnEdit.Location = new System.Drawing.Point(785, 639);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(179, 30);
-            this.btnEdit.TabIndex = 4;
+            this.btnEdit.TabIndex = 2;
             this.btnEdit.Text = "&Edit Record";
             this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);

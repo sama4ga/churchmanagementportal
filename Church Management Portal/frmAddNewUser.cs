@@ -62,7 +62,18 @@ namespace Church_Management_Portal
             }
             else
             {
-                Sql.Execute_Insert("INSERT INTO `users`(`username`,`password`,`parishioner_id`,`priviledge`) VALUES('"+ txtUsername.Text + "',sha1('" + txtPassword.Text + "'),'" + parishioner_id + "','" + cmbPriviledge.SelectedItem.ToString() + "');");
+                if (rdNonParishioner.Checked)
+                {
+                    parishioner_id = 0;
+                }
+                //parishioner_id = rdNonParishioner.Checked == true ? 0 : int.Parse(dgvParishionerList.CurrentRow.Cells[0].Value.ToString());
+                List<string> param = new List<string>();
+                param.Add(txtUsername.Text.Trim());
+                param.Add(parishioner_id.ToString());
+                param.Add(cmbPriviledge.SelectedItem.ToString());
+                //long insertId = 0;
+                Sql.Execute_Insert("INSERT INTO `users`(`username`,`password`,`parishioner_id`,`priviledge`) VALUES('" + txtUsername.Text + "',sha1('" + txtPassword.Text + "'),'" + parishioner_id + "','" + cmbPriviledge.SelectedItem.ToString() + "');");
+                //Sql.InsertQuery("INSERT INTO `users`(`username`,`password`,`parishioner_id`,`priviledge`) VALUES(@1,sha1('" + txtPassword.Text + "'),@3,@4);", param, out insertId);
                 if (!Sql.result) { return; }
                 MessageBox.Show("Success", "Add New User");
             }
@@ -70,12 +81,17 @@ namespace Church_Management_Portal
 
         private void dgvParishionerList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            parishioner_id = int.Parse(dgvParishionerList.CurrentRow.Cells[0].Value.ToString());
+           // refer to cell_click event listener
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void dgvParishionerList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            parishioner_id = int.Parse(dgvParishionerList.CurrentRow.Cells[0].Value.ToString());
         }
     }
 }

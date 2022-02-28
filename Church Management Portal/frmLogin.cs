@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.IO;
 
 namespace Church_Management_Portal
 {
@@ -33,6 +35,7 @@ namespace Church_Management_Portal
             else
             {
                 maxrow = Sql.maxrow("SELECT IFNULL(`parishioner_id`,0) `parishioner_id`,`priviledge` FROM `users` WHERE `username`='" + txtUsername.Text + "' AND password=sha1('" + txtPassword.Text + "');", "users");
+                if (!Sql.result) { return; }
                 if (maxrow == 1)
                 {
                     int parishioner_id = 0;
@@ -44,7 +47,6 @@ namespace Church_Management_Portal
                     frm.user_status = priviledge;
                     frm.Show();
                     this.Hide();
-
                 }
                 else
                 {
@@ -64,5 +66,22 @@ namespace Church_Management_Portal
         {
 
         }
+
+        private void frmLogin_Load(object sender, EventArgs e)
+        {
+            //if (Properties.Settings.Default.firstRun)
+            //{
+            //    Sql.Execute_Query("ALTER TABLE `parishioners` ADD COLUMN `title` varchar(10) DEFAULT ' ',`whatCanYouDo` tinytext ");
+            //    if (Sql.result)
+            //    {
+            //        Properties.Settings.Default.firstRun = false;
+            //    }
+            //}
+            
+
+
+        }
+
+
     }
 }

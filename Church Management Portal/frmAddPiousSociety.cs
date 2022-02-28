@@ -24,6 +24,10 @@ namespace Church_Management_Portal
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtSocietyName.Text.Trim()))
+            {
+                MessageBox.Show("Enter name of pious society to proceed", "Add Pious Society");txtSocietyName.Focus();return;
+            }
             // society code name
             string[] split = txtSocietyName.Text.Split(' ');
             string codename = "";
@@ -34,7 +38,13 @@ namespace Church_Management_Portal
 
             codename.ToUpper();
 
-            Sql.Execute_Query("INSERT INTO `pious_societies`(`name`,`code_name`,`slogan`) VALUES('" + txtSocietyName.Text + "','" + codename + "','" + txtSlogan.Text + "');");
+            List<string> param = new List<string>();
+            param.Add(txtSocietyName.Text.Trim());
+            param.Add(codename);
+            param.Add(txtSlogan.Text.Trim());
+
+            long insertId = 0;
+            Sql.InsertQuery("INSERT INTO `pious_societies`(`name`,`code_name`,`slogan`) VALUES(@1,@2,@3);", param, out insertId);
             if (!Sql.result) { return; }
 
             Sql.Execute_CUD("CREATE TABLE IF NOT EXISTS `"+ codename +"`(`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE,`member_id` INT);",

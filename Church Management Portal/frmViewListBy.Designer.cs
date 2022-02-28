@@ -45,10 +45,10 @@
             this.flpOrganisation = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.flpSacraments = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnMarried = new System.Windows.Forms.Button();
             this.btnBaptised = new System.Windows.Forms.Button();
             this.btnCommunicants = new System.Windows.Forms.Button();
             this.btnConfirmed = new System.Windows.Forms.Button();
-            this.btnMarried = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -99,7 +99,7 @@
             this.groupBox7.Size = new System.Drawing.Size(165, 656);
             this.groupBox7.TabIndex = 6;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Other Groups";
+            this.groupBox7.Text = "Lay Apostolates";
             // 
             // flpOtherGroups
             // 
@@ -271,6 +271,17 @@
             this.flpSacraments.WrapContents = false;
             this.flpSacraments.Paint += new System.Windows.Forms.PaintEventHandler(this.flpSacraments_Paint);
             // 
+            // btnMarried
+            // 
+            this.btnMarried.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnMarried.Location = new System.Drawing.Point(3, 3);
+            this.btnMarried.Name = "btnMarried";
+            this.btnMarried.Size = new System.Drawing.Size(130, 97);
+            this.btnMarried.TabIndex = 3;
+            this.btnMarried.Text = "Married";
+            this.btnMarried.UseVisualStyleBackColor = false;
+            this.btnMarried.Click += new System.EventHandler(this.btnMarried_Click);
+            // 
             // btnBaptised
             // 
             this.btnBaptised.BackColor = System.Drawing.Color.ForestGreen;
@@ -303,17 +314,6 @@
             this.btnConfirmed.Text = "Confirmed";
             this.btnConfirmed.UseVisualStyleBackColor = false;
             this.btnConfirmed.Click += new System.EventHandler(this.btnConfirmed_Click);
-            // 
-            // btnMarried
-            // 
-            this.btnMarried.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnMarried.Location = new System.Drawing.Point(3, 3);
-            this.btnMarried.Name = "btnMarried";
-            this.btnMarried.Size = new System.Drawing.Size(130, 97);
-            this.btnMarried.TabIndex = 3;
-            this.btnMarried.Text = "Married";
-            this.btnMarried.UseVisualStyleBackColor = false;
-            this.btnMarried.Click += new System.EventHandler(this.btnMarried_Click);
             // 
             // frmViewListBy
             // 

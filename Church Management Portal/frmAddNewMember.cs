@@ -86,7 +86,7 @@ namespace Church_Management_Portal
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            (dataGridView1.DataSource as DataTable).DefaultView.RowFilter = "Name LIKE LIKE '%" + txtSearch.Text + "%'";  // Sql.ds.Tables[0]
+            (dataGridView1.DataSource as DataTable).DefaultView.RowFilter = "Name LIKE '%" + txtSearch.Text + "%'";  // Sql.ds.Tables[0]
             dataGridView1.Refresh();
         }
 

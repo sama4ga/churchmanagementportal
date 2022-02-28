@@ -79,13 +79,59 @@ namespace Church_Management_Portal
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Sql.Execute_Insert("INSERT INTO `matrimony`("+
+            if (string.IsNullOrWhiteSpace(txtGroomName.Text.Trim()))
+            {
+                MessageBox.Show("Groom's name is required");return;
+            }
+            if (string.IsNullOrWhiteSpace(txtGroomParent.Text.Trim()))
+            {
+                MessageBox.Show("Groom Parent's name is required"); return;
+            }
+            if (string.IsNullOrWhiteSpace(txtGroomVillage.Text.Trim()))
+            {
+                MessageBox.Show("Groom's  village is required"); return;
+            }
+            if (string.IsNullOrWhiteSpace(txtBrideName.Text.Trim()))
+            {
+                MessageBox.Show("Bride's name is required"); return;
+            }
+            if (string.IsNullOrWhiteSpace(txtBrideParent.Text.Trim()))
+            {
+                MessageBox.Show("Bride Parent's name is required"); return;
+            }
+            if (string.IsNullOrWhiteSpace(txtBrideVillage.Text.Trim()))
+            {
+                MessageBox.Show("Bride's village is required"); return;
+            }
+            if (string.IsNullOrWhiteSpace(txtSponsor.Text.Trim()))
+            {
+                MessageBox.Show("Sponsor's name is required"); return;
+            }
+            if (string.IsNullOrWhiteSpace(txtWitness.Text.Trim()))
+            {
+                MessageBox.Show("Minister's name is required"); return;
+            }
+            if (string.IsNullOrWhiteSpace(txtVenue.Text.Trim()))
+            {
+                MessageBox.Show("Venue name is required"); return;
+            }
+
+            List<string> param = new List<string>();
+            param.Add(txtGroomName.Text.Trim());
+            param.Add(txtGroomParent.Text);
+            param.Add(txtGroomVillage.Text.Trim());
+            param.Add(txtBrideName.Text.Trim());
+            param.Add(txtBrideParent.Text.Trim());
+            param.Add(txtBrideVillage.Text.Trim());
+            param.Add(txtSponsor.Text.Trim());
+            param.Add(txtWitness.Text.Trim());
+            param.Add(txtVenue.Text.Trim());
+            param.Add(dtpDate.Value.ToString("yyyy-MM-dd"));
+            long insertId = 0;
+
+            Sql.InsertQuery("INSERT INTO `matrimony`("+
                 "`groom_name`,`groom_parent`,`groom_village`,`bride_name`,`bride_parent`,`bride_village` ,  "+
-               "`sponsor`,`minister`,`venue`,`date_received`                                    "+
-               ") VALUES(                                                                                   "+
-               "'"+ txtGroomName.Text + "','" + txtGroomParent.Text + "','" + txtGroomVillage.Text + "',    "+
-               "'" + txtBrideName.Text + "','" + txtBrideParent.Text + "','" + txtBrideVillage.Text + "',   "+
-               "'" + txtSponsor.Text + "','" + txtWitness.Text + "','" + txtVenue.Text + "','"+ dtpDate.Value.ToString("yyyy-MM-dd") +"' );");
+               "`sponsor`,`minister`,`venue`,`date_received`) VALUES(@1,@2,@3,@4,@5,@6,@7,@8,@9,@10 );",param,out insertId);
             if (!Sql.result) { return; }
             MessageBox.Show("Record successfully added","View Marriage Record");
             refresh();

@@ -152,7 +152,7 @@
             this.txtMinisterUpdate.Location = new System.Drawing.Point(94, 201);
             this.txtMinisterUpdate.Name = "txtMinisterUpdate";
             this.txtMinisterUpdate.Size = new System.Drawing.Size(237, 22);
-            this.txtMinisterUpdate.TabIndex = 13;
+            this.txtMinisterUpdate.TabIndex = 14;
             // 
             // btnUpdate
             // 
@@ -163,7 +163,7 @@
             this.btnUpdate.Location = new System.Drawing.Point(181, 237);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(147, 29);
-            this.btnUpdate.TabIndex = 2;
+            this.btnUpdate.TabIndex = 15;
             this.btnUpdate.Text = "&Update Record";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
@@ -200,28 +200,28 @@
             this.dtpDateUpdate.Location = new System.Drawing.Point(94, 162);
             this.dtpDateUpdate.Name = "dtpDateUpdate";
             this.dtpDateUpdate.Size = new System.Drawing.Size(237, 22);
-            this.dtpDateUpdate.TabIndex = 9;
+            this.dtpDateUpdate.TabIndex = 13;
             // 
             // txtVenueUpdate
             // 
             this.txtVenueUpdate.Location = new System.Drawing.Point(94, 77);
             this.txtVenueUpdate.Name = "txtVenueUpdate";
             this.txtVenueUpdate.Size = new System.Drawing.Size(237, 22);
-            this.txtVenueUpdate.TabIndex = 5;
+            this.txtVenueUpdate.TabIndex = 11;
             // 
             // txtSponsorUpdate
             // 
             this.txtSponsorUpdate.Location = new System.Drawing.Point(94, 118);
             this.txtSponsorUpdate.Name = "txtSponsorUpdate";
             this.txtSponsorUpdate.Size = new System.Drawing.Size(237, 22);
-            this.txtSponsorUpdate.TabIndex = 4;
+            this.txtSponsorUpdate.TabIndex = 12;
             // 
             // txtNameUpdate
             // 
             this.txtNameUpdate.Location = new System.Drawing.Point(94, 34);
             this.txtNameUpdate.Name = "txtNameUpdate";
             this.txtNameUpdate.Size = new System.Drawing.Size(237, 22);
-            this.txtNameUpdate.TabIndex = 3;
+            this.txtNameUpdate.TabIndex = 10;
             // 
             // label10
             // 
@@ -326,7 +326,7 @@
             this.txtMinister.Location = new System.Drawing.Point(94, 238);
             this.txtMinister.Name = "txtMinister";
             this.txtMinister.Size = new System.Drawing.Size(237, 22);
-            this.txtMinister.TabIndex = 13;
+            this.txtMinister.TabIndex = 7;
             // 
             // btnClear
             // 
@@ -337,7 +337,7 @@
             this.btnClear.Location = new System.Drawing.Point(187, 279);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(144, 29);
-            this.btnClear.TabIndex = 3;
+            this.btnClear.TabIndex = 9;
             this.btnClear.Text = "&Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -351,7 +351,7 @@
             this.btnSave.Location = new System.Drawing.Point(13, 279);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(147, 29);
-            this.btnSave.TabIndex = 2;
+            this.btnSave.TabIndex = 8;
             this.btnSave.Text = "&Save Record";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -388,7 +388,7 @@
             this.dtpDate.Location = new System.Drawing.Point(94, 199);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(237, 22);
-            this.dtpDate.TabIndex = 9;
+            this.dtpDate.TabIndex = 6;
             // 
             // rdNewParishioner
             // 
@@ -396,7 +396,7 @@
             this.rdNewParishioner.Location = new System.Drawing.Point(207, 31);
             this.rdNewParishioner.Name = "rdNewParishioner";
             this.rdNewParishioner.Size = new System.Drawing.Size(124, 20);
-            this.rdNewParishioner.TabIndex = 7;
+            this.rdNewParishioner.TabIndex = 2;
             this.rdNewParishioner.TabStop = true;
             this.rdNewParishioner.Text = "New Parishioner";
             this.rdNewParishioner.UseVisualStyleBackColor = true;
@@ -408,7 +408,7 @@
             this.rdExistingParishioner.Location = new System.Drawing.Point(40, 32);
             this.rdExistingParishioner.Name = "rdExistingParishioner";
             this.rdExistingParishioner.Size = new System.Drawing.Size(143, 20);
-            this.rdExistingParishioner.TabIndex = 6;
+            this.rdExistingParishioner.TabIndex = 1;
             this.rdExistingParishioner.TabStop = true;
             this.rdExistingParishioner.Text = "Existing Parishioner";
             this.rdExistingParishioner.UseVisualStyleBackColor = true;
@@ -419,14 +419,14 @@
             this.txtVenue.Location = new System.Drawing.Point(94, 114);
             this.txtVenue.Name = "txtVenue";
             this.txtVenue.Size = new System.Drawing.Size(237, 22);
-            this.txtVenue.TabIndex = 5;
+            this.txtVenue.TabIndex = 4;
             // 
             // txtSponsor
             // 
             this.txtSponsor.Location = new System.Drawing.Point(94, 155);
             this.txtSponsor.Name = "txtSponsor";
             this.txtSponsor.Size = new System.Drawing.Size(237, 22);
-            this.txtSponsor.TabIndex = 4;
+            this.txtSponsor.TabIndex = 5;
             // 
             // txtName
             // 
@@ -493,7 +493,7 @@
             this.txtRowNo.Location = new System.Drawing.Point(93, 9);
             this.txtRowNo.Name = "txtRowNo";
             this.txtRowNo.Size = new System.Drawing.Size(35, 26);
-            this.txtRowNo.TabIndex = 6;
+            this.txtRowNo.TabIndex = 22;
             this.txtRowNo.TextChanged += new System.EventHandler(this.txtRowNo_TextChanged);
             this.txtRowNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRowNo_KeyPress);
             // 
@@ -504,7 +504,7 @@
             this.txtRowCount.Location = new System.Drawing.Point(149, 8);
             this.txtRowCount.Name = "txtRowCount";
             this.txtRowCount.Size = new System.Drawing.Size(35, 26);
-            this.txtRowCount.TabIndex = 5;
+            this.txtRowCount.TabIndex = 30;
             // 
             // label12
             // 
@@ -523,7 +523,7 @@
             this.btnLast.Location = new System.Drawing.Point(233, 5);
             this.btnLast.Name = "btnLast";
             this.btnLast.Size = new System.Drawing.Size(35, 30);
-            this.btnLast.TabIndex = 3;
+            this.btnLast.TabIndex = 26;
             this.btnLast.Text = ">>";
             this.btnLast.UseVisualStyleBackColor = true;
             this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
@@ -535,7 +535,7 @@
             this.btnNext.Location = new System.Drawing.Point(195, 5);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(35, 30);
-            this.btnNext.TabIndex = 2;
+            this.btnNext.TabIndex = 24;
             this.btnNext.Text = ">";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
@@ -547,7 +547,7 @@
             this.btnPrevious.Location = new System.Drawing.Point(49, 6);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(35, 30);
-            this.btnPrevious.TabIndex = 1;
+            this.btnPrevious.TabIndex = 23;
             this.btnPrevious.Text = "<";
             this.btnPrevious.UseVisualStyleBackColor = true;
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
@@ -559,7 +559,7 @@
             this.btnFirst.Location = new System.Drawing.Point(10, 6);
             this.btnFirst.Name = "btnFirst";
             this.btnFirst.Size = new System.Drawing.Size(35, 30);
-            this.btnFirst.TabIndex = 0;
+            this.btnFirst.TabIndex = 25;
             this.btnFirst.Text = "<<";
             this.btnFirst.UseVisualStyleBackColor = true;
             this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
@@ -572,8 +572,8 @@
             this.btnExport.Margin = new System.Windows.Forms.Padding(4);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(56, 39);
-            this.btnExport.TabIndex = 12;
-            this.btnExport.Text = "Export";
+            this.btnExport.TabIndex = 21;
+            this.btnExport.Text = "E&xport";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
@@ -585,8 +585,8 @@
             this.btnPrint.Margin = new System.Windows.Forms.Padding(4);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(58, 39);
-            this.btnPrint.TabIndex = 11;
-            this.btnPrint.Text = "Print";
+            this.btnPrint.TabIndex = 20;
+            this.btnPrint.Text = "&Print";
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
@@ -623,14 +623,14 @@
             this.cmbSearchBy.Location = new System.Drawing.Point(87, 16);
             this.cmbSearchBy.Name = "cmbSearchBy";
             this.cmbSearchBy.Size = new System.Drawing.Size(95, 21);
-            this.cmbSearchBy.TabIndex = 9;
+            this.cmbSearchBy.TabIndex = 18;
             // 
             // txtSearch
             // 
             this.txtSearch.Location = new System.Drawing.Point(183, 16);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(239, 20);
-            this.txtSearch.TabIndex = 2;
+            this.txtSearch.TabIndex = 19;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // dgvConfirmationRegister
@@ -653,7 +653,7 @@
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.DarkGreen;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
@@ -665,7 +665,8 @@
             this.dgvConfirmationRegister.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvConfirmationRegister.ShowEditingIcon = false;
             this.dgvConfirmationRegister.Size = new System.Drawing.Size(553, 624);
-            this.dgvConfirmationRegister.TabIndex = 10;
+            this.dgvConfirmationRegister.TabIndex = 0;
+            this.dgvConfirmationRegister.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvConfirmationRegister_CellClick);
             this.dgvConfirmationRegister.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvConfirmationRegister_CellContentClick);
             // 
             // btnBack
@@ -695,7 +696,7 @@
             this.btnEditRecord.Location = new System.Drawing.Point(773, 713);
             this.btnEditRecord.Name = "btnEditRecord";
             this.btnEditRecord.Size = new System.Drawing.Size(150, 30);
-            this.btnEditRecord.TabIndex = 11;
+            this.btnEditRecord.TabIndex = 17;
             this.btnEditRecord.Text = "&Edit Record";
             this.btnEditRecord.UseVisualStyleBackColor = true;
             this.btnEditRecord.Click += new System.EventHandler(this.btnEditRecord_Click);

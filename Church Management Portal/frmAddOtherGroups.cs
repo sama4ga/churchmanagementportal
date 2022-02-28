@@ -32,26 +32,39 @@ namespace Church_Management_Portal
         {
             // group code name
             string codename = "";
-            if (txtGroupName.Text.Contains(" "))
+            if (!string.IsNullOrWhiteSpace(txtGroupName.Text.Trim()))
             {
-                string[] split = txtGroupName.Text.Split(' ');
-                
-                foreach (string item in split)
+                if (txtGroupName.Text.Trim().Contains(" "))
                 {
-                    codename += item.Substring(0, 1);
+                    string[] split = txtGroupName.Text.Split(' ');
+                
+                    foreach (string item in split)
+                    {
+                        codename += item.Substring(0, 1);
+                    }
+                }
+                else
+                {
+                    codename = txtGroupName.Text;
                 }
 
             }
             else
             {
-                codename = txtGroupName.Text;
+                MessageBox.Show("Group name is a required field", "Error - unsupplied data");
+                txtGroupName.Focus();
+                    return;
             }
 
             codename.ToUpper();
 
 
-
-            Sql.Execute_Query("INSERT INTO `other_groups`(`name`,`code_name`,`slogan`) VALUES('" + txtGroupName.Text + "','" + codename + "','" + txtSlogan.Text + "');");
+            List<string> param = new List<string>();
+            long insertId = 0;
+            param.Add(txtGroupName.Text.Trim());
+            param.Add(codename);
+            param.Add(txtSlogan.Text.Trim());
+            Sql.InsertQuery("INSERT INTO `other_groups`(`name`,`code_name`,`slogan`) VALUES(@1,@2,@3);",param, out insertId);
             if (!Sql.result) { return; }
 
             Sql.Execute_CUD("CREATE TABLE IF NOT EXISTS `" + codename + "`(`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE,`member_id` INT);",

@@ -33,6 +33,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmViewListOfParishioners));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnDeleteParishionerRecord = new System.Windows.Forms.Button();
             this.btnViewDetails = new System.Windows.Forms.Button();
             this.btnMarkActive = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -70,6 +71,7 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.DarkGreen;
@@ -79,7 +81,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -96,10 +97,13 @@
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.Size = new System.Drawing.Size(1370, 688);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnDeleteParishionerRecord);
             this.groupBox2.Controls.Add(this.btnViewDetails);
             this.groupBox2.Controls.Add(this.btnMarkActive);
             this.groupBox2.Controls.Add(this.btnRefresh);
@@ -111,6 +115,17 @@
             this.groupBox2.Size = new System.Drawing.Size(388, 56);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
+            // 
+            // btnDeleteParishionerRecord
+            // 
+            this.btnDeleteParishionerRecord.Location = new System.Drawing.Point(241, 30);
+            this.btnDeleteParishionerRecord.Name = "btnDeleteParishionerRecord";
+            this.btnDeleteParishionerRecord.Size = new System.Drawing.Size(85, 23);
+            this.btnDeleteParishionerRecord.TabIndex = 7;
+            this.btnDeleteParishionerRecord.Text = "Delete Record";
+            this.btnDeleteParishionerRecord.UseVisualStyleBackColor = true;
+            this.btnDeleteParishionerRecord.Visible = false;
+            this.btnDeleteParishionerRecord.Click += new System.EventHandler(this.btnDeleteParishionerRecord_Click);
             // 
             // btnViewDetails
             // 
@@ -124,9 +139,9 @@
             // 
             // btnMarkActive
             // 
-            this.btnMarkActive.Location = new System.Drawing.Point(133, 30);
+            this.btnMarkActive.Location = new System.Drawing.Point(130, 30);
             this.btnMarkActive.Name = "btnMarkActive";
-            this.btnMarkActive.Size = new System.Drawing.Size(120, 23);
+            this.btnMarkActive.Size = new System.Drawing.Size(105, 23);
             this.btnMarkActive.TabIndex = 5;
             this.btnMarkActive.Text = "Mark As Active";
             this.btnMarkActive.UseVisualStyleBackColor = true;
@@ -134,9 +149,9 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(259, 30);
+            this.btnRefresh.Location = new System.Drawing.Point(328, 30);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(120, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(56, 23);
             this.btnRefresh.TabIndex = 5;
             this.btnRefresh.Text = "&Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -144,9 +159,9 @@
             // 
             // btnMarkInactive
             // 
-            this.btnMarkInactive.Location = new System.Drawing.Point(133, 8);
+            this.btnMarkInactive.Location = new System.Drawing.Point(130, 8);
             this.btnMarkInactive.Name = "btnMarkInactive";
-            this.btnMarkInactive.Size = new System.Drawing.Size(120, 23);
+            this.btnMarkInactive.Size = new System.Drawing.Size(105, 23);
             this.btnMarkInactive.TabIndex = 4;
             this.btnMarkInactive.Text = "Mark As Inactive";
             this.btnMarkInactive.UseVisualStyleBackColor = true;
@@ -154,9 +169,9 @@
             // 
             // btnMarkDead
             // 
-            this.btnMarkDead.Location = new System.Drawing.Point(259, 8);
+            this.btnMarkDead.Location = new System.Drawing.Point(241, 8);
             this.btnMarkDead.Name = "btnMarkDead";
-            this.btnMarkDead.Size = new System.Drawing.Size(120, 23);
+            this.btnMarkDead.Size = new System.Drawing.Size(143, 23);
             this.btnMarkDead.TabIndex = 3;
             this.btnMarkDead.Text = "Mark as Dead";
             this.btnMarkDead.UseVisualStyleBackColor = true;
@@ -437,5 +452,6 @@
         private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.Button btnFirst;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnDeleteParishionerRecord;
     }
 }

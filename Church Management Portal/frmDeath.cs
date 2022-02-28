@@ -60,19 +60,7 @@ namespace Church_Management_Portal
 
         private void dgvDeathList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            parishioner_id = int.Parse(dgvDeathList.Rows[e.RowIndex].Cells[0].Value.ToString());
-            if (dgvDeathList.RowCount > 0)
-            {
-                current_row_no = e.RowIndex;
-                txtRowNo.Text = (current_row_no + 1).ToString();
-            }
-
-            dtpDeathDate.Value = (DateTime)dgvDeathList.Rows[e.RowIndex].Cells["Date of Death"].Value;
-
-            if (!string.IsNullOrEmpty(dgvDeathList.Rows[e.RowIndex].Cells["Burial Date"].Value.ToString()))
-            {
-                dtpBurialDate.Value = (DateTime)dgvDeathList.Rows[e.RowIndex].Cells["Burial Date"].Value;
-            }
+            // refer to cell_click event listener
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -191,6 +179,23 @@ namespace Church_Management_Portal
                 {
                     e.Handled = true;
                 }
+            }
+        }
+
+        private void dgvDeathList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            parishioner_id = int.Parse(dgvDeathList.Rows[e.RowIndex].Cells[0].Value.ToString());
+            if (dgvDeathList.RowCount > 0)
+            {
+                current_row_no = e.RowIndex;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+
+            dtpDeathDate.Value = (DateTime)dgvDeathList.Rows[e.RowIndex].Cells["Date of Death"].Value;
+
+            if (!string.IsNullOrEmpty(dgvDeathList.Rows[e.RowIndex].Cells["Burial Date"].Value.ToString()))
+            {
+                dtpBurialDate.Value = (DateTime)dgvDeathList.Rows[e.RowIndex].Cells["Burial Date"].Value;
             }
         }
     }

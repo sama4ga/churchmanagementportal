@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Church_Management_Portal
@@ -18,10 +19,10 @@ namespace Church_Management_Portal
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to delete " + listSocieties.SelectedItem.ToString(),"Delete Society",MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want to delete " + txtName.Text,"Delete Society",MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 
-                Sql.Execute_Query("SELECT * FROM `societies` WHERE `society_id`='"+ society_id +"';");
+                Sql.Execute_Query("DELETE FROM `societies` WHERE `society_id`='"+ society_id +"';");
                 if (!Sql.result) { return; }
                 MessageBox.Show("Record successfully deleted","View Society Records");
                 refresh();
@@ -69,7 +70,15 @@ namespace Church_Management_Portal
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Sql.Execute_Query("UPDATE `societies` SET `name`='"+ txtName.Text +"' WHERE `society_id`='" + society_id + "';");
+            if (string.IsNullOrWhiteSpace(txtName.Text.Trim()))
+            {
+                MessageBox.Show("Enter name of society to proceed", "View Society Records"); txtName.Focus(); return;
+            }
+            List<string> param = new List<string>();
+            param.Add(txtName.Text.Trim());
+            param.Add(society_id);
+
+            Sql.UpdateQuery("UPDATE `societies` SET `name`=@1 WHERE `society_id`=@2;", param);
             if (!Sql.result) { return; }
             MessageBox.Show("Record successfully update", "View Society Records");
             refresh();

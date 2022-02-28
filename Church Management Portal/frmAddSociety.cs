@@ -22,7 +22,23 @@ namespace Church_Management_Portal
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            Sql.Execute_CUD("INSERT INTO `societies`(`name`,`organisation_id`,`station_id`) VALUES('"+ txtName.Text +"','" + cmbOrg.SelectedValue.ToString() +"','" + cmbStation.SelectedValue.ToString() +"');", "Could not add new society","Society successfully added");
+            if (string.IsNullOrWhiteSpace(txtName.Text.Trim()))
+            {
+                MessageBox.Show("Enter society name to proceed", "Add Society");txtName.Focus(); return;
+            }
+            List<string> param = new List<string>();
+            param.Add(txtName.Text.Trim());
+            param.Add(cmbOrg.SelectedValue.ToString());
+            param.Add(cmbStation.SelectedValue.ToString());
+
+            long insertId = 0;
+            Sql.InsertQuery("INSERT INTO `societies`(`name`,`organisation_id`,`station_id`) VALUES(@1,@2,@3);", param, out insertId);
+            if (!Sql.result) { return; }
+
+            MessageBox.Show("Society successfully added", "Add Society");
+            txtName.Clear();
+            cmbOrg.SelectedIndex = 0;
+            cmbStation.SelectedIndex = 0;
         }
 
         private void frmAddSociety_Load(object sender, EventArgs e)
@@ -34,6 +50,11 @@ namespace Church_Management_Portal
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void cmbStation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

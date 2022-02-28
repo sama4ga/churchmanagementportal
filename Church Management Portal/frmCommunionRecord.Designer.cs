@@ -507,7 +507,7 @@
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.DarkGreen;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
@@ -520,6 +520,7 @@
             this.dgvCommunionRegister.ShowEditingIcon = false;
             this.dgvCommunionRegister.Size = new System.Drawing.Size(558, 574);
             this.dgvCommunionRegister.TabIndex = 8;
+            this.dgvCommunionRegister.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCommunionRegister_CellClick);
             this.dgvCommunionRegister.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCommunionRegister_CellContentClick);
             // 
             // btnAddNewRecord

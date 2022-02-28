@@ -82,9 +82,18 @@ namespace Church_Management_Portal
                 string minister = txtMinister.Text;
                 string dateReceived = dtpDate.Value.ToString("yyyy-MM-dd");
 
-                Sql.Execute_Insert("INSERT INTO `confirmation`(" +
+                List<string> param = new List<string>();
+                param.Add(parishioner_id);
+                param.Add(dateReceived);
+                param.Add(minister);
+                param.Add(venue);
+                param.Add(sponsor);
+
+                long insertId = 0;
+
+                Sql.InsertQuery("INSERT INTO `confirmation`(" +
                     "`parishioner_id`,`date_received`,`minister`,`venue`,`sponsor`) VALUES(" +
-                    "'" + parishioner_id + "','" + dateReceived + "','" + minister + "','" + venue + "','" + sponsor + "');");
+                    "@1,@2,@3,@4,@5);", param, out insertId);
                 if (!Sql.result) { return; }
                 MessageBox.Show("Name successfully entered into the confirmation register", "Add New Confirmation Record");
                 refresh();
@@ -383,21 +392,7 @@ namespace Church_Management_Portal
 
         private void dgvConfirmationRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            parishioner_id = dgvConfirmationRegister.CurrentRow.Cells[0].Value.ToString();
-            if (dgvConfirmationRegister.RowCount > 0)
-            {
-                current_row_no = e.RowIndex;
-                txtRowNo.Text = (current_row_no + 1).ToString();
-            }
-
-            if (gbEditRecord.Visible)
-            {
-                txtNameUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Name"].Value.ToString();
-                txtVenueUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Venue"].Value.ToString();
-                txtSponsorUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Sponsor"].Value.ToString();
-                txtMinisterUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Minister"].Value.ToString();
-                dtpDateUpdate.Value = (DateTime)dgvConfirmationRegister.CurrentRow.Cells["Date"].Value;
-            }
+            // refer to cell_click event listener
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -407,9 +402,16 @@ namespace Church_Management_Portal
             string minister = txtMinisterUpdate.Text;
             string dateReceived = dtpDateUpdate.Value.ToString("yyyy-MM-dd");
 
-            Sql.Execute_Query("UPDATE `confirmation` SET `date_received`='" + dateReceived + "'," +
-                "`minister`='" + minister + "',`venue`='" + venue + "',`sponsor`='" + sponsor + "'" +
-                "WHERE `parishioner_id`='" + parishioner_id + "';");
+            List<string> param = new List<string>();
+            param.Add(dateReceived);
+            param.Add(minister);
+            param.Add(venue);
+            param.Add(sponsor);
+            param.Add(parishioner_id);
+
+            Sql.UpdateQuery("UPDATE `confirmation` SET `date_received`=@1," +
+                "`minister`=@2,`venue`=@3,`sponsor`=@4" +
+                "WHERE `parishioner_id`=@5;",param);
             if (!Sql.result) { return; }
             MessageBox.Show("Record successfully updated in the confirmation register", "Update confirmation Record");
 
@@ -497,6 +499,25 @@ namespace Church_Management_Portal
                 {
                     e.Handled = true;
                 }
+            }
+        }
+
+        private void dgvConfirmationRegister_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            parishioner_id = dgvConfirmationRegister.CurrentRow.Cells[0].Value.ToString();
+            if (dgvConfirmationRegister.RowCount > 0)
+            {
+                current_row_no = e.RowIndex;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+
+            if (gbEditRecord.Visible)
+            {
+                txtNameUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Name"].Value.ToString();
+                txtVenueUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Venue"].Value.ToString();
+                txtSponsorUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Sponsor"].Value.ToString();
+                txtMinisterUpdate.Text = dgvConfirmationRegister.CurrentRow.Cells["Minister"].Value.ToString();
+                dtpDateUpdate.Value = (DateTime)dgvConfirmationRegister.CurrentRow.Cells["Date"].Value;
             }
         }
     }

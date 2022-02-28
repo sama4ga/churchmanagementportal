@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -34,6 +35,8 @@ namespace Church_Management_Portal
             {
                 btnDelete.Visible = false; btnUpdateSelected.Visible = false; btnAddShow.Visible = false;
             }
+
+            cmbType.SelectedIndex = 0;
             refresh();
         }
 
@@ -54,6 +57,7 @@ namespace Church_Management_Portal
 
         private void btnAddShow_Click(object sender, EventArgs e)
         {
+            cmbType.SelectedIndex = 1;
             gbAdd.Show();
         }
 
@@ -64,7 +68,18 @@ namespace Church_Management_Portal
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            sql.Execute_Insert("INSERT INTO `priests` (`priest_name`,`type`,`date_resumed`) VALUES('"+ txtName.Text + "','" + cmbType.SelectedItem.ToString() + "','" + dtpDateResumed.Value.ToString("yyyy-MM-dd") + "');");
+            if (string.IsNullOrEmpty(txtName.Text.Trim()))
+            {
+                MessageBox.Show("Enter the name of the Priest to continue","View Priests"); return;
+            }
+
+            List<string> param = new List<string>();
+            param.Add(txtName.Text.Trim());
+            param.Add(cmbType.SelectedItem.ToString());
+            param.Add(dtpDateResumed.Value.ToString("yyyy-MM-dd"));
+
+            long insertId = 0;
+            sql.InsertQuery("INSERT INTO `priests` (`priest_name`,`type`,`date_resumed`) VALUES(@1,@2,@3);", param, out insertId);
             if (!sql.result) { return; }
             MessageBox.Show("Record successfully added","View Priests");
             refresh();
@@ -78,20 +93,7 @@ namespace Church_Management_Portal
 
         private void dgvListOfPriests_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            priest_id = int.Parse(dgvListOfPriests.CurrentRow.Cells[0].Value.ToString());
-            if (dgvListOfPriests.RowCount > 0)
-            {
-                current_row_no = e.RowIndex;
-                txtRowNo.Text = (current_row_no + 1).ToString();
-            }
-
-
-            if (groupBox1.Visible == true)
-            {
-                txtNameUpdate.Text = dgvListOfPriests.Rows[e.RowIndex].Cells[1].Value.ToString();
-                cmbTypeUpdate.SelectedItem = dgvListOfPriests.Rows[e.RowIndex].Cells[2].Value.ToString();
-                dtpDateResumedUpdate.Value = (DateTime)dgvListOfPriests.CurrentRow.Cells[3].Value;
-            }
+            // refer to cell_click event listener
         }
 
         private void groupBox1_VisibleChanged(object sender, EventArgs e)
@@ -107,8 +109,24 @@ namespace Church_Management_Portal
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             if (dgvListOfPriests.SelectedCells.Count > 0)
-            { 
-                sql.Execute_Insert("UPDATE `priests` SET `priest_name`='" + txtNameUpdate.Text + "',`type`='" + cmbTypeUpdate.SelectedItem.ToString() + "',`date_resumed`='" + dtpDateResumedUpdate.Value.ToString("yyyy-MM-dd") + "' WHERE `priest_id`='" + priest_id + "';");
+            {
+                if (string.IsNullOrWhiteSpace(txtNameUpdate.Text.Trim()))
+                {
+                    MessageBox.Show("Priest name is required");return;
+                }
+                if (cmbTypeUpdate.SelectedIndex  == 0)
+                {
+                    MessageBox.Show("Select type to proceed"); return;
+                }
+
+                List<string> param = new List<string>();
+                param.Add(txtNameUpdate.Text.Trim());
+                param.Add(cmbTypeUpdate.SelectedItem.ToString());
+                param.Add(dtpDateResumedUpdate.Value.ToString("yyyy-MM-dd"));
+                param.Add(priest_id.ToString());
+                long insertId = 0;
+
+                sql.InsertQuery("UPDATE `priests` SET `priest_name`=@1,`type`=@2,`date_resumed`=@3 WHERE `priest_id`=@4;",param,out insertId);
                 if (!sql.result) { return; }
                 MessageBox.Show("Record successfully updated", "View Priests");
                 refresh();
@@ -283,6 +301,13 @@ namespace Church_Management_Portal
         {
             (dgvListOfPriests.DataSource as DataTable).DefaultView.RowFilter = "`Name`" + " LIKE '%" + txtSearch.Text + "%'";
             dgvListOfPriests.Refresh();
+
+            current_row_no = 0;
+            txtRowNo.Text = current_row_no.ToString();
+            if (dgvListOfPriests.RowCount > 0)
+            {
+                txtRowCount.Text = (dgvListOfPriests.RowCount).ToString();
+            }
         }
 
         usableFunction usf = new usableFunction();
@@ -299,7 +324,8 @@ namespace Church_Management_Portal
             if (MessageBox.Show("Are you sure you want to delete record of "+ name,"Delete Priest Record", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes) {
                 sql.Execute_Query("DELETE FROM `priests` WHERE `priest_id`='" + priest_id + "';");
                 if (!sql.result) { return; }
-                MessageBox.Show("Record of " + name + " successfully deleted");
+                MessageBox.Show("Record of " + name + " successfully deleted", "Delete Priest Record");
+                refresh();
             }
         }
 
@@ -370,6 +396,24 @@ namespace Church_Management_Portal
                 {
                     e.Handled = true;
                 }
+            }
+        }
+
+        private void dgvListOfPriests_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            priest_id = int.Parse(dgvListOfPriests.CurrentRow.Cells[0].Value.ToString());
+            if (dgvListOfPriests.RowCount > 0)
+            {
+                current_row_no = e.RowIndex;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+
+
+            if (groupBox1.Visible == true)
+            {
+                txtNameUpdate.Text = dgvListOfPriests.Rows[e.RowIndex].Cells[1].Value.ToString();
+                cmbTypeUpdate.SelectedItem = dgvListOfPriests.Rows[e.RowIndex].Cells[2].Value.ToString();
+                dtpDateResumedUpdate.Value = (DateTime)dgvListOfPriests.CurrentRow.Cells[3].Value;
             }
         }
     }

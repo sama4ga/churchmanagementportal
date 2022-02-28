@@ -38,20 +38,22 @@ namespace Church_Management_Portal
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Sql.fiil_listBox("UPDATE `stations` SET                                             "+
-                "`name`='"+ txtName.Text + "',                                                  S"+
-                "`address`='" + txtAddress.Text + "',                                           "+
-                "`date_established`='" + dtpDateEstablished.Value.ToString("yyyy-MM-dd") + "'   "+
-                "WHERE `station_id`='" + station_id + "';", listStations);
+            List<string> param = new List<string>();
+            param.Add(txtName.Text.Trim());
+            param.Add(txtAddress.Text.Trim());
+            param.Add(dtpDateEstablished.Value.ToString("yyyy-MM-dd"));
+            param.Add(station_id);
+
+            Sql.UpdateQuery("UPDATE `stations` SET `name`=@1,`address`=@2,`date_established`=@3 WHERE `station_id`=@4;", param);
             MessageBox.Show("Record successfully updated", "VIew Station Record");
             refresh();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to delete " + listStations.SelectedItem.ToString(), "Delete Stations", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want to delete " + txtName.Text, "Delete Stations", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Sql.fiil_listBox("DELETE FROM `stations` WHERE `station_id`='" + station_id + "';", listStations);
+                Sql.Execute_Query("DELETE FROM `stations` WHERE `station_id`='" + station_id + "';");
                 MessageBox.Show("Record successfully deleted", "VIew Station Record");
                 refresh();
             }

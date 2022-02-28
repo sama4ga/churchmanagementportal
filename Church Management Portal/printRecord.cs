@@ -68,23 +68,23 @@ namespace Church_Management_Portal
                     float startY = leading;
                     float offset = 10;
 
-                    StringFormat formaCenter = new StringFormat(StringFormatFlags.NoClip);
-                    formaCenter.Alignment = StringAlignment.Center;
+                    StringFormat formatCenter = new StringFormat(StringFormatFlags.NoClip);
+                    formatCenter.Alignment = StringAlignment.Center;
                     SizeF layoutSize = new SizeF(e.PageBounds.Width - offset * 2, leading);
                     RectangleF layout = new RectangleF(new PointF(startX, startY + offset), layoutSize);
 
                     Brush brush = Brushes.Black;
 
                     // prints church information
-                    e.Graphics.DrawString(Properties.Settings.Default.church_name, fnt, brush, layout, formaCenter);
+                    e.Graphics.DrawString(Properties.Settings.Default.church_name, fnt, brush, layout, formatCenter);
 
                     offset += leading;
                     layout = new RectangleF(new PointF(startX, startY + offset), layoutSize);
-                    e.Graphics.DrawString(Properties.Settings.Default.church_address, fnt, brush, layout, formaCenter);
+                    e.Graphics.DrawString(Properties.Settings.Default.church_address, fnt, brush, layout, formatCenter);
 
                     offset += leading + 20;
                     layout = new RectangleF(new PointF(startX, startY + offset), layoutSize);
-                    e.Graphics.DrawString(title, fnt, brush, layout, formaCenter);
+                    e.Graphics.DrawString(title, fnt, brush, layout, formatCenter);
 
                     y += 100;
                 }
@@ -120,7 +120,7 @@ namespace Church_Management_Portal
 
                     // now print the data for each row
                     int thisNDX;
-                    for (thisNDX = mRow; thisNDX < dgv.RowCount - 1; thisNDX++)
+                    for (thisNDX = mRow; thisNDX < dgv.RowCount; thisNDX++)
                     {
                         // no need to try to print the new row
                         if (dgv.Rows[thisNDX].IsNewRow) { break; }

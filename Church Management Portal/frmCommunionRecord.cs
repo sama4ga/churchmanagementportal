@@ -83,9 +83,17 @@ namespace Church_Management_Portal
                 string minister = txtMinister.Text;
                 string dateReceived = dtpDate.Value.ToString("yyyy-MM-dd");
 
-                Sql.Execute_Insert("INSERT INTO `communion`(" +
+                List<string> param = new List<string>();
+                param.Add(parishioner_id);
+                param.Add(dateReceived);
+                param.Add(minister);
+                param.Add(venue);
+                param.Add(sponsor);
+
+                long insertId = 0;
+                Sql.InsertQuery("INSERT INTO `communion`(" +
                     "`parishioner_id`,`date_received`,`minister`,`venue`,`sponsor`) VALUES(" +
-                    "'" + parishioner_id + "','" + dateReceived + "','" + minister + "','" + venue + "','" + sponsor + "');");
+                    "@1,@2,@3,@4,@5);", param, out insertId);
                 if (!Sql.result) { return; }
                 MessageBox.Show("Name successfully entered into the communion register", "Add New Communion Record");
                 refresh();
@@ -387,9 +395,14 @@ namespace Church_Management_Portal
             string minister = txtMinisterUpdate.Text;
             string dateReceived = dtpDateUpdate.Value.ToString("yyyy-MM-dd");
 
-            Sql.Execute_Query("UPDATE `communion` SET `date_received`='" + dateReceived + "'," +
-                "`minister`='" + minister + "',`venue`='" + venue + "',`sponsor`='" + sponsor + "'" +
-                "WHERE `parishioner_id`='" + parishioner_id + "';");
+            List<string> param = new List<string>();
+            param.Add(dateReceived);
+            param.Add(minister);
+            param.Add(venue);
+            param.Add(sponsor);
+            param.Add(parishioner_id);
+
+            Sql.UpdateQuery("UPDATE `communion` SET `date_received`=@1,`minister`=@2,`venue`=@3,`sponsor`=@4 WHERE `parishioner_id`=@5;", param);
             if (!Sql.result) { return; }
             MessageBox.Show("Record successfully updated in the communion register", "Update Communion Record");
 
@@ -398,21 +411,7 @@ namespace Church_Management_Portal
 
         private void dgvCommunionRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            parishioner_id = dgvCommunionRegister.CurrentRow.Cells[0].Value.ToString();
-            if (dgvCommunionRegister.RowCount > 0)
-            {
-                current_row_no = e.RowIndex;
-                txtRowNo.Text = (current_row_no + 1).ToString();
-            }
-
-            if (gbEditRecord.Visible)
-            {
-                txtNameUpdate.Text = dgvCommunionRegister.CurrentRow.Cells["Name"].Value.ToString();
-                txtVenueUpdate.Text = dgvCommunionRegister.CurrentRow.Cells["Venue"].Value.ToString();
-                txtSponsorUpdate.Text = dgvCommunionRegister.CurrentRow.Cells["Sponsor"].Value.ToString();
-                txtMinisterUpdate.Text = dgvCommunionRegister.CurrentRow.Cells["Minister"].Value.ToString();
-                dtpDateUpdate.Value = (DateTime)dgvCommunionRegister.CurrentRow.Cells["Date"].Value;
-            }
+           // refer to cell_click event listener
         }
 
         private void btnLast_Click(object sender, EventArgs e)
@@ -482,6 +481,25 @@ namespace Church_Management_Portal
                 {
                     e.Handled = true;
                 }
+            }
+        }
+
+        private void dgvCommunionRegister_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            parishioner_id = dgvCommunionRegister.CurrentRow.Cells[0].Value.ToString();
+            if (dgvCommunionRegister.RowCount > 0)
+            {
+                current_row_no = e.RowIndex;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+
+            if (gbEditRecord.Visible)
+            {
+                txtNameUpdate.Text = dgvCommunionRegister.CurrentRow.Cells["Name"].Value.ToString();
+                txtVenueUpdate.Text = dgvCommunionRegister.CurrentRow.Cells["Venue"].Value.ToString();
+                txtSponsorUpdate.Text = dgvCommunionRegister.CurrentRow.Cells["Sponsor"].Value.ToString();
+                txtMinisterUpdate.Text = dgvCommunionRegister.CurrentRow.Cells["Minister"].Value.ToString();
+                dtpDateUpdate.Value = (DateTime)dgvCommunionRegister.CurrentRow.Cells["Date"].Value;
             }
         }
     }

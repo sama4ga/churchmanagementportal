@@ -57,6 +57,7 @@
             this.cmbPriviledge = new System.Windows.Forms.ComboBox();
             this.gbUpdatePriviledge = new System.Windows.Forms.GroupBox();
             this.gbUpdatePassword = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.gbNewPassword = new System.Windows.Forms.GroupBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsersList)).BeginInit();
@@ -102,6 +103,7 @@
             this.dgvUsersList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUsersList.Size = new System.Drawing.Size(463, 434);
             this.dgvUsersList.TabIndex = 13;
+            this.dgvUsersList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsersList_CellClick);
             this.dgvUsersList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsersList_CellContentClick);
             // 
             // gbListOfUsers
@@ -171,7 +173,7 @@
             this.btnAddNewUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddNewUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.btnAddNewUser.ForeColor = System.Drawing.Color.White;
-            this.btnAddNewUser.Location = new System.Drawing.Point(626, 490);
+            this.btnAddNewUser.Location = new System.Drawing.Point(637, 490);
             this.btnAddNewUser.Name = "btnAddNewUser";
             this.btnAddNewUser.Size = new System.Drawing.Size(123, 31);
             this.btnAddNewUser.TabIndex = 0;
@@ -187,7 +189,7 @@
             this.btnChangePassword.ForeColor = System.Drawing.Color.White;
             this.btnChangePassword.Location = new System.Drawing.Point(93, 490);
             this.btnChangePassword.Name = "btnChangePassword";
-            this.btnChangePassword.Size = new System.Drawing.Size(122, 31);
+            this.btnChangePassword.Size = new System.Drawing.Size(135, 31);
             this.btnChangePassword.TabIndex = 1;
             this.btnChangePassword.Text = "Change Password";
             this.btnChangePassword.UseVisualStyleBackColor = true;
@@ -199,7 +201,7 @@
             this.btnDeleteUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeleteUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.btnDeleteUser.ForeColor = System.Drawing.Color.White;
-            this.btnDeleteUser.Location = new System.Drawing.Point(221, 490);
+            this.btnDeleteUser.Location = new System.Drawing.Point(238, 490);
             this.btnDeleteUser.Name = "btnDeleteUser";
             this.btnDeleteUser.Size = new System.Drawing.Size(75, 31);
             this.btnDeleteUser.TabIndex = 16;
@@ -213,7 +215,7 @@
             this.btnChangeUserPriviledge.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnChangeUserPriviledge.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.btnChangeUserPriviledge.ForeColor = System.Drawing.Color.White;
-            this.btnChangeUserPriviledge.Location = new System.Drawing.Point(302, 490);
+            this.btnChangeUserPriviledge.Location = new System.Drawing.Point(322, 490);
             this.btnChangeUserPriviledge.Name = "btnChangeUserPriviledge";
             this.btnChangeUserPriviledge.Size = new System.Drawing.Size(149, 31);
             this.btnChangeUserPriviledge.TabIndex = 17;
@@ -227,9 +229,9 @@
             this.btnChangeUsername.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnChangeUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.btnChangeUsername.ForeColor = System.Drawing.Color.White;
-            this.btnChangeUsername.Location = new System.Drawing.Point(456, 490);
+            this.btnChangeUsername.Location = new System.Drawing.Point(479, 490);
             this.btnChangeUsername.Name = "btnChangeUsername";
-            this.btnChangeUsername.Size = new System.Drawing.Size(118, 31);
+            this.btnChangeUsername.Size = new System.Drawing.Size(142, 31);
             this.btnChangeUsername.TabIndex = 18;
             this.btnChangeUsername.Text = "Change Username";
             this.btnChangeUsername.UseVisualStyleBackColor = true;
@@ -241,7 +243,7 @@
             this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.btnBack.ForeColor = System.Drawing.Color.White;
-            this.btnBack.Location = new System.Drawing.Point(827, 490);
+            this.btnBack.Location = new System.Drawing.Point(776, 490);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(75, 31);
             this.btnBack.TabIndex = 19;
@@ -358,9 +360,9 @@
             this.cmbPriviledge.FormattingEnabled = true;
             this.cmbPriviledge.ImeMode = System.Windows.Forms.ImeMode.On;
             this.cmbPriviledge.Items.AddRange(new object[] {
-            "admin",
-            "secretary",
-            "user"});
+            "Admin",
+            "Secretary",
+            "User"});
             this.cmbPriviledge.Location = new System.Drawing.Point(151, 26);
             this.cmbPriviledge.Margin = new System.Windows.Forms.Padding(4);
             this.cmbPriviledge.Name = "cmbPriviledge";
@@ -386,6 +388,7 @@
             // gbUpdatePassword
             // 
             this.gbUpdatePassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbUpdatePassword.Controls.Add(this.label3);
             this.gbUpdatePassword.Controls.Add(this.gbNewPassword);
             this.gbUpdatePassword.Controls.Add(this.btnConfirmPassword);
             this.gbUpdatePassword.Controls.Add(this.txtOldPassword);
@@ -399,6 +402,16 @@
             this.gbUpdatePassword.TabStop = false;
             this.gbUpdatePassword.Text = "Change Password";
             this.gbUpdatePassword.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(20, 42);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(372, 17);
+            this.label3.TabIndex = 42;
+            this.label3.Text = "This action will change the password for the selected user";
             // 
             // gbNewPassword
             // 
@@ -492,5 +505,6 @@
         private System.Windows.Forms.GroupBox gbUpdatePassword;
         private System.Windows.Forms.GroupBox gbNewPassword;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -66,7 +66,16 @@ namespace Church_Management_Portal
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Sql.Execute_Query("UPDATE `pious_societies` SET `name`='"+ txtName.Text + "',`slogan`='" + txtSlogan.Text + "' WHERE `pious_society_id`='" + society_id + "';");
+            if (string.IsNullOrWhiteSpace(txtName.Text.Trim()))
+            {
+                MessageBox.Show("Enter name of society to proceed", "View Society Records"); txtName.Focus(); return;
+            }
+            List<string> param = new List<string>();
+            param.Add(txtName.Text.Trim());
+            param.Add(txtSlogan.Text.Trim());
+            param.Add(society_id);
+
+            Sql.UpdateQuery("UPDATE `pious_societies` SET `name`=@1,`slogan`=@2 WHERE `pious_society_id`=@3;", param);
             if (!Sql.result) { return; }
             MessageBox.Show("Record successfully updated", "VIew Pious Society Record");
             refresh();

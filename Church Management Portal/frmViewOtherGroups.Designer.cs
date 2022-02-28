@@ -53,7 +53,7 @@
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(233, 67);
             this.btnDelete.TabIndex = 14;
-            this.btnDelete.Text = "Delete Selected Group";
+            this.btnDelete.Text = "Delete Selected Lay Apostolate";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
@@ -69,7 +69,7 @@
             this.groupBox1.Size = new System.Drawing.Size(484, 454);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Available Groups";
+            this.groupBox1.Text = "Available Lay Apostolates";
             // 
             // listGroups
             // 
@@ -92,6 +92,7 @@
             this.label1.Size = new System.Drawing.Size(115, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Current Group ";
+            this.label1.Visible = false;
             // 
             // btnBack
             // 
@@ -140,7 +141,7 @@
             this.groupBox2.Size = new System.Drawing.Size(466, 454);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Group\'s Details";
+            this.groupBox2.Text = "Lay Apostolate\'s Details";
             // 
             // btnUpdate
             // 
@@ -188,7 +189,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmViewOtherGroups";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "View Other Groups";
+            this.Text = "View Lay Apostolates";
             this.Load += new System.EventHandler(this.frmViewOtherGroups_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

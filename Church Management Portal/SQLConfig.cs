@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.ServiceProcess;
 
 namespace Church_Management_Portal
 {
@@ -19,7 +20,13 @@ namespace Church_Management_Portal
         private DataTable dt;
         public DataSet ds;
         public bool result;
-        usableFunction funct = new usableFunction(); 
+        public MySqlDataReader dr;
+        usableFunction funct = new usableFunction();
+        private string uid = Properties.Settings.Default.user;
+        private string password = Properties.Settings.Default.password;
+        private string server = Properties.Settings.Default.server;
+        private string port = Properties.Settings.Default.port;
+        private string database = "churchms";
 
         public void Execute_CUD(string sql, string msg_false, string msg_true)
         {
@@ -58,8 +65,9 @@ namespace Church_Management_Portal
         /// </summary>
         /// <param name="query">Query string</param>
         /// <param name="ParamValues">A list containing values for parameters used in the query</param>
+        /// <param name="insertId">Returns the id of the last inserted data</param>
         /// <returns>true if query is successful and false if otherwise</returns>
-        public bool InsertQuery(string query, List<object>[] ParamValues, out long insertId)
+        public bool InsertQuery(string query, List<string> ParamValues, out long insertId)
         {
             try
             {
@@ -69,11 +77,18 @@ namespace Church_Management_Portal
 
                 //if (cmd.IsPrepared) {
                 cmd.Parameters.Clear();
-                
-                cmd.Parameters.AddRange(ParamValues);
+
+                int count = 1;
+                foreach (var item in ParamValues)
+                {
+                    string paramName = "@" + count;
+                    cmd.Parameters.AddWithValue(paramName, item);
+                    count++;
+                }
 
                 cmd.ExecuteNonQuery();
                 insertId = cmd.LastInsertedId;
+                result = true;
                 return true;
 
             }
@@ -81,6 +96,7 @@ namespace Church_Management_Portal
             {
                 MessageBox.Show("An error occurred while inserting the record: " + e.Message);
                 insertId = 0;
+                result = false;
                 return false;
             }
             finally
@@ -98,7 +114,7 @@ namespace Church_Management_Portal
         /// <param name="query">Query string</param>
         /// <param name="ParamValues">A list containing values for parameters used in the query</param>
         /// <returns>true if query is successful and false if otherwise</returns>
-        public bool UpdateQuery(string query, List<object>[] ParamValues)
+        public bool UpdateQuery(string query, List<string> ParamValues)
         {
             try
             {
@@ -109,15 +125,23 @@ namespace Church_Management_Portal
                 //if (cmd.IsPrepared) {
                 cmd.Parameters.Clear();
 
-                cmd.Parameters.AddRange(ParamValues);
+                int count = 1;
+                foreach (var item in ParamValues)
+                {
+                    string paramName = "@" + count;
+                    cmd.Parameters.AddWithValue(paramName, item);
+                    count++;
+                }
 
                 cmd.ExecuteNonQuery();
+                result = true;
                 return true;
 
             }
             catch (MySqlException e)
             {
-                MessageBox.Show("An error occurred while inserting the record: " + e.Message);
+                MessageBox.Show("An error occurred while updating the record: " + e.Message);
+                result = false;
                 return false;
             }
             finally
@@ -289,9 +313,27 @@ namespace Church_Management_Portal
                 ds.Tables.Add(dt);
 
                 maxrow = dt.Rows.Count;
-
+                result = true;
 
                 da.Dispose();
+            }
+            catch (MySqlException e)
+            {
+                if (e.Number ==1042) //  MySqlErrorCode.UnableToConnectToHost
+                {
+                    ServiceController controller = new ServiceController();
+
+                    controller.MachineName = ".";
+                    controller.ServiceName = "MySQL80";
+
+                    // Start the service
+                    controller.Start();
+
+                    //// Stop the service
+                    //controller.Stop();
+                }
+                //MessageBox.Show(e.Message + " Code:" + e.ErrorCode + " Number:"+e.Number+" Source:"+e.Source);
+                result = false;
             }
             catch (Exception ex)
             {
@@ -340,7 +382,26 @@ namespace Church_Management_Portal
         }
 
         
-        
+        public void ReadData(string sql)
+        {
+            try
+            {
+                con.Open();
+                cmd = new MySqlCommand(sql, con);
+                dr = cmd.ExecuteReader();
+                
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occured while reading data\n" + ex.Message);
+                result = false;
+            }
+            finally
+            {
+                //con.Close();
+            }
+        }
 
       
     }

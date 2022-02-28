@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Church_Management_Portal
@@ -55,7 +56,16 @@ namespace Church_Management_Portal
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Sql.Execute_Query("UPDATE `other_groups` SET `name`='" + txtName.Text + "',`slogan`='" + txtSlogan.Text + "' WHERE `group_id`='" + society_id + "';");
+            if (string.IsNullOrWhiteSpace(txtName.Text.Trim()))
+            {
+                MessageBox.Show("Enter name of group to proceed", "View Other Groups Record"); txtName.Focus(); return;
+            }
+            List<string> param = new List<string>();
+            param.Add(txtName.Text.Trim());
+            param.Add(txtSlogan.Text.Trim());
+            param.Add(society_id);
+
+            Sql.UpdateQuery("UPDATE `other_groups` SET `name`=@1,`slogan`=@2 WHERE `group_id`=@3;", param);
             if (!Sql.result) { return; }
             MessageBox.Show("Record successfully updated", "VIew Other Groups Record");
             refresh();

@@ -39,15 +39,15 @@ namespace Church_Management_Portal
             if (filter == "pious_society" | filter == "other_groups")
             {
                 groupBox3.Show();
-            }
-            else
+                btnDeleteParishionerRecord.Hide();
+            }else
             {
                 groupBox3.Hide();
             }
 
             if (user_status.Equals("user", StringComparison.CurrentCultureIgnoreCase))
             {
-                groupBox3.Hide(); btnEditMemberDetails.Hide(); btnMarkActive.Hide(); btnMarkDead.Hide(); btnMarkInactive.Hide();
+                groupBox3.Hide(); btnEditMemberDetails.Hide(); btnMarkActive.Hide(); btnMarkDead.Hide(); btnMarkInactive.Hide(); btnDeleteParishionerRecord.Hide();
             }
 
             refresh();
@@ -79,7 +79,7 @@ namespace Church_Management_Portal
             if (parishioner_id != 0)
             {                
 
-                 if (MessageBox.Show("Are you sure you want to delete "+ dataGridView1.CurrentRow.Cells[1].Value.ToString(),"Delete Member",MessageBoxButtons.YesNo) == DialogResult.Yes)
+                 if (MessageBox.Show("Are you sure you want to delete "+ dataGridView1.CurrentRow.Cells[2].Value.ToString(),"Delete Member",MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     if (filter == "pious_society" | filter == "other_groups")
                     {
@@ -89,7 +89,7 @@ namespace Church_Management_Portal
                         if (!Sql.result) { return; }
                     }
 
-                    MessageBox.Show(dataGridView1.CurrentRow.Cells[1].Value.ToString() + " successfully deleted", "Delete Member");
+                    MessageBox.Show(dataGridView1.CurrentRow.Cells[2].Value.ToString() + " successfully deleted", "Delete Member");
                     refresh();
 
                     current_row_no = 0;
@@ -109,53 +109,72 @@ namespace Church_Management_Portal
         {
             if (by == "all")
             {
-                Sql.Load_DTG("select p.`parishioner_id`,p.`name` as 'Name',p.`address` as 'Address',p.`phoneNo` as 'Phone Number'," +
+                Sql.Load_DTG("select p.`parishioner_id`,p.`regNo` as 'Reg. No.',concat(p.`title`,' ',p.`name`) as 'Name',p.`gender` as 'Gender'," +
+                    "p.`dob` as 'Date of Birth',p.`address` as 'Address',p.`phoneNo` as 'Phone Number',p.`email` as 'Email'," +
+                    "soo.`state` as 'State',loo.`lga` as 'LGA',d.`diocese` as 'Diocese',p.`parishOfOrigin` as 'Parish',p.`maritalStatus` as 'Marital Status'," +
                     "st.`name` as 'Station',so.`name` as 'Society',o.`short_name` as 'Organisation'," +
-                    "p.`status` as 'Status',p.`gender` as 'Gender',p.`dob` as 'Date of Birth'," +
                     "p.`baptised` as 'Baptised',p.`communicant` as 'Communicant',p.`confirmed` as 'Confirmed'," +
-                    "p.`wedded` as 'Wedded' from `parishioners` p " +
+                    "p.`wedded` as 'Wedded',p.`status` as 'Status'"+
+                    "from `parishioners` p " +
                     "left join `stations` st on p.`station`=st.`station_id`" +
                     "left join `societies` so on so.`society_id`=p.`society`" +
                     "left join `organisation` o on o.`organisation_id`=p.`organisation`"+
+                    "left join `state_of_origin` soo on soo.`state_id`=p.`stateOfOrigin`" +
+                    "left join `lga_of_origin` loo on loo.`lga_id`=p.`lgaOfOrigin`" +
+                    "left join `diocese` d on d.`dioceseId`=p.`dioceseOfOrigin`" +
                     "WHERE p.`status`<>'dead';", dataGridView1);
             }
 
             else if (filter == "sacrament")
             {
-                //Sql.Load_DTG("SELECT * FROM `parishioners` p JOIN `" + by + "` b ON b.`parishioner_id`=p.`parishioner_id`;", dataGridView1);
-                Sql.Load_DTG("select p.`parishioner_id`, p.`name` as 'Name',p.`address` as 'Address',p.`phoneNo` as 'Phone Number'," +
+                Sql.Load_DTG("select p.`parishioner_id`,p.`regNo` as 'Reg. No.',concat(p.`title`,' ',p.`name`) as 'Name',p.`gender` as 'Gender'," +
+                    "p.`dob` as 'Date of Birth',p.`address` as 'Address',p.`phoneNo` as 'Phone Number',p.`email` as 'Email'," +
+                    "soo.`state` as 'State',loo.`lga` as 'LGA',d.`diocese` as 'Diocese',p.`parishOfOrigin` as 'Parish',p.`maritalStatus` as 'Marital Status'," +
                     "st.`name` as 'Station',so.`name` as 'Society',o.`short_name` as 'Organisation'," +
-                    "p.`status` as 'Status',p.`gender` as 'Gender',p.`dob` as 'Date of Birth'," +
                     "p.`baptised` as 'Baptised',p.`communicant` as 'Communicant',p.`confirmed` as 'Confirmed'," +
-                    "p.`wedded` as 'Wedded' from `parishioners` p " +
+                    "p.`wedded` as 'Wedded',p.`status` as 'Status'" +
+                    "from `parishioners` p " +
                     "left join `stations` st on p.`station`=st.`station_id`" +
                     "left join `societies` so on so.`society_id`=p.`society`" +
                     "left join `organisation` o on o.`organisation_id`=p.`organisation`" +
+                    "left join `state_of_origin` soo on soo.`state_id`=p.`stateOfOrigin`" +
+                    "left join `lga_of_origin` loo on loo.`lga_id`=p.`lgaOfOrigin`" +
+                    "left join `diocese` d on d.`dioceseId`=p.`dioceseOfOrigin`" + 
                     "where p.`" + by + "`='true' AND p.`status`<>'dead';", dataGridView1);
             }
             else if (filter == "pious_society" || filter == "other_groups")
             {
-                Sql.Load_DTG("select p.`parishioner_id`, p.`name` as 'Name',p.`address` as 'Address',p.`phoneNo` as 'Phone Number'," +
+                Sql.Load_DTG("select p.`parishioner_id`,p.`regNo` as 'Reg. No.',concat(p.`title`,' ',p.`name`) as 'Name',p.`gender` as 'Gender'," +
+                    "p.`dob` as 'Date of Birth',p.`address` as 'Address',p.`phoneNo` as 'Phone Number',p.`email` as 'Email'," +
+                    "soo.`state` as 'State',loo.`lga` as 'LGA',d.`diocese` as 'Diocese',p.`parishOfOrigin` as 'Parish',p.`maritalStatus` as 'Marital Status'," +
                     "st.`name` as 'Station',so.`name` as 'Society',o.`short_name` as 'Organisation'," +
-                    "p.`status` as 'Status',p.`gender` as 'Gender',p.`dob` as 'Date of Birth'," +
                     "p.`baptised` as 'Baptised',p.`communicant` as 'Communicant',p.`confirmed` as 'Confirmed'," +
-                    "p.`wedded` as 'Wedded' from `parishioners` p " +
+                    "p.`wedded` as 'Wedded',p.`status` as 'Status'" +
+                    "from `parishioners` p " +
                     "left join `stations` st on p.`station`=st.`station_id`" +
                     "left join `societies` so on so.`society_id`=p.`society`" +
                     "left join `organisation` o on o.`organisation_id`=p.`organisation`" +
+                    "left join `state_of_origin` soo on soo.`state_id`=p.`stateOfOrigin`" +
+                    "left join `lga_of_origin` loo on loo.`lga_id`=p.`lgaOfOrigin`" +
+                    "left join `diocese` d on d.`dioceseId`=p.`dioceseOfOrigin`" +
                     "JOIN `" + by + "` b ON b.`member_id`=p.`parishioner_id`" +
                     "WHERE p.`status`<>'dead';", dataGridView1);
             }
             else if (filter != "")
             {
-                Sql.Load_DTG("select p.`parishioner_id`, p.`name` as 'Name',p.`address` as 'Address',p.`phoneNo` as 'Phone Number'," +
+                Sql.Load_DTG("select p.`parishioner_id`,p.`regNo` as 'Reg. No.',concat(p.`title`,' ',p.`name`) as 'Name',p.`gender` as 'Gender'," +
+                    "p.`dob` as 'Date of Birth',p.`address` as 'Address',p.`phoneNo` as 'Phone Number',p.`email` as 'Email'," +
+                    "soo.`state` as 'State',loo.`lga` as 'LGA',d.`diocese` as 'Diocese',p.`parishOfOrigin` as 'Parish',p.`maritalStatus` as 'Marital Status'," +
                     "st.`name` as 'Station',so.`name` as 'Society',o.`short_name` as 'Organisation'," +
-                    "p.`status` as 'Status',p.`gender` as 'Gender',p.`dob` as 'Date of Birth'," +
                     "p.`baptised` as 'Baptised',p.`communicant` as 'Communicant',p.`confirmed` as 'Confirmed'," +
-                    "p.`wedded` as 'Wedded' from `parishioners` p " +
+                    "p.`wedded` as 'Wedded',p.`status` as 'Status'" +
+                    "from `parishioners` p " +
                     "left join `stations` st on p.`station`=st.`station_id`" +
                     "left join `societies` so on so.`society_id`=p.`society`" +
                     "left join `organisation` o on o.`organisation_id`=p.`organisation`" +
+                    "left join `state_of_origin` soo on soo.`state_id`=p.`stateOfOrigin`" +
+                    "left join `lga_of_origin` loo on loo.`lga_id`=p.`lgaOfOrigin`" +
+                    "left join `diocese` d on d.`dioceseId`=p.`dioceseOfOrigin`" +
                     "where p.`" + filter + "`='" + by + "' AND p.`status`<>'dead';", dataGridView1);
             }
             //else
@@ -164,10 +183,13 @@ namespace Church_Management_Portal
             //}
             if (!Sql.result) { return; }
             dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[1].Width = 150;
-            dataGridView1.Columns[2].Width = 150;
-            dataGridView1.Columns[4].Width = 150;
-            dataGridView1.Columns[5].Width = 150;
+            dataGridView1.Columns[1].Width = 30;
+            //dataGridView1.Columns[2].Width = 100;
+            //dataGridView1.Columns[3].Width = 100;
+            //dataGridView1.Columns[5].Width = 80;
+            //dataGridView1.Columns[6].Width = 150;
+            dataGridView1.Columns[7].Width = 120;
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Green;
         }
 
         private void btnEditMemberDetails_Click(object sender, EventArgs e)
@@ -182,12 +204,7 @@ namespace Church_Management_Portal
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            parishioner_id = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
-            if (dataGridView1.RowCount > 0)
-            {
-                current_row_no = e.RowIndex;
-                txtRowNo.Text = (current_row_no + 1).ToString();
-            }
+           // Refer to cell_click event listener
         }
 
         private void btnAddNewMember_Click(object sender, EventArgs e)
@@ -205,7 +222,7 @@ namespace Church_Management_Portal
             if (parishioner_id != 0)
             {
 
-                if (MessageBox.Show("Are you sure you want to mark " + dataGridView1.CurrentRow.Cells[1].Value.ToString() + " as dead", "Mark Member as Dead",MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Are you sure you want to mark " + dataGridView1.CurrentRow.Cells[2].Value.ToString() + " as dead", "Mark Member as Dead",MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     frmDeathDate frm = new frmDeathDate();
 
@@ -215,7 +232,7 @@ namespace Church_Management_Portal
                         if (!Sql.result) { return; }
                         Sql.Execute_Query("UPDATE `parishioners` SET `status`='dead' WHERE `parishioner_id`='" + parishioner_id + "';");
                         if (!Sql.result) { return; }
-                        MessageBox.Show(dataGridView1.CurrentRow.Cells[1].Value.ToString() + " successfully marked as dead", "Mark Member as Dead");
+                        MessageBox.Show(dataGridView1.CurrentRow.Cells[2].Value.ToString() + " successfully marked as dead", "Mark Member as Dead");
                         refresh();
                     }
 
@@ -234,15 +251,15 @@ namespace Church_Management_Portal
         {
             if (dataGridView1.CurrentRow.Cells[7].Value.ToString().Equals("Inactive"))
             {
-                MessageBox.Show(dataGridView1.CurrentRow.Cells[1].Value.ToString() + " is already inactive");
+                MessageBox.Show(dataGridView1.CurrentRow.Cells[2].Value.ToString() + " is already inactive");
             }
             else
             {
-                if (MessageBox.Show("Are you sure you want to mark " + dataGridView1.CurrentRow.Cells[1].Value.ToString() + " as inactive", "Mark Member as Inactive", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Are you sure you want to mark " + dataGridView1.CurrentRow.Cells[2].Value.ToString() + " as inactive", "Mark Member as Inactive", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Sql.Execute_Query("UPDATE `parishioners` SET `status`='inactive' WHERE `parishioner_id`='" + parishioner_id + "';");
                     if (!Sql.result) { return; }
-                    MessageBox.Show(dataGridView1.CurrentRow.Cells[1].Value.ToString() + " successfully marked as inactive", "Mark Member as Inactive");
+                    MessageBox.Show(dataGridView1.CurrentRow.Cells[2].Value.ToString() + " successfully marked as inactive", "Mark Member as Inactive");
                     refresh();
                 }
             }
@@ -471,15 +488,15 @@ namespace Church_Management_Portal
         {
             if (dataGridView1.CurrentRow.Cells[7].Value.ToString().Equals("Active"))
             {
-                MessageBox.Show(dataGridView1.CurrentRow.Cells[1].Value.ToString() + " is already active");
+                MessageBox.Show(dataGridView1.CurrentRow.Cells[2].Value.ToString() + " is already active");
             }
             else
             {
-                if (MessageBox.Show("Are you sure you want to mark " + dataGridView1.CurrentRow.Cells[1].Value.ToString() + " as active", "Mark Member as Active", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Are you sure you want to mark " + dataGridView1.CurrentRow.Cells[2].Value.ToString() + " as active", "Mark Member as Active", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Sql.Execute_Query("UPDATE `parishioners` SET `status`='active' WHERE `parishioner_id`='" + parishioner_id + "';");
                     if (!Sql.result) { return; }
-                    MessageBox.Show(dataGridView1.CurrentRow.Cells[1].Value.ToString() + " successfully marked as active", "Mark Member as Active");
+                    MessageBox.Show(dataGridView1.CurrentRow.Cells[2].Value.ToString() + " successfully marked as active", "Mark Member as Active");
                     refresh();
                 }
             }
@@ -488,9 +505,9 @@ namespace Church_Management_Portal
 
         private void btnViewDetails_Click(object sender, EventArgs e)
         {
-            frmViewParishionerDetails frm = new frmViewParishionerDetails();
             if (parishioner_id != 0)
             {
+                frmViewFullParishionerDetail frm = new frmViewFullParishionerDetail();
                 frm.parishioner_id = parishioner_id;
                 frm.Show();
             }
@@ -579,6 +596,60 @@ namespace Church_Management_Portal
             }
         }
 
-       
+        private void btnDeleteParishionerRecord_Click(object sender, EventArgs e)
+        {
+            if (parishioner_id != 0)
+            {
+
+                if (MessageBox.Show("Are you sure you want to permanently delete record of " + dataGridView1.CurrentRow.Cells[2].Value.ToString(), "Delete Parishioner Record", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    // get all groups parishioner belongs to
+                    Sql.ReadData("SELECT `group_code_name` FROM `parishioner_groups` WHERE `parishioner_id`='"+ parishioner_id +"';");
+                    if (!Sql.result){ return;}
+                    if (Sql.dr.HasRows)
+                    {
+                        string group = string.Empty;
+                        while (Sql.dr.Read())
+                        {
+                            group = Sql.dr.GetString("group_code_name");
+                            Sql.Execute_Query("DELETE FROM `"+ group +"` WHERE `parishioner_id`='" + parishioner_id + "';");
+                            if (!Sql.result) { return; }
+                        }
+                    }
+                    
+                    Sql.Execute_Query("DELETE FROM `parishioners` WHERE `parishioner_id`='" + parishioner_id + "';");
+                    if (!Sql.result) { return; }
+                    Sql.Execute_Query("DELETE FROM `parishioner_groups` WHERE `parishioner_id`='" + parishioner_id + "';");
+                    if (!Sql.result) { return; }
+
+                    MessageBox.Show(dataGridView1.CurrentRow.Cells[2].Value.ToString() + " successfully deleted", "Delete Parishioner Record");
+                    refresh();
+
+                    current_row_no = 0;
+                    txtRowNo.Text = current_row_no.ToString();
+                    if (dataGridView1.RowCount > 0)
+                    {
+                        txtRowCount.Text = (dataGridView1.RowCount).ToString();
+                    }
+
+                }
+            }
+        }
+
+        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            frmViewFullParishionerDetail frm = new frmViewFullParishionerDetail(parishioner_id);
+            frm.ShowDialog();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            parishioner_id = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
+            if (dataGridView1.RowCount > 0)
+            {
+                current_row_no = e.RowIndex;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+        }
     }
 }

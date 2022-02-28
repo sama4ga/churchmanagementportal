@@ -88,6 +88,7 @@
             this.dgvDeathList.ShowEditingIcon = false;
             this.dgvDeathList.Size = new System.Drawing.Size(758, 550);
             this.dgvDeathList.TabIndex = 0;
+            this.dgvDeathList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDeathList_CellClick);
             this.dgvDeathList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDeathList_CellContentClick);
             // 
             // btnUpdate

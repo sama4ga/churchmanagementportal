@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Church_Management_Portal
@@ -30,9 +23,13 @@ namespace Church_Management_Portal
         {
             Clear();
             gbUpdatePassword.Show();
-            txtOldPassword.Enabled = true;
-            txtOldPassword.Clear();
-            gbNewPassword.Hide();
+            //txtOldPassword.Enabled = true;
+            //txtOldPassword.Clear();
+            //gbNewPassword.Hide();
+            txtOldPassword.Hide();
+            label2.Hide();
+            gbNewPassword.Show();
+            btnConfirmPassword.Hide();
         }
 
 
@@ -46,19 +43,23 @@ namespace Church_Management_Portal
         private string user_id;
         private void dgvUsersList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            user_id = dgvUsersList.CurrentRow.Cells[0].Value.ToString();
-            txtUsername.Text = dgvUsersList.CurrentRow.Cells["Username"].Value.ToString();
-            cmbPriviledge.SelectedItem = dgvUsersList.CurrentRow.Cells["Priviledge"].Value;
+            // this does not allows trigger. I'm now using the cell_click event listener which always triggers
         }
 
         private void btnDeleteUser_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to delete user "+ dgvUsersList.CurrentRow.Cells["Username"].Value.ToString(),"Delete User",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+            if (Properties.Settings.Default.currentLoggedInUser != int.Parse(user_id)) {
+                if (MessageBox.Show("Are you sure you want to delete user " + dgvUsersList.CurrentRow.Cells["Username"].Value.ToString(), "Delete User", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    sql.Execute_Query("DELETE FROM `users` WHERE `user_id`='" + user_id + "';");
+                    if (!sql.result) { return; }
+                    MessageBox.Show("Success", "Delete User");
+                    refresh();
+                }
+            }
+            else
             {
-                sql.Execute_Query("DELETE FROM `users` WHERE `user_id`='"+ user_id +"';");
-                if (!sql.result) { return; }
-                MessageBox.Show("Success", "Delete User");
-                refresh();
+                MessageBox.Show("You cannot delete the current logged in user. Logout and login as another admin to do this","Delete User");
             }
         }
 
@@ -141,6 +142,18 @@ namespace Church_Management_Portal
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             refresh();
+        }
+
+        private void dgvUsersList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            user_id = dgvUsersList.CurrentRow.Cells[0].Value.ToString();
+            txtUsername.Text = dgvUsersList.CurrentRow.Cells["Username"].Value.ToString();
+            cmbPriviledge.SelectedItem = dgvUsersList.CurrentRow.Cells["Priviledge"].Value;
+        }
+
+        private void forceLogin()
+        {
+            // will be used to force the user to login again after password change
         }
     }
 }

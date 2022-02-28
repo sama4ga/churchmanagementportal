@@ -241,12 +241,12 @@
             // lblChurchName
             // 
             this.lblChurchName.AutoSize = true;
-            this.lblChurchName.Font = new System.Drawing.Font("Garamond", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblChurchName.Location = new System.Drawing.Point(112, 1);
+            this.lblChurchName.Font = new System.Drawing.Font("Garamond", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChurchName.Location = new System.Drawing.Point(101, 5);
             this.lblChurchName.Name = "lblChurchName";
-            this.lblChurchName.Size = new System.Drawing.Size(771, 54);
+            this.lblChurchName.Size = new System.Drawing.Size(811, 33);
             this.lblChurchName.TabIndex = 4;
-            this.lblChurchName.Text = "ST. PETER CATHOLIC CHURCH";
+            this.lblChurchName.Text = "HOLY ROSARY AUTONOMOUS CATHOLIC COMMUNITY";
             this.lblChurchName.Click += new System.EventHandler(this.lblChurchName_Click);
             // 
             // statusStrip1
@@ -339,7 +339,7 @@
             // cmbViewRecordBy
             // 
             this.cmbViewRecordBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbViewRecordBy.Font = new System.Drawing.Font("Dutch801 XBd BT", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbViewRecordBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbViewRecordBy.FormattingEnabled = true;
             this.cmbViewRecordBy.Items.AddRange(new object[] {
             "Baptism",
@@ -569,6 +569,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.VisibleChanged += new System.EventHandler(this.Form1_VisibleChanged);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

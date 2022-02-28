@@ -131,11 +131,17 @@ namespace Church_Management_Portal
                 string dateReceived = dtpDate.Value.ToString("yyyy-MM-dd");
 
                 // perform background check to see if name already exists
+                List<string> param = new List<string>();
+                param.Add(parishioner_id.ToString());
+                param.Add(dateReceived);
+                param.Add(minister);
+                param.Add(venue);
+                param.Add(sponsor);
+                long insertId = 0;
 
-
-                Sql.Execute_Insert("INSERT INTO `baptism`("+
+                Sql.InsertQuery("INSERT INTO `baptism`("+
                     "`parishioner_id`,`date_received`,`minister`,`venue`,`sponsor`) VALUES(" +
-                    "'"+ parishioner_id +"','" + dateReceived +"','" + minister +"','" + venue +"','" + sponsor +"');");
+                    "@1,@2,@3,@4,@5);",param,out insertId);
                 if (!Sql.result) { return; }
                 MessageBox.Show("Name successfully entered into the baptism register","Add New Baptism Record");
 
@@ -143,18 +149,7 @@ namespace Church_Management_Portal
             }
         }
 
-        private void dgvListOfParishioners_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //if (e.RowIndex > -1)
-            //{
-            //    parishioner_id = dgvListOfParishioners.Rows[e.RowIndex].Cells[0].Value.ToString();
-            //    txtName.Text = dgvListOfParishioners.Rows[e.RowIndex].Cells[1].Value.ToString();
-                
-            //}
-        }
-
-
-        private void refresh()
+       private void refresh()
         {
             Sql.Load_DTG("select p.`parishioner_id`,p.`name` as 'Name', /* p.`address` as 'Address', */" +
                    "/* p.`gender` as 'Gender',p.`dob` as 'Date of Birth', */" +
@@ -405,32 +400,18 @@ namespace Church_Management_Portal
             string minister = txtMinisterUpdate.Text;
             string dateReceived = dtpDateUpdate.Value.ToString("yyyy-MM-dd");
 
-            Sql.Execute_Query("UPDATE `baptism` SET `date_received`='" + dateReceived + "'," +
-                "`minister`='" + minister + "',`venue`='" + venue + "',`sponsor`='" + sponsor + "'" +
-                "WHERE `parishioner_id`='" + parishioner_id + "';");
+            List<string> param = new List<string>();
+            param.Add(dateReceived);
+            param.Add(minister);
+            param.Add(venue);
+            param.Add(sponsor);
+            param.Add(parishioner_id);
+            
+            Sql.UpdateQuery("UPDATE `baptism` SET `date_received`=@1,`minister`=@2,`venue`=@3,`sponsor`=@4 WHERE `parishioner_id`=@5;", param);
             if (!Sql.result) { return; }
             MessageBox.Show("Record successfully updated in the baptism register", "Update Baptism Record");
 
             refresh();
-        }
-
-        private void dgvBaptismRegister_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            parishioner_id = dgvBaptismRegister.CurrentRow.Cells[0].Value.ToString();
-            if (dgvBaptismRegister.RowCount > 0)
-            {
-                current_row_no = e.RowIndex;
-                txtRowNo.Text = (current_row_no + 1).ToString();
-            }
-
-            if (gbEditRecord.Visible)
-            {
-                txtNameUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Name"].Value.ToString();
-                txtVenueUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Venue"].Value.ToString();
-                txtSponsorUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Sponsor"].Value.ToString();
-                txtMinisterUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Minister"].Value.ToString();
-                dtpDateUpdate.Value = (DateTime)dgvBaptismRegister.CurrentRow.Cells["Date"].Value;
-            }
         }
 
         private void btnLast_Click(object sender, EventArgs e)
@@ -500,6 +481,25 @@ namespace Church_Management_Portal
                 {
                     e.Handled = true;
                 }
+            }
+        }
+
+        private void dgvBaptismRegister_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            parishioner_id = dgvBaptismRegister.CurrentRow.Cells[0].Value.ToString();
+            if (dgvBaptismRegister.RowCount > 0)
+            {
+                current_row_no = e.RowIndex;
+                txtRowNo.Text = (current_row_no + 1).ToString();
+            }
+
+            if (gbEditRecord.Visible)
+            {
+                txtNameUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Name"].Value.ToString();
+                txtVenueUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Venue"].Value.ToString();
+                txtSponsorUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Sponsor"].Value.ToString();
+                txtMinisterUpdate.Text = dgvBaptismRegister.CurrentRow.Cells["Minister"].Value.ToString();
+                dtpDateUpdate.Value = (DateTime)dgvBaptismRegister.CurrentRow.Cells["Date"].Value;
             }
         }
     }

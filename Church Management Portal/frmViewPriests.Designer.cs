@@ -43,6 +43,14 @@
             this.gbAdd = new System.Windows.Forms.GroupBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.txtRowNo = new System.Windows.Forms.TextBox();
+            this.txtRowCount = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btnLast = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnPrevious = new System.Windows.Forms.Button();
+            this.btnFirst = new System.Windows.Forms.Button();
             this.dgvListOfPriests = new System.Windows.Forms.DataGridView();
             this.btnExport = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
@@ -64,21 +72,13 @@
             this.btnUpdateSelected = new System.Windows.Forms.Button();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.txtRowNo = new System.Windows.Forms.TextBox();
-            this.txtRowCount = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.btnLast = new System.Windows.Forms.Button();
-            this.btnNext = new System.Windows.Forms.Button();
-            this.btnPrevious = new System.Windows.Forms.Button();
-            this.btnFirst = new System.Windows.Forms.Button();
             this.gbAdd.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListOfPriests)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnAddShow
@@ -91,7 +91,7 @@
             this.btnAddShow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddShow.Name = "btnAddShow";
             this.btnAddShow.Size = new System.Drawing.Size(104, 53);
-            this.btnAddShow.TabIndex = 0;
+            this.btnAddShow.TabIndex = 1;
             this.btnAddShow.Text = "Add New Record";
             this.btnAddShow.UseVisualStyleBackColor = true;
             this.btnAddShow.Click += new System.EventHandler(this.btnAddShow_Click);
@@ -106,7 +106,7 @@
             this.btnBack.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(104, 53);
-            this.btnBack.TabIndex = 1;
+            this.btnBack.TabIndex = 4;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
@@ -147,7 +147,7 @@
             this.dtpDateResumed.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpDateResumed.Name = "dtpDateResumed";
             this.dtpDateResumed.Size = new System.Drawing.Size(298, 26);
-            this.dtpDateResumed.TabIndex = 6;
+            this.dtpDateResumed.TabIndex = 10;
             // 
             // txtName
             // 
@@ -160,15 +160,17 @@
             // 
             // cmbType
             // 
+            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Items.AddRange(new object[] {
             "",
             "Parish Priest",
-            "Associate Priest"});
+            "Associate Parish Priest",
+            "Priest In Residence"});
             this.cmbType.Location = new System.Drawing.Point(167, 63);
             this.cmbType.Name = "cmbType";
             this.cmbType.Size = new System.Drawing.Size(298, 28);
-            this.cmbType.TabIndex = 10;
+            this.cmbType.TabIndex = 9;
             // 
             // gbAdd
             // 
@@ -198,7 +200,7 @@
             this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(112, 35);
-            this.btnAdd.TabIndex = 13;
+            this.btnAdd.TabIndex = 11;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -221,6 +223,98 @@
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "List of Priests";
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.txtRowNo);
+            this.panel1.Controls.Add(this.txtRowCount);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.btnLast);
+            this.panel1.Controls.Add(this.btnNext);
+            this.panel1.Controls.Add(this.btnPrevious);
+            this.panel1.Controls.Add(this.btnFirst);
+            this.panel1.Location = new System.Drawing.Point(575, 26);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(270, 41);
+            this.panel1.TabIndex = 14;
+            // 
+            // txtRowNo
+            // 
+            this.txtRowNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.txtRowNo.Location = new System.Drawing.Point(93, 9);
+            this.txtRowNo.Name = "txtRowNo";
+            this.txtRowNo.Size = new System.Drawing.Size(35, 26);
+            this.txtRowNo.TabIndex = 21;
+            this.txtRowNo.TextChanged += new System.EventHandler(this.txtRowNo_TextChanged);
+            this.txtRowNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRowNo_KeyPress);
+            // 
+            // txtRowCount
+            // 
+            this.txtRowCount.Enabled = false;
+            this.txtRowCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.txtRowCount.Location = new System.Drawing.Point(149, 8);
+            this.txtRowCount.Name = "txtRowCount";
+            this.txtRowCount.Size = new System.Drawing.Size(35, 26);
+            this.txtRowCount.TabIndex = 22;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label8.Location = new System.Drawing.Point(132, 11);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(13, 20);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "/";
+            // 
+            // btnLast
+            // 
+            this.btnLast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLast.Font = new System.Drawing.Font("Britannic Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLast.Location = new System.Drawing.Point(233, 5);
+            this.btnLast.Name = "btnLast";
+            this.btnLast.Size = new System.Drawing.Size(35, 30);
+            this.btnLast.TabIndex = 26;
+            this.btnLast.Text = ">>";
+            this.btnLast.UseVisualStyleBackColor = true;
+            this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNext.Font = new System.Drawing.Font("Britannic Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNext.Location = new System.Drawing.Point(195, 5);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(35, 30);
+            this.btnNext.TabIndex = 24;
+            this.btnNext.Text = ">";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // btnPrevious
+            // 
+            this.btnPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrevious.Font = new System.Drawing.Font("Britannic Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPrevious.Location = new System.Drawing.Point(49, 6);
+            this.btnPrevious.Name = "btnPrevious";
+            this.btnPrevious.Size = new System.Drawing.Size(35, 30);
+            this.btnPrevious.TabIndex = 23;
+            this.btnPrevious.Text = "<";
+            this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
+            // 
+            // btnFirst
+            // 
+            this.btnFirst.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFirst.Font = new System.Drawing.Font("Britannic Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFirst.Location = new System.Drawing.Point(10, 6);
+            this.btnFirst.Name = "btnFirst";
+            this.btnFirst.Size = new System.Drawing.Size(35, 30);
+            this.btnFirst.TabIndex = 25;
+            this.btnFirst.Text = "<<";
+            this.btnFirst.UseVisualStyleBackColor = true;
+            this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
             // 
             // dgvListOfPriests
             // 
@@ -256,7 +350,8 @@
             this.dgvListOfPriests.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvListOfPriests.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvListOfPriests.Size = new System.Drawing.Size(837, 564);
-            this.dgvListOfPriests.TabIndex = 13;
+            this.dgvListOfPriests.TabIndex = 0;
+            this.dgvListOfPriests.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListOfPriests_CellClick);
             this.dgvListOfPriests.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListOfPriests_CellContentClick);
             // 
             // btnExport
@@ -268,8 +363,8 @@
             this.btnExport.Margin = new System.Windows.Forms.Padding(4);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(84, 39);
-            this.btnExport.TabIndex = 11;
-            this.btnExport.Text = "Export";
+            this.btnExport.TabIndex = 20;
+            this.btnExport.Text = "E&xport";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
@@ -282,8 +377,8 @@
             this.btnPrint.Margin = new System.Windows.Forms.Padding(4);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(84, 39);
-            this.btnPrint.TabIndex = 10;
-            this.btnPrint.Text = "Print";
+            this.btnPrint.TabIndex = 19;
+            this.btnPrint.Text = "&Print";
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
@@ -312,7 +407,7 @@
             this.txtSearch.Location = new System.Drawing.Point(123, 14);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(239, 26);
-            this.txtSearch.TabIndex = 2;
+            this.txtSearch.TabIndex = 18;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // groupBox1
@@ -344,7 +439,7 @@
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(112, 35);
-            this.btnUpdate.TabIndex = 13;
+            this.btnUpdate.TabIndex = 15;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
@@ -355,19 +450,21 @@
             this.dtpDateResumedUpdate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpDateResumedUpdate.Name = "dtpDateResumedUpdate";
             this.dtpDateResumedUpdate.Size = new System.Drawing.Size(298, 26);
-            this.dtpDateResumedUpdate.TabIndex = 6;
+            this.dtpDateResumedUpdate.TabIndex = 14;
             // 
             // cmbTypeUpdate
             // 
+            this.cmbTypeUpdate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTypeUpdate.FormattingEnabled = true;
             this.cmbTypeUpdate.Items.AddRange(new object[] {
             "",
             "Parish Priest",
-            "Associate Priest"});
+            "Associate Parish Priest",
+            "Priest In Residence"});
             this.cmbTypeUpdate.Location = new System.Drawing.Point(169, 61);
             this.cmbTypeUpdate.Name = "cmbTypeUpdate";
             this.cmbTypeUpdate.Size = new System.Drawing.Size(298, 28);
-            this.cmbTypeUpdate.TabIndex = 10;
+            this.cmbTypeUpdate.TabIndex = 13;
             // 
             // label4
             // 
@@ -385,7 +482,7 @@
             this.txtNameUpdate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtNameUpdate.Name = "txtNameUpdate";
             this.txtNameUpdate.Size = new System.Drawing.Size(298, 26);
-            this.txtNameUpdate.TabIndex = 8;
+            this.txtNameUpdate.TabIndex = 12;
             this.txtNameUpdate.Text = "Rev. Fr. ";
             // 
             // label5
@@ -432,7 +529,7 @@
             this.btnAddTransferDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddTransferDate.Name = "btnAddTransferDate";
             this.btnAddTransferDate.Size = new System.Drawing.Size(112, 35);
-            this.btnAddTransferDate.TabIndex = 13;
+            this.btnAddTransferDate.TabIndex = 17;
             this.btnAddTransferDate.Text = "Add";
             this.btnAddTransferDate.UseVisualStyleBackColor = true;
             this.btnAddTransferDate.Click += new System.EventHandler(this.btnAddTransferDate_Click);
@@ -443,7 +540,7 @@
             this.dtpTransferDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpTransferDate.Name = "dtpTransferDate";
             this.dtpTransferDate.Size = new System.Drawing.Size(298, 26);
-            this.dtpTransferDate.TabIndex = 6;
+            this.dtpTransferDate.TabIndex = 16;
             // 
             // label9
             // 
@@ -465,7 +562,7 @@
             this.btnUpdateSelected.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnUpdateSelected.Name = "btnUpdateSelected";
             this.btnUpdateSelected.Size = new System.Drawing.Size(104, 53);
-            this.btnUpdateSelected.TabIndex = 16;
+            this.btnUpdateSelected.TabIndex = 2;
             this.btnUpdateSelected.Text = "Update Record";
             this.btnUpdateSelected.UseVisualStyleBackColor = true;
             this.btnUpdateSelected.Click += new System.EventHandler(this.btnUpdateSelected_Click);
@@ -484,102 +581,10 @@
             this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(104, 53);
-            this.btnDelete.TabIndex = 17;
+            this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "Delete Record";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.txtRowNo);
-            this.panel1.Controls.Add(this.txtRowCount);
-            this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.btnLast);
-            this.panel1.Controls.Add(this.btnNext);
-            this.panel1.Controls.Add(this.btnPrevious);
-            this.panel1.Controls.Add(this.btnFirst);
-            this.panel1.Location = new System.Drawing.Point(575, 26);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(270, 41);
-            this.panel1.TabIndex = 14;
-            // 
-            // txtRowNo
-            // 
-            this.txtRowNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.txtRowNo.Location = new System.Drawing.Point(93, 9);
-            this.txtRowNo.Name = "txtRowNo";
-            this.txtRowNo.Size = new System.Drawing.Size(35, 26);
-            this.txtRowNo.TabIndex = 6;
-            this.txtRowNo.TextChanged += new System.EventHandler(this.txtRowNo_TextChanged);
-            this.txtRowNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRowNo_KeyPress);
-            // 
-            // txtRowCount
-            // 
-            this.txtRowCount.Enabled = false;
-            this.txtRowCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.txtRowCount.Location = new System.Drawing.Point(149, 8);
-            this.txtRowCount.Name = "txtRowCount";
-            this.txtRowCount.Size = new System.Drawing.Size(35, 26);
-            this.txtRowCount.TabIndex = 5;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label8.Location = new System.Drawing.Point(132, 11);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(13, 20);
-            this.label8.TabIndex = 4;
-            this.label8.Text = "/";
-            // 
-            // btnLast
-            // 
-            this.btnLast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLast.Font = new System.Drawing.Font("Britannic Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLast.Location = new System.Drawing.Point(233, 5);
-            this.btnLast.Name = "btnLast";
-            this.btnLast.Size = new System.Drawing.Size(35, 30);
-            this.btnLast.TabIndex = 3;
-            this.btnLast.Text = ">>";
-            this.btnLast.UseVisualStyleBackColor = true;
-            this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
-            // 
-            // btnNext
-            // 
-            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNext.Font = new System.Drawing.Font("Britannic Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNext.Location = new System.Drawing.Point(195, 5);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(35, 30);
-            this.btnNext.TabIndex = 2;
-            this.btnNext.Text = ">";
-            this.btnNext.UseVisualStyleBackColor = true;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
-            // 
-            // btnPrevious
-            // 
-            this.btnPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrevious.Font = new System.Drawing.Font("Britannic Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrevious.Location = new System.Drawing.Point(49, 6);
-            this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Size = new System.Drawing.Size(35, 30);
-            this.btnPrevious.TabIndex = 1;
-            this.btnPrevious.Text = "<";
-            this.btnPrevious.UseVisualStyleBackColor = true;
-            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
-            // 
-            // btnFirst
-            // 
-            this.btnFirst.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFirst.Font = new System.Drawing.Font("Britannic Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFirst.Location = new System.Drawing.Point(10, 6);
-            this.btnFirst.Name = "btnFirst";
-            this.btnFirst.Size = new System.Drawing.Size(35, 30);
-            this.btnFirst.TabIndex = 0;
-            this.btnFirst.Text = "<<";
-            this.btnFirst.UseVisualStyleBackColor = true;
-            this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
             // 
             // frmViewPriests
             // 
@@ -606,6 +611,8 @@
             this.gbAdd.ResumeLayout(false);
             this.gbAdd.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListOfPriests)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -613,8 +620,6 @@
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }

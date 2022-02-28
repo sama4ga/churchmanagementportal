@@ -73,7 +73,7 @@ namespace Church_Management_Portal.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ST. PETER CATHOLIC CHURCH")]
+        [global::System.Configuration.DefaultSettingValueAttribute("HOLY ROSARY AUTONOMOUS CATHOLIC COMMUNITY")]
         public string church_name {
             get {
                 return ((string)(this["church_name"]));
@@ -85,7 +85,7 @@ namespace Church_Management_Portal.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Mbiabong Anyanya Etoi, Uyo")]
+        [global::System.Configuration.DefaultSettingValueAttribute("72 Itu Road, Ibiaku Itam, Itu L.G.A")]
         public string church_address {
             get {
                 return ((string)(this["church_address"]));
@@ -104,6 +104,29 @@ namespace Church_Management_Portal.Properties {
             }
             set {
                 this["background_image"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public int currentLoggedInUser {
+            get {
+                return ((int)(this["currentLoggedInUser"]));
+            }
+            set {
+                this["currentLoggedInUser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool firstRun {
+            get {
+                return ((bool)(this["firstRun"]));
+            }
+            set {
+                this["firstRun"] = value;
             }
         }
     }

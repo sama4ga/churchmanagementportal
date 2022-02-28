@@ -16,7 +16,7 @@ namespace Church_Management_Portal
         usableFunction UF = new usableFunction();
         SQLConfig Sql = new SQLConfig();
         TimeSpan timeLogin = new TimeSpan();
-        public int user_id = 0;
+        public int user_id = -1;
         int maxrow = 0;
         public  string user_status;
 
@@ -47,7 +47,7 @@ namespace Church_Management_Portal
                    
             
             // get user details
-            if (user_id != 0) {
+            if (user_id != -1) {
                 maxrow = Sql.maxrow("SELECT * FROM `parishioners` where `parishioner_id`='"+ user_id +"';","parishioners");
                 if (maxrow == 1)
                 {
@@ -60,17 +60,23 @@ namespace Church_Management_Portal
                         picPassport.Image = Properties.Resources.index;
                     }
                     lblUserName.Text = Sql.ds.Tables["parishioners"].Rows[0].Field<string>("name");
-                    lblUserStatus.Text = user_status;
                 }
                 else
                 {
                     picPassport.Image = Properties.Resources.index;
                     lblUserName.Text = "user";
-                    lblUserStatus.Text = user_status;
                 }
+
+                if (user_id == 0)
+                {
+                    picPassport.Image = Properties.Resources.index;
+                    lblUserName.Text = "user";
+                }
+
+                Properties.Settings.Default.currentLoggedInUser = user_id;
             }
-
-
+            
+            lblUserStatus.Text = user_status;
             lblDate.Text = DateTime.Now.ToString("dddd, dd MMMM, yyyy HH:mm:ss");
             timeLogin = DateTime.Now.TimeOfDay;
 
@@ -350,6 +356,18 @@ namespace Church_Management_Portal
         {
             frmSettings frm = new frmSettings();
             frm.Show();
+        }
+
+        private void Form1_VisibleChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.background_image) & File.Exists(Properties.Settings.Default.background_image))
+            {
+                this.BackgroundImage = Image.FromFile(Properties.Settings.Default.background_image);
+            }
+            else
+            {
+                this.BackgroundImage = Properties.Resources.background_image;
+            }
         }
     }
 }

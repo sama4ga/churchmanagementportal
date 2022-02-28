@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Windows.Forms;
+using System.IO;
+using System.Diagnostics;
 
 namespace Church_Management_Portal
 {
@@ -17,6 +19,11 @@ namespace Church_Management_Portal
         private MySqlDataReader dr;
         public DataSet ds = new DataSet();
         private DataTable dt = new DataTable();
+        private string uid = Properties.Settings.Default.user;
+        private string password = Properties.Settings.Default.password;
+        private string server = Properties.Settings.Default.server;
+        private string port = Properties.Settings.Default.port;
+        private string database = "churchms";
 
         /// <summary>
         /// Opens a connection to the mysql database using default parameters
@@ -24,7 +31,7 @@ namespace Church_Management_Portal
         /// <returns></returns>
         private Boolean OpenCon()
         {
-            con = new MySqlConnection("server=" + Properties.Settings.Default.server + ";user id=" + Properties.Settings.Default.user + ";password=" + Properties.Settings.Default.password + ";port=" + Properties.Settings.Default.port + ";database=churchms");
+            con = new MySqlConnection("server=" + server + ";user id=" + uid + ";password=" + password + ";port=" + port + ";database="+database);
             try
             {
                 if (con.State != ConnectionState.Open)
@@ -36,6 +43,10 @@ namespace Church_Management_Portal
             }
             catch (MySqlException e)
             {
+                if (e.Number.Equals(MySqlErrorCode.UnableToConnectToHost))
+                { 
+                    // try to open mysql server
+                }
                 MessageBox.Show("An error occurred while connecting to the database: " + e.Message);
                 return false;
             }
@@ -51,6 +62,7 @@ namespace Church_Management_Portal
         {
             if (con != null)
             {
+                con.Open();
                 try
                 {
 
@@ -107,7 +119,11 @@ namespace Church_Management_Portal
             }
             catch (MySqlException e)
             {
-                MessageBox.Show("An error occurred while connecting to the database: " + e.Message);
+                MessageBox.Show("An error occurred while connecting to the database: " + e.Message + e.ErrorCode);
+                if (MySqlErrorCode.UnableToConnectToHost.Equals(e.ErrorCode))
+                {
+                    MessageBox.Show("Connection error");
+                }
                 return false;
             }
 
@@ -345,6 +361,79 @@ namespace Church_Management_Portal
             }
         }
 
+        //Backup
+        public void Backup()
+        {
+            try
+            {
+                DateTime Time = DateTime.Now;
+                int year = Time.Year;
+                int month = Time.Month;
+                int day = Time.Day;
+                int hour = Time.Hour;
+                int minute = Time.Minute;
+                int second = Time.Second;
+                int millisecond = Time.Millisecond;
+
+                //Save file to C:\ with the current date as a filename
+                string path;
+                path = "C:\\MySqlBackup.sql"; // + year + "-" + month + "-" + day + "-" + hour + "-" + minute + "-" + second + "-" + millisecond + ".sql";
+                StreamWriter file = new StreamWriter(path);
+
+
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.FileName = "mysqldump";
+                psi.RedirectStandardInput = false;
+                psi.RedirectStandardOutput = true;
+                psi.Arguments = string.Format(@"-u{0} -p{1} -h{2} {3}", uid, password, server, database);
+                psi.UseShellExecute = false;
+
+                Process process = Process.Start(psi);
+
+                string output;
+                output = process.StandardOutput.ReadToEnd();
+                file.WriteLine(output);
+                process.WaitForExit();
+                file.Close();
+                process.Close();
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("Error , unable to backup!");
+            }
+        }
+
+        //Restore
+        public void Restore()
+        {
+            try
+            {
+                //Read file from C:\
+                string path;
+                path = "C:\\MySqlBackup.sql";
+                StreamReader file = new StreamReader(path);
+                string input = file.ReadToEnd();
+                file.Close();
+
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.FileName = "mysql";
+                psi.RedirectStandardInput = true;
+                psi.RedirectStandardOutput = false;
+                psi.Arguments = string.Format(@"-u{0} -p{1} -h{2} {3}", uid, password, server, database);
+                psi.UseShellExecute = false;
+
+
+                Process process = Process.Start(psi);
+                process.StandardInput.WriteLine(input);
+                process.StandardInput.Close();
+                process.WaitForExit();
+                process.Close();
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("Error , unable to Restore!");
+            }
+        }
 
     }
 }

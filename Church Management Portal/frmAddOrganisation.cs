@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Church_Management_Portal
@@ -43,10 +37,13 @@ namespace Church_Management_Portal
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (txtLongname.Text.Trim() != "" && txtShortName.Text.Trim() != "")
+            if (string.IsNullOrWhiteSpace(txtLongname.Text.Trim()) && string.IsNullOrWhiteSpace(txtShortName.Text.Trim()))
             {
-                Sql.Execute_CUD("INSERT INTO `organisations`(`short_name`,`long_name`) VALUES('" + txtShortName.Text + "','" + txtLongname.Text + "');",
-                "Could not add new organisation","New Organisation successfully added");
+                List<string> param = new List<string>();
+                long insertId = 0;
+                param.Add(txtShortName.Text.Trim());
+                param.Add(txtLongname.Text.Trim());
+                Sql.InsertQuery("INSERT INTO `organisations`(`short_name`,`long_name`) VALUES(@1,@2);", param, out insertId);
             }
             else
             {
